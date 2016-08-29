@@ -1,0 +1,76 @@
+﻿生成启动时间为 2016/8/24 14:06:24。
+     1>项目“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\mqtt\mqtt.vcxproj”在节点 2 上(Rebuild 个目标)。
+     1>ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\lua\include /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\mqtt /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\openssl /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\jsoncpp\include /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\message /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D MQTT_EXPORTS /D "TARGET_PLATFORM=PLATFORM_WIN32" /D _SCL_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_WARNINGS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\src\boyim.pb.cc ..\..\src\jsoncpp\src\json_reader.cpp ..\..\src\jsoncpp\src\json_value.cpp ..\..\src\jsoncpp\src\json_writer.cpp ..\..\src\main.cpp
+         main.cpp
+     1>e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\main.cpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\bymqttclient.h(202): warning C4800: “int”: 将值强制为布尔值“true”或“false”(性能警告)
+     1>e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\main.cpp(311): warning C4244: “初始化”: 从“lua_Number”转换到“_long”，可能丢失数据
+     1>e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\main.cpp(330): warning C4244: “参数”: 从“lua_Number”转换到“__int64”，可能丢失数据
+     1>e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\main.cpp(342): warning C4244: “参数”: 从“_long”转换到“lua_Number”，可能丢失数据
+     1>e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\main.cpp(638): warning C4244: “参数”: 从“_long”转换到“lua_Number”，可能丢失数据
+     1>e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\main.cpp(655): warning C4244: “参数”: 从“_long”转换到“lua_Number”，可能丢失数据
+     1>e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\main.cpp(675): warning C4244: “参数”: 从“_long”转换到“lua_Number”，可能丢失数据
+         json_writer.cpp
+         json_value.cpp
+         json_reader.cpp
+         boyim.pb.cc
+         正在生成代码...
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\lua\include /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\mqtt /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\openssl /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\jsoncpp\include /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\message /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D MQTT_EXPORTS /D "TARGET_PLATFORM=PLATFORM_WIN32" /D _SCL_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_WARNINGS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\src\mqtt\Clients.c ..\..\src\mqtt\Heap.c ..\..\src\mqtt\LinkedList.c ..\..\src\mqtt\Log.c ..\..\src\mqtt\Messages.c ..\..\src\mqtt\MQTTAsync.c ..\..\src\mqtt\MQTTPacket.c ..\..\src\mqtt\MQTTPacketOut.c ..\..\src\mqtt\MQTTPersistence.c ..\..\src\mqtt\MQTTPersistenceDefault.c ..\..\src\mqtt\MQTTProtocolClient.c ..\..\src\mqtt\MQTTProtocolOut.c ..\..\src\mqtt\MQTTVersion.c ..\..\src\mqtt\Socket.c ..\..\src\mqtt\SocketBuffer.c ..\..\src\mqtt\SSLSocket.c ..\..\src\mqtt\StackTrace.c ..\..\src\mqtt\Thread.c ..\..\src\mqtt\Tree.c "..\..\src\mqtt\utf-8.c"
+         utf-8.c
+         Tree.c
+         Thread.c
+         StackTrace.c
+         SSLSocket.c
+         SocketBuffer.c
+         Socket.c
+         MQTTVersion.c
+         MQTTProtocolOut.c
+         MQTTProtocolClient.c
+         MQTTPersistenceDefault.c
+         MQTTPersistence.c
+         MQTTPacketOut.c
+         MQTTPacket.c
+         MQTTAsync.c
+     1>e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\mqtt\mqttasync.h(89): warning C4005: “DLLImport”: 宏重定义
+                 e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\mqtt\mqttclient.h(110) : 参见“DLLImport”的前一个定义
+     1>e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\mqtt\mqttasync.h(90): warning C4005: “DLLExport”: 宏重定义
+                 e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\mqtt\mqttclient.h(111) : 参见“DLLExport”的前一个定义
+         Messages.c
+         Log.c
+         LinkedList.c
+         Heap.c
+         Clients.c
+         正在生成代码...
+       Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\Debug\mqtt.dll" /INCREMENTAL /NOLOGO /LIBPATH:E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\lib lua.lib ws2_32.lib libeay32.lib ssleay32.lib "libprotobuf-lite.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\Debug\mqtt.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\Debug\mqtt.lib" /MACHINE:X86 /DLL Debug\boyim.pb.obj
+         Debug\json_reader.obj
+         Debug\json_value.obj
+         Debug\json_writer.obj
+         Debug\main.obj
+         Debug\Clients.obj
+         Debug\Heap.obj
+         Debug\LinkedList.obj
+         Debug\Log.obj
+         Debug\Messages.obj
+         Debug\MQTTAsync.obj
+         Debug\MQTTPacket.obj
+         Debug\MQTTPacketOut.obj
+         Debug\MQTTPersistence.obj
+         Debug\MQTTPersistenceDefault.obj
+         Debug\MQTTProtocolClient.obj
+         Debug\MQTTProtocolOut.obj
+         Debug\MQTTVersion.obj
+         Debug\Socket.obj
+         Debug\SocketBuffer.obj
+         Debug\SSLSocket.obj
+         Debug\StackTrace.obj
+         Debug\Thread.obj
+         Debug\Tree.obj
+         "Debug\utf-8.obj"
+     1>LINK : fatal error LNK1104: 无法打开文件“libprotobuf-lite.lib”
+     1>已完成生成项目“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\mqtt\mqtt.vcxproj”(Rebuild 个目标)的操作 - 失败。
+
+生成失败。
+
+已用时间 00:00:08.17

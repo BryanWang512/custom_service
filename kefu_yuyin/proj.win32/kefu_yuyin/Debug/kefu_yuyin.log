@@ -1,0 +1,63 @@
+﻿生成启动时间为 2016/8/24 14:11:37。
+     1>项目“E:\BabeTeam\projects\UITeam\misc\CustomerService\kefu_yuyin\proj.win32\kefu_yuyin\kefu_yuyin.vcxproj”在节点 2 上(Rebuild 个目标)。
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(357,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+     1>ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IE:\BabeTeam\projects\UITeam\misc\CustomerService\kefu_yuyin\proj.win32\..\src\lua\include /IE:\BabeTeam\projects\UITeam\misc\CustomerService\kefu_yuyin\proj.win32\..\src /IE:\BabeTeam\projects\UITeam\misc\CustomerService\kefu_yuyin\proj.win32\..\src\speex /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _XKEYCHECK_H /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D TARGET_PLATFORM=PLATFORM_WIN32 /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE=1 /D _CRT_NONSTDC_NO_DEPRECATE=1 /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\src\byaudio_speex.c ..\..\src\byaudio_wave_header.c
+         byaudio_wave_header.c
+     1>e:\babeteam\projects\uiteam\misc\customerservice\kefu_yuyin\src\byaudio_wave_header.c : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\babeteam\projects\uiteam\misc\customerservice\kefu_yuyin\src\byaudio_wave_header.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+         byaudio_speex.c
+     1>e:\babeteam\projects\uiteam\misc\customerservice\kefu_yuyin\src\byaudio_speex.c : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\babeteam\projects\uiteam\misc\customerservice\kefu_yuyin\src\byaudio_speex.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\babeteam\projects\uiteam\misc\customerservice\kefu_yuyin\src\byaudio_speex.c(44): warning C4244: “函数”: 从“float”转换到“int”，可能丢失数据
+     1>e:\babeteam\projects\uiteam\misc\customerservice\kefu_yuyin\src\byaudio_speex.c(165): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\babeteam\projects\uiteam\misc\customerservice\kefu_yuyin\src\byaudio_speex.c(254): warning C4244: “=”: 从“float”转换到“short”，可能丢失数据
+     1>e:\babeteam\projects\uiteam\misc\customerservice\kefu_yuyin\src\byaudio_speex.c(256): warning C4018: “>=”: 有符号/无符号不匹配
+         正在生成代码...
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IE:\BabeTeam\projects\UITeam\misc\CustomerService\kefu_yuyin\proj.win32\..\src\lua\include /IE:\BabeTeam\projects\UITeam\misc\CustomerService\kefu_yuyin\proj.win32\..\src /IE:\BabeTeam\projects\UITeam\misc\CustomerService\kefu_yuyin\proj.win32\..\src\speex /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _XKEYCHECK_H /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D TARGET_PLATFORM=PLATFORM_WIN32 /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE=1 /D _CRT_NONSTDC_NO_DEPRECATE=1 /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\src\main.cpp
+         main.cpp
+     1>e:\babeteam\projects\uiteam\misc\customerservice\kefu_yuyin\src\byaudio_speex.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\babeteam\projects\uiteam\misc\customerservice\kefu_yuyin\src\byaudio_wave_header.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\babeteam\projects\uiteam\misc\customerservice\kefu_yuyin\src\audio_record.h(44): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\babeteam\projects\uiteam\misc\customerservice\kefu_yuyin\src\main.cpp(304): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+       Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\BabeTeam\projects\UITeam\misc\CustomerService\kefu_yuyin\proj.win32\..\..\mqtt_demo\Win32Player\kefu_yuyin.dll" /INCREMENTAL /NOLOGO /LIBPATH:E:\BabeTeam\projects\UITeam\misc\CustomerService\kefu_yuyin\proj.win32\lib lua.lib libspeex.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\BabeTeam\projects\UITeam\misc\CustomerService\kefu_yuyin\proj.win32\..\..\mqtt_demo\Win32Player\kefu_yuyin.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\BabeTeam\projects\UITeam\misc\CustomerService\kefu_yuyin\proj.win32\..\..\mqtt_demo\Win32Player\kefu_yuyin.lib" /MACHINE:X86 /DLL Debug\byaudio_speex.obj
+         Debug\byaudio_wave_header.obj
+         Debug\main.obj
+            正在创建库 E:\BabeTeam\projects\UITeam\misc\CustomerService\kefu_yuyin\proj.win32\..\..\mqtt_demo\Win32Player\kefu_yuyin.lib 和对象 E:\BabeTeam\projects\UITeam\misc\CustomerService\kefu_yuyin\proj.win32\..\..\mqtt_demo\Win32Player\kefu_yuyin.exp
+     1>LINK : warning LNK4098: 默认库“LIBCMTD”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
+     1>libspeex.lib(bits.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(bits.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(cb_search.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(cb_search.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(exc_10_16_table.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(exc_10_16_table.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(exc_10_32_table.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(exc_10_32_table.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(exc_20_32_table.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(exc_20_32_table.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(exc_5_256_table.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(exc_5_256_table.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(exc_5_64_table.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(exc_5_64_table.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(exc_8_128_table.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(exc_8_128_table.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(fftwrap.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(fftwrap.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(filterbank.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(filterbank.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(filters.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(filters.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(gain_table.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(gain_table.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(gain_table_lbr.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(gain_table_lbr.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(high_lsp_tables.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(high_lsp_tables.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(lpc.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(lpc.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(lsp.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(lsp.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(lsp_tables_nb.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(lsp_tables_nb.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(ltp.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(ltp.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(mdf.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(mdf.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(modes.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(modes.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(nb_celp.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(nb_celp.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(preprocess.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(preprocess.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(quant_lsp.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(quant_lsp.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(smallft.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(smallft.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(speex.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(speex.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(speex_callbacks.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(speex_callbacks.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(vbr.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(vbr.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(vq.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(vq.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libspeex.lib(window.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libspeex.lib(window.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+         kefu_yuyin.vcxproj -> E:\BabeTeam\projects\UITeam\misc\CustomerService\kefu_yuyin\proj.win32\..\..\mqtt_demo\Win32Player\kefu_yuyin.dll
+     1>已完成生成项目“E:\BabeTeam\projects\UITeam\misc\CustomerService\kefu_yuyin\proj.win32\kefu_yuyin\kefu_yuyin.vcxproj”(Rebuild 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:02.13

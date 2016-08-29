@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\platform_android">
+      <UniqueIdentifier>{68e8688a-fa71-4a9f-a9df-8b64cde520de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\platform_win32">
+      <UniqueIdentifier>{5c172896-a48b-445b-bcc9-a97d4798cc0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\json">
+      <UniqueIdentifier>{8b081e41-448b-406d-91c8-ea15e81758a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\mqtt">
+      <UniqueIdentifier>{6a7e55b8-5717-4d4d-9769-8b639c220ebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\message">
+      <UniqueIdentifier>{bffd52e3-9f26-4cbc-ba7e-345c69ccc4c0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\mqtt\Clients.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\Heap.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\LinkedList.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\Log.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\Messages.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\MQTTAsync.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\MQTTClient.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\MQTTClientPersistence.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\MQTTPacket.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\MQTTPacketOut.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\MQTTPersistence.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\MQTTPersistenceDefault.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\MQTTProtocol.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\MQTTProtocolClient.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\MQTTProtocolOut.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\Socket.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\SocketBuffer.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\SSLSocket.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\StackTrace.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\Thread.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\Tree.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\utf-8.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt\VersionInfo.h">
+      <Filter>源文件\mqtt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\boyim.pb.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\BYJsonUtil.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\BYMqttClient.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ClientConfig.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\config.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\messageFactory.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Plugin.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\message\Message.h">
+      <Filter>源文件\message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\message\MessageContainer.h">
+      <Filter>源文件\message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt_lua_bind.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt_global.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\mqtt_constants.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\jsoncpp\src\json_reader.cpp">
+      <Filter>源文件\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\jsoncpp\src\json_value.cpp">
+      <Filter>源文件\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\jsoncpp\src\json_writer.cpp">
+      <Filter>源文件\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\Clients.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\Heap.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\LinkedList.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\Log.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\Messages.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\MQTTPacket.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\MQTTPacketOut.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\MQTTPersistence.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\MQTTPersistenceDefault.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\MQTTProtocolClient.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\MQTTProtocolOut.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\MQTTVersion.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\Socket.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\SocketBuffer.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\SSLSocket.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\StackTrace.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\Thread.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\Tree.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\utf-8.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\boyim.pb.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mqtt\MQTTAsync.c">
+      <Filter>源文件\mqtt</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

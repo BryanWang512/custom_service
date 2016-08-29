@@ -1,0 +1,109 @@
+﻿生成启动时间为 2016/8/24 14:10:31。
+     1>项目“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\mqtt\mqtt.vcxproj”在节点 2 上(Rebuild 个目标)。
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(357,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+     1>ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\lua\include /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\mqtt /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\openssl /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\jsoncpp\include /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\message /Zi /nologo /W3 /WX- /sdl /Od /Oi /Oy- /GL /D WIN32 /D _WINDOWS /D _USRDLL /D MQTT_EXPORTS /D TARGET_PLATFORM=PLATFORM_WIN32 /D _SCL_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_WARNINGS /D _WINDLL /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\src\boyim.pb.cc ..\..\src\jsoncpp\src\json_reader.cpp ..\..\src\jsoncpp\src\json_value.cpp ..\..\src\jsoncpp\src\json_writer.cpp ..\..\src\main.cpp
+         boyim.pb.cc
+         json_reader.cpp
+         json_value.cpp
+         json_writer.cpp
+         main.cpp
+     1>..\..\src\main.cpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\BYMqttClient.h(202): warning C4800: “int”: 将值强制为布尔值“true”或“false”(性能警告)
+     1>..\..\src\main.cpp(314): warning C4244: “初始化”: 从“lua_Number”转换到“_long”，可能丢失数据
+     1>..\..\src\main.cpp(333): warning C4244: “参数”: 从“lua_Number”转换到“__int64”，可能丢失数据
+     1>..\..\src\main.cpp(345): warning C4244: “参数”: 从“_long”转换到“lua_Number”，可能丢失数据
+     1>..\..\src\main.cpp(641): warning C4244: “参数”: 从“_long”转换到“lua_Number”，可能丢失数据
+     1>..\..\src\main.cpp(658): warning C4244: “参数”: 从“_long”转换到“lua_Number”，可能丢失数据
+     1>..\..\src\main.cpp(678): warning C4244: “参数”: 从“_long”转换到“lua_Number”，可能丢失数据
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\lua\include /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\mqtt /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\openssl /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\jsoncpp\include /IE:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\src\message /Zi /nologo /W3 /WX- /sdl /Od /Oi /Oy- /GL /D WIN32 /D _WINDOWS /D _USRDLL /D MQTT_EXPORTS /D TARGET_PLATFORM=PLATFORM_WIN32 /D _SCL_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_WARNINGS /D _WINDLL /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\src\mqtt\Clients.c ..\..\src\mqtt\Heap.c ..\..\src\mqtt\LinkedList.c ..\..\src\mqtt\Log.c ..\..\src\mqtt\Messages.c ..\..\src\mqtt\MQTTAsync.c ..\..\src\mqtt\MQTTPacket.c ..\..\src\mqtt\MQTTPacketOut.c ..\..\src\mqtt\MQTTPersistence.c ..\..\src\mqtt\MQTTPersistenceDefault.c ..\..\src\mqtt\MQTTProtocolClient.c ..\..\src\mqtt\MQTTProtocolOut.c ..\..\src\mqtt\MQTTVersion.c ..\..\src\mqtt\Socket.c ..\..\src\mqtt\SocketBuffer.c ..\..\src\mqtt\SSLSocket.c ..\..\src\mqtt\StackTrace.c ..\..\src\mqtt\Thread.c ..\..\src\mqtt\Tree.c "..\..\src\mqtt\utf-8.c"
+         Clients.c
+         Heap.c
+         LinkedList.c
+         Log.c
+         Messages.c
+         MQTTAsync.c
+     1>e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\mqtt\MQTTAsync.h(89): warning C4005: “DLLImport”: 宏重定义
+                 e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\mqtt\MQTTClient.h(110) : 参见“DLLImport”的前一个定义
+     1>e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\mqtt\MQTTAsync.h(90): warning C4005: “DLLExport”: 宏重定义
+                 e:\babeteam\projects\uiteam\misc\customerservice\mqtt\src\mqtt\MQTTClient.h(111) : 参见“DLLExport”的前一个定义
+         MQTTPacket.c
+         MQTTPacketOut.c
+         MQTTPersistence.c
+         MQTTPersistenceDefault.c
+         MQTTProtocolClient.c
+         MQTTProtocolOut.c
+         MQTTVersion.c
+     1>..\..\src\mqtt\MQTTVersion.c(131): warning C4133: “函数”: 从“wchar_t [30]”到“LPCSTR”的类型不兼容
+         Socket.c
+     1>..\..\src\mqtt\Socket.c(824): warning C4133: “函数”: 从“wchar_t [67]”到“LPSTR”的类型不兼容
+         SocketBuffer.c
+         SSLSocket.c
+         StackTrace.c
+         Thread.c
+         Tree.c
+         utf-8.c
+       Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\..\mqtt_demo\Win32Player\mqtt.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\lib lua.lib ws2_32.lib libprotobuf.lib libeay32.lib ssleay32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\..\mqtt_demo\Win32Player\mqtt.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:NOICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\..\mqtt_demo\Win32Player\mqtt.lib" /MACHINE:X86 /SAFESEH /DLL Release\boyim.pb.obj
+         Release\json_reader.obj
+         Release\json_value.obj
+         Release\json_writer.obj
+         Release\main.obj
+         Release\Clients.obj
+         Release\Heap.obj
+         Release\LinkedList.obj
+         Release\Log.obj
+         Release\Messages.obj
+         Release\MQTTAsync.obj
+         Release\MQTTPacket.obj
+         Release\MQTTPacketOut.obj
+         Release\MQTTPersistence.obj
+         Release\MQTTPersistenceDefault.obj
+         Release\MQTTProtocolClient.obj
+         Release\MQTTProtocolOut.obj
+         Release\MQTTVersion.obj
+         Release\Socket.obj
+         Release\SocketBuffer.obj
+         Release\SSLSocket.obj
+         Release\StackTrace.obj
+         Release\Thread.obj
+         Release\Tree.obj
+         "Release\utf-8.obj"
+            正在创建库 E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\..\mqtt_demo\Win32Player\mqtt.lib 和对象 E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\..\mqtt_demo\Win32Player\mqtt.exp
+         正在生成代码
+         已完成代码的生成
+     1>libprotobuf.lib(coded_stream.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(coded_stream.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(common.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(common.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(descriptor.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(descriptor.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(descriptor.pb.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(descriptor.pb.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(descriptor_database.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(descriptor_database.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(dynamic_message.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(dynamic_message.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(extension_set.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(extension_set.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(extension_set_heavy.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(extension_set_heavy.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(generated_message_reflection.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(generated_message_reflection.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(generated_message_util.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(generated_message_util.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(strtod.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(strtod.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(message.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(message.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(message_lite.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(message_lite.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(once.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(once.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(atomicops_internals_x86_msvc.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(atomicops_internals_x86_msvc.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(reflection_ops.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(reflection_ops.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(repeated_field.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(repeated_field.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(structurally_valid.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(structurally_valid.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(strutil.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(strutil.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(substitute.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(substitute.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(text_format.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(text_format.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(tokenizer.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(tokenizer.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(unknown_field_set.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(unknown_field_set.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(wire_format.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(wire_format.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(wire_format_lite.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(wire_format_lite.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(zero_copy_stream.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(zero_copy_stream.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(zero_copy_stream_impl.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(zero_copy_stream_impl.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(zero_copy_stream_impl_lite.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(zero_copy_stream_impl_lite.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+     1>libprotobuf.lib(stringprintf.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“libprotobuf.lib(stringprintf.obj)”或在“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt_demo\Win32Player\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+         mqtt.vcxproj -> E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\..\..\mqtt_demo\Win32Player\mqtt.dll
+     1>已完成生成项目“E:\BabeTeam\projects\UITeam\misc\CustomerService\mqtt\proj.win32\mqtt\mqtt.vcxproj”(Rebuild 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:08.35

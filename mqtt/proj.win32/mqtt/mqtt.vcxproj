@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{352B1A9D-3D92-490C-9962-CE1FD385F126}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>mqtt</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)..\..\mqtt_demo\Win32Player</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;MQTT_EXPORTS;TARGET_PLATFORM=PLATFORM_WIN32;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\src\lua\include;$(SolutionDir)..\src;$(SolutionDir)..\src\mqtt;$(SolutionDir)..\src\openssl;$(SolutionDir)..\src\jsoncpp\include;$(SolutionDir)..\src\message;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>lua.lib;ws2_32.lib;libeay32.lib;ssleay32.lib;libprotobuf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;MQTT_EXPORTS;TARGET_PLATFORM=PLATFORM_WIN32;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\src\lua\include;$(SolutionDir)..\src;$(SolutionDir)..\src\mqtt;$(SolutionDir)..\src\openssl;$(SolutionDir)..\src\jsoncpp\include;$(SolutionDir)..\src\message;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>lua.lib;ws2_32.lib;libprotobuf.lib;libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\boyim.pb.h" />
+    <ClInclude Include="..\..\src\BYJsonUtil.h" />
+    <ClInclude Include="..\..\src\BYMqttClient.h" />
+    <ClInclude Include="..\..\src\ClientConfig.h" />
+    <ClInclude Include="..\..\src\config.h" />
+    <ClInclude Include="..\..\src\messageFactory.h" />
+    <ClInclude Include="..\..\src\message\Message.h" />
+    <ClInclude Include="..\..\src\message\MessageContainer.h" />
+    <ClInclude Include="..\..\src\mqtt\Clients.h" />
+    <ClInclude Include="..\..\src\mqtt\Heap.h" />
+    <ClInclude Include="..\..\src\mqtt\LinkedList.h" />
+    <ClInclude Include="..\..\src\mqtt\Log.h" />
+    <ClInclude Include="..\..\src\mqtt\Messages.h" />
+    <ClInclude Include="..\..\src\mqtt\MQTTAsync.h" />
+    <ClInclude Include="..\..\src\mqtt\MQTTClient.h" />
+    <ClInclude Include="..\..\src\mqtt\MQTTClientPersistence.h" />
+    <ClInclude Include="..\..\src\mqtt\MQTTPacket.h" />
+    <ClInclude Include="..\..\src\mqtt\MQTTPacketOut.h" />
+    <ClInclude Include="..\..\src\mqtt\MQTTPersistence.h" />
+    <ClInclude Include="..\..\src\mqtt\MQTTPersistenceDefault.h" />
+    <ClInclude Include="..\..\src\mqtt\MQTTProtocol.h" />
+    <ClInclude Include="..\..\src\mqtt\MQTTProtocolClient.h" />
+    <ClInclude Include="..\..\src\mqtt\MQTTProtocolOut.h" />
+    <ClInclude Include="..\..\src\mqtt\Socket.h" />
+    <ClInclude Include="..\..\src\mqtt\SocketBuffer.h" />
+    <ClInclude Include="..\..\src\mqtt\SSLSocket.h" />
+    <ClInclude Include="..\..\src\mqtt\StackTrace.h" />
+    <ClInclude Include="..\..\src\mqtt\Thread.h" />
+    <ClInclude Include="..\..\src\mqtt\Tree.h" />
+    <ClInclude Include="..\..\src\mqtt\utf-8.h" />
+    <ClInclude Include="..\..\src\mqtt\VersionInfo.h" />
+    <ClInclude Include="..\..\src\mqtt_constants.h" />
+    <ClInclude Include="..\..\src\mqtt_global.h" />
+    <ClInclude Include="..\..\src\mqtt_lua_bind.h" />
+    <ClInclude Include="..\..\src\Plugin.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\boyim.pb.cc" />
+    <ClCompile Include="..\..\src\jsoncpp\src\json_reader.cpp" />
+    <ClCompile Include="..\..\src\jsoncpp\src\json_value.cpp" />
+    <ClCompile Include="..\..\src\jsoncpp\src\json_writer.cpp" />
+    <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\mqtt\Clients.c" />
+    <ClCompile Include="..\..\src\mqtt\Heap.c" />
+    <ClCompile Include="..\..\src\mqtt\LinkedList.c" />
+    <ClCompile Include="..\..\src\mqtt\Log.c" />
+    <ClCompile Include="..\..\src\mqtt\Messages.c" />
+    <ClCompile Include="..\..\src\mqtt\MQTTAsync.c" />
+    <ClCompile Include="..\..\src\mqtt\MQTTPacket.c" />
+    <ClCompile Include="..\..\src\mqtt\MQTTPacketOut.c" />
+    <ClCompile Include="..\..\src\mqtt\MQTTPersistence.c" />
+    <ClCompile Include="..\..\src\mqtt\MQTTPersistenceDefault.c" />
+    <ClCompile Include="..\..\src\mqtt\MQTTProtocolClient.c" />
+    <ClCompile Include="..\..\src\mqtt\MQTTProtocolOut.c" />
+    <ClCompile Include="..\..\src\mqtt\MQTTVersion.c" />
+    <ClCompile Include="..\..\src\mqtt\Socket.c" />
+    <ClCompile Include="..\..\src\mqtt\SocketBuffer.c" />
+    <ClCompile Include="..\..\src\mqtt\SSLSocket.c" />
+    <ClCompile Include="..\..\src\mqtt\StackTrace.c" />
+    <ClCompile Include="..\..\src\mqtt\Thread.c" />
+    <ClCompile Include="..\..\src\mqtt\Tree.c" />
+    <ClCompile Include="..\..\src\mqtt\utf-8.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

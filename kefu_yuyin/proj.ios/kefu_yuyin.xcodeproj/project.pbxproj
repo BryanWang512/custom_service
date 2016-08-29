@@ -1,0 +1,501 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0491961E1D48993D0094B22B /* byaudio_speex.c in Sources */ = {isa = PBXBuildFile; fileRef = 0491957E1D48993D0094B22B /* byaudio_speex.c */; };
+		0491961F1D48993D0094B22B /* byaudio_wave_header.c in Sources */ = {isa = PBXBuildFile; fileRef = 049195821D48993D0094B22B /* byaudio_wave_header.c */; };
+		049196201D48993D0094B22B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049195A61D48993D0094B22B /* main.cpp */; };
+		0491965B1D489E400094B22B /* ios_audio_record.mm in Sources */ = {isa = PBXBuildFile; fileRef = 049196541D489E400094B22B /* ios_audio_record.mm */; };
+		0491965C1D489E400094B22B /* ios_audio_track.mm in Sources */ = {isa = PBXBuildFile; fileRef = 049196561D489E400094B22B /* ios_audio_track.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		04BE5E711D6A932200701C1C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04BE5E6C1D6A932200701C1C /* speex.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 04BE5E6F1D6A932200701C1C;
+			remoteInfo = speex;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		049195641D4897290094B22B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		049195661D4897290094B22B /* libkefu_yuyin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkefu_yuyin.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0491957C1D48993D0094B22B /* audio_record.h */ = {isa = PBXFileReference; fileEncoding = 2147483673; lastKnownFileType = sourcecode.c.h; path = audio_record.h; sourceTree = "<group>"; };
+		0491957D1D48993D0094B22B /* audio_track.h */ = {isa = PBXFileReference; fileEncoding = 2147483673; lastKnownFileType = sourcecode.c.h; path = audio_track.h; sourceTree = "<group>"; };
+		0491957E1D48993D0094B22B /* byaudio_speex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = byaudio_speex.c; sourceTree = "<group>"; };
+		0491957F1D48993D0094B22B /* byaudio_speex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = byaudio_speex.h; sourceTree = "<group>"; };
+		049195801D48993D0094B22B /* byaudio_speex_api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = byaudio_speex_api.h; sourceTree = "<group>"; };
+		049195811D48993D0094B22B /* byaudio_timer.h */ = {isa = PBXFileReference; fileEncoding = 2147483673; lastKnownFileType = sourcecode.c.h; path = byaudio_timer.h; sourceTree = "<group>"; };
+		049195821D48993D0094B22B /* byaudio_wave_header.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = byaudio_wave_header.c; sourceTree = "<group>"; };
+		049195831D48993D0094B22B /* byaudio_wave_header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = byaudio_wave_header.h; sourceTree = "<group>"; };
+		049195841D48993D0094B22B /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		049195851D48993D0094B22B /* file_utils.h */ = {isa = PBXFileReference; fileEncoding = 2147483673; lastKnownFileType = sourcecode.c.h; path = file_utils.h; sourceTree = "<group>"; };
+		049195861D48993D0094B22B /* global.h */ = {isa = PBXFileReference; fileEncoding = 2147483673; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		049195891D48993D0094B22B /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		0491958A1D48993D0094B22B /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lapi.h; sourceTree = "<group>"; };
+		0491958B1D48993D0094B22B /* lauxlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lauxlib.h; sourceTree = "<group>"; };
+		0491958C1D48993D0094B22B /* lcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcode.h; sourceTree = "<group>"; };
+		0491958D1D48993D0094B22B /* ldebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ldebug.h; sourceTree = "<group>"; };
+		0491958E1D48993D0094B22B /* ldo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ldo.h; sourceTree = "<group>"; };
+		0491958F1D48993D0094B22B /* lfunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lfunc.h; sourceTree = "<group>"; };
+		049195901D48993D0094B22B /* lgc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lgc.h; sourceTree = "<group>"; };
+		049195911D48993D0094B22B /* llex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = llex.h; sourceTree = "<group>"; };
+		049195921D48993D0094B22B /* llimits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = llimits.h; sourceTree = "<group>"; };
+		049195931D48993D0094B22B /* lmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lmem.h; sourceTree = "<group>"; };
+		049195941D48993D0094B22B /* lobject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lobject.h; sourceTree = "<group>"; };
+		049195951D48993D0094B22B /* lopcodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lopcodes.h; sourceTree = "<group>"; };
+		049195961D48993D0094B22B /* lparser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lparser.h; sourceTree = "<group>"; };
+		049195971D48993D0094B22B /* lstate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lstate.h; sourceTree = "<group>"; };
+		049195981D48993D0094B22B /* lstring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lstring.h; sourceTree = "<group>"; };
+		049195991D48993D0094B22B /* ltable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ltable.h; sourceTree = "<group>"; };
+		0491959A1D48993D0094B22B /* ltm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ltm.h; sourceTree = "<group>"; };
+		0491959B1D48993D0094B22B /* lua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua.h; sourceTree = "<group>"; };
+		0491959C1D48993D0094B22B /* luaconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luaconf.h; sourceTree = "<group>"; };
+		0491959D1D48993D0094B22B /* lualib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lualib.h; sourceTree = "<group>"; };
+		0491959E1D48993D0094B22B /* lundump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lundump.h; sourceTree = "<group>"; };
+		0491959F1D48993D0094B22B /* lvm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lvm.h; sourceTree = "<group>"; };
+		049195A01D48993D0094B22B /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lzio.h; sourceTree = "<group>"; };
+		049195A11D48993D0094B22B /* tolua++.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "tolua++.h"; sourceTree = "<group>"; };
+		049195A21D48993D0094B22B /* tolua_event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tolua_event.h; sourceTree = "<group>"; };
+		049195A31D48993D0094B22B /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		049195A41D48993D0094B22B /* _lua_bind.h */ = {isa = PBXFileReference; fileEncoding = 2147483673; lastKnownFileType = sourcecode.c.h; path = _lua_bind.h; sourceTree = "<group>"; };
+		049195A61D48993D0094B22B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 2147483673; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		049195A71D48993D0094B22B /* _MessageContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _MessageContainer.h; sourceTree = "<group>"; };
+		049195A91D48993D0094B22B /* android_audio_record.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = android_audio_record.h; sourceTree = "<group>"; };
+		049195AA1D48993D0094B22B /* android_audio_track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = android_audio_track.h; sourceTree = "<group>"; };
+		049195AD1D48993D0094B22B /* Plugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plugin.h; sourceTree = "<group>"; };
+		049196101D48993D0094B22B /* speex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex.h; sourceTree = "<group>"; };
+		049196111D48993D0094B22B /* speex_bits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_bits.h; sourceTree = "<group>"; };
+		049196121D48993D0094B22B /* speex_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_buffer.h; sourceTree = "<group>"; };
+		049196131D48993D0094B22B /* speex_callbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_callbacks.h; sourceTree = "<group>"; };
+		049196141D48993D0094B22B /* speex_config_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_config_types.h; sourceTree = "<group>"; };
+		049196151D48993D0094B22B /* speex_echo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_echo.h; sourceTree = "<group>"; };
+		049196161D48993D0094B22B /* speex_header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_header.h; sourceTree = "<group>"; };
+		049196171D48993D0094B22B /* speex_jitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_jitter.h; sourceTree = "<group>"; };
+		049196181D48993D0094B22B /* speex_preprocess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_preprocess.h; sourceTree = "<group>"; };
+		049196191D48993D0094B22B /* speex_resampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_resampler.h; sourceTree = "<group>"; };
+		0491961A1D48993D0094B22B /* speex_stereo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_stereo.h; sourceTree = "<group>"; };
+		0491961B1D48993D0094B22B /* speex_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_types.h; sourceTree = "<group>"; };
+		0491961C1D48993D0094B22B /* thread_record.h */ = {isa = PBXFileReference; fileEncoding = 2147483673; lastKnownFileType = sourcecode.c.h; path = thread_record.h; sourceTree = "<group>"; };
+		0491961D1D48993D0094B22B /* thread_track.h */ = {isa = PBXFileReference; fileEncoding = 2147483673; lastKnownFileType = sourcecode.c.h; path = thread_track.h; sourceTree = "<group>"; };
+		049196531D489E400094B22B /* ios_audio_record.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_audio_record.h; sourceTree = "<group>"; };
+		049196541D489E400094B22B /* ios_audio_record.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ios_audio_record.mm; sourceTree = "<group>"; };
+		049196551D489E400094B22B /* ios_audio_track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_audio_track.h; sourceTree = "<group>"; };
+		049196561D489E400094B22B /* ios_audio_track.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ios_audio_track.mm; sourceTree = "<group>"; };
+		04BE5E6C1D6A932200701C1C /* speex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = speex.xcodeproj; path = libSpeex/speex.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		049195631D4897290094B22B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0491955D1D4897290094B22B = {
+			isa = PBXGroup;
+			children = (
+				04BE5E6C1D6A932200701C1C /* speex.xcodeproj */,
+				0491957B1D48993D0094B22B /* src */,
+				049195671D4897290094B22B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		049195671D4897290094B22B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				049195661D4897290094B22B /* libkefu_yuyin.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0491957B1D48993D0094B22B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				0491957C1D48993D0094B22B /* audio_record.h */,
+				0491957D1D48993D0094B22B /* audio_track.h */,
+				0491957E1D48993D0094B22B /* byaudio_speex.c */,
+				0491957F1D48993D0094B22B /* byaudio_speex.h */,
+				049195801D48993D0094B22B /* byaudio_speex_api.h */,
+				049195811D48993D0094B22B /* byaudio_timer.h */,
+				049195821D48993D0094B22B /* byaudio_wave_header.c */,
+				049195831D48993D0094B22B /* byaudio_wave_header.h */,
+				049195841D48993D0094B22B /* config.h */,
+				049195851D48993D0094B22B /* file_utils.h */,
+				049195861D48993D0094B22B /* global.h */,
+				049195871D48993D0094B22B /* lua */,
+				049195A41D48993D0094B22B /* _lua_bind.h */,
+				049195A61D48993D0094B22B /* main.cpp */,
+				049195A71D48993D0094B22B /* _MessageContainer.h */,
+				049195A81D48993D0094B22B /* platform_android */,
+				049195AB1D48993D0094B22B /* platform_ios */,
+				049195AC1D48993D0094B22B /* platform_win */,
+				049195AD1D48993D0094B22B /* Plugin.h */,
+				049195AE1D48993D0094B22B /* speex */,
+				0491961C1D48993D0094B22B /* thread_record.h */,
+				0491961D1D48993D0094B22B /* thread_track.h */,
+			);
+			name = src;
+			path = ../src;
+			sourceTree = "<group>";
+		};
+		049195871D48993D0094B22B /* lua */ = {
+			isa = PBXGroup;
+			children = (
+				049195881D48993D0094B22B /* include */,
+			);
+			path = lua;
+			sourceTree = "<group>";
+		};
+		049195881D48993D0094B22B /* include */ = {
+			isa = PBXGroup;
+			children = (
+				049195891D48993D0094B22B /* ioapi.h */,
+				0491958A1D48993D0094B22B /* lapi.h */,
+				0491958B1D48993D0094B22B /* lauxlib.h */,
+				0491958C1D48993D0094B22B /* lcode.h */,
+				0491958D1D48993D0094B22B /* ldebug.h */,
+				0491958E1D48993D0094B22B /* ldo.h */,
+				0491958F1D48993D0094B22B /* lfunc.h */,
+				049195901D48993D0094B22B /* lgc.h */,
+				049195911D48993D0094B22B /* llex.h */,
+				049195921D48993D0094B22B /* llimits.h */,
+				049195931D48993D0094B22B /* lmem.h */,
+				049195941D48993D0094B22B /* lobject.h */,
+				049195951D48993D0094B22B /* lopcodes.h */,
+				049195961D48993D0094B22B /* lparser.h */,
+				049195971D48993D0094B22B /* lstate.h */,
+				049195981D48993D0094B22B /* lstring.h */,
+				049195991D48993D0094B22B /* ltable.h */,
+				0491959A1D48993D0094B22B /* ltm.h */,
+				0491959B1D48993D0094B22B /* lua.h */,
+				0491959C1D48993D0094B22B /* luaconf.h */,
+				0491959D1D48993D0094B22B /* lualib.h */,
+				0491959E1D48993D0094B22B /* lundump.h */,
+				0491959F1D48993D0094B22B /* lvm.h */,
+				049195A01D48993D0094B22B /* lzio.h */,
+				049195A11D48993D0094B22B /* tolua++.h */,
+				049195A21D48993D0094B22B /* tolua_event.h */,
+				049195A31D48993D0094B22B /* unzip.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		049195A81D48993D0094B22B /* platform_android */ = {
+			isa = PBXGroup;
+			children = (
+				049195A91D48993D0094B22B /* android_audio_record.h */,
+				049195AA1D48993D0094B22B /* android_audio_track.h */,
+			);
+			path = platform_android;
+			sourceTree = "<group>";
+		};
+		049195AB1D48993D0094B22B /* platform_ios */ = {
+			isa = PBXGroup;
+			children = (
+				049196531D489E400094B22B /* ios_audio_record.h */,
+				049196541D489E400094B22B /* ios_audio_record.mm */,
+				049196551D489E400094B22B /* ios_audio_track.h */,
+				049196561D489E400094B22B /* ios_audio_track.mm */,
+			);
+			path = platform_ios;
+			sourceTree = "<group>";
+		};
+		049195AC1D48993D0094B22B /* platform_win */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = platform_win;
+			sourceTree = "<group>";
+		};
+		049195AE1D48993D0094B22B /* speex */ = {
+			isa = PBXGroup;
+			children = (
+				0491960F1D48993D0094B22B /* speex */,
+			);
+			path = speex;
+			sourceTree = "<group>";
+		};
+		0491960F1D48993D0094B22B /* speex */ = {
+			isa = PBXGroup;
+			children = (
+				049196101D48993D0094B22B /* speex.h */,
+				049196111D48993D0094B22B /* speex_bits.h */,
+				049196121D48993D0094B22B /* speex_buffer.h */,
+				049196131D48993D0094B22B /* speex_callbacks.h */,
+				049196141D48993D0094B22B /* speex_config_types.h */,
+				049196151D48993D0094B22B /* speex_echo.h */,
+				049196161D48993D0094B22B /* speex_header.h */,
+				049196171D48993D0094B22B /* speex_jitter.h */,
+				049196181D48993D0094B22B /* speex_preprocess.h */,
+				049196191D48993D0094B22B /* speex_resampler.h */,
+				0491961A1D48993D0094B22B /* speex_stereo.h */,
+				0491961B1D48993D0094B22B /* speex_types.h */,
+			);
+			path = speex;
+			sourceTree = "<group>";
+		};
+		04BE5E6D1D6A932200701C1C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				04BE5E721D6A932200701C1C /* libspeex.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		049195651D4897290094B22B /* kefu_yuyin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0491956F1D4897290094B22B /* Build configuration list for PBXNativeTarget "kefu_yuyin" */;
+			buildPhases = (
+				049195621D4897290094B22B /* Sources */,
+				049195631D4897290094B22B /* Frameworks */,
+				049195641D4897290094B22B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = kefu_yuyin;
+			productName = kefu_yuyin;
+			productReference = 049195661D4897290094B22B /* libkefu_yuyin.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0491955E1D4897290094B22B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = wangshuai;
+				TargetAttributes = {
+					049195651D4897290094B22B = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = CDYX55Y7N4;
+					};
+				};
+			};
+			buildConfigurationList = 049195611D4897290094B22B /* Build configuration list for PBXProject "kefu_yuyin" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0491955D1D4897290094B22B;
+			productRefGroup = 049195671D4897290094B22B /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 04BE5E6D1D6A932200701C1C /* Products */;
+					ProjectRef = 04BE5E6C1D6A932200701C1C /* speex.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				049195651D4897290094B22B /* kefu_yuyin */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		04BE5E721D6A932200701C1C /* libspeex.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libspeex.a;
+			remoteRef = 04BE5E711D6A932200701C1C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		049195621D4897290094B22B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0491961E1D48993D0094B22B /* byaudio_speex.c in Sources */,
+				0491965B1D489E400094B22B /* ios_audio_record.mm in Sources */,
+				0491961F1D48993D0094B22B /* byaudio_wave_header.c in Sources */,
+				0491965C1D489E400094B22B /* ios_audio_track.mm in Sources */,
+				049196201D48993D0094B22B /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0491956D1D4897290094B22B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		0491956E1D4897290094B22B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		049195701D4897290094B22B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"TARGET_PLATFORM=PLATFORM_IOS",
+					"EXPORT=\"\"",
+					USE_KISS_FFT,
+					FIXED_POINT,
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../src/speex",
+					"$(PROJECT_DIR)/../src",
+					"$(PROJECT_DIR)/../src/lua/include",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		049195711D4897290094B22B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"TARGET_PLATFORM=PLATFORM_IOS",
+					USE_KISS_FFT,
+					"EXPORT=\"\"",
+					FIXED_POINT,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../src/speex",
+					"$(PROJECT_DIR)/../src",
+					"$(PROJECT_DIR)/../src/lua/include",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		049195611D4897290094B22B /* Build configuration list for PBXProject "kefu_yuyin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0491956D1D4897290094B22B /* Debug */,
+				0491956E1D4897290094B22B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0491956F1D4897290094B22B /* Build configuration list for PBXNativeTarget "kefu_yuyin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				049195701D4897290094B22B /* Debug */,
+				049195711D4897290094B22B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0491955E1D4897290094B22B /* Project object */;
+}

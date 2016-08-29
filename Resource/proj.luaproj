@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>E439935D-B2A2-46AE-856D-2AA408428F33</ProjectGuid>
+    <!--$guid1$-->
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>
+    </StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="scripts\" />
+    <Folder Include="scripts\byui\" />
+    <Folder Include="scripts\conversation\" />
+    <Folder Include="scripts\EngineCore\" />
+    <Folder Include="scripts\example\" />
+    <Folder Include="scripts\libs\" />
+    <Folder Include="scripts\network\" />
+    <Folder Include="scripts\network\mqttModule\" />
+    <Folder Include="scripts\ui_view\" />
+    <Folder Include="scripts\ui_xml\" />
+    <Folder Include="scripts\view\" />
+    <Folder Include="scripts\view\currency\" />
+    <Folder Include="scripts\view\face\" />
+    <Folder Include="scripts\view\voice\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="scripts\byui\utils.lua" />
+    <Compile Include="scripts\conversation\chatMessage.lua" />
+    <Compile Include="scripts\conversation\record.lua" />
+    <Compile Include="scripts\conversation\sessionControl.lua" />
+    <Compile Include="scripts\conversation\sessionData.lua" />
+    <Compile Include="scripts\effects.lua" />
+    <Compile Include="scripts\engine.lua" />
+    <Compile Include="scripts\EngineCore\animation.lua" />
+    <Compile Include="scripts\EngineCore\byui.lua" />
+    <Compile Include="scripts\EngineCore\config.lua" />
+    <Compile Include="scripts\EngineCore\core.lua" />
+    <Compile Include="scripts\EngineCore\editorRT.lua" />
+    <Compile Include="scripts\EngineCore\gamebase.lua" />
+    <Compile Include="scripts\EngineCore\libEffect.lua" />
+    <Compile Include="scripts\EngineCore\libutils.lua" />
+    <Compile Include="scripts\EngineCore\network.lua" />
+    <Compile Include="scripts\EngineCore\ui.lua" />
+    <Compile Include="scripts\example\addMemberView.lua" />
+    <Compile Include="scripts\example\chatDetailView.lua" />
+    <Compile Include="scripts\example\chatPreviewPage.lua" />
+    <Compile Include="scripts\example\contactPage.lua" />
+    <Compile Include="scripts\example\discoveryPage.lua" />
+    <Compile Include="scripts\example\groupChatView.lua" />
+    <Compile Include="scripts\example\loadView.lua" />
+    <Compile Include="scripts\example\mainView.lua" />
+    <Compile Include="scripts\example\markView.lua" />
+    <Compile Include="scripts\example\searchView.lua" />
+    <Compile Include="scripts\example\socialPartyView.lua" />
+    <Compile Include="scripts\example\userInfoView.lua" />
+    <Compile Include="scripts\kefuCommon.lua" />
+    <Compile Include="scripts\libs\bit.lua" />
+    <Compile Include="scripts\libs\json.lua" />
+    <Compile Include="scripts\libs\json_wrap.lua" />
+    <Compile Include="scripts\libs\xmlSimple.lua" />
+    <Compile Include="scripts\main.lua" />
+    <Compile Include="scripts\nanoui.lua" />
+    <Compile Include="scripts\Nanovg.lua" />
+    <Compile Include="scripts\network\clientInfo.lua" />
+    <Compile Include="scripts\network\mqttModule\boyaaConversation.lua" />
+    <Compile Include="scripts\network\mqttModule\clientConfig.lua" />
+    <Compile Include="scripts\network\mqttModule\dataUtils.lua" />
+    <Compile Include="scripts\network\mqttModule\mqttConstants.lua" />
+    <Compile Include="scripts\network\mqttModule\mqttMaps.lua" />
+    <Compile Include="scripts\network\netWorkControl.lua" />
+    <Compile Include="scripts\shadow.lua" />
+    <Compile Include="scripts\system.lua" />
+    <Compile Include="scripts\systemUtils.lua" />
+    <Compile Include="scripts\tiling.lua" />
+    <Compile Include="scripts\utils.lua" />
+    <Compile Include="scripts\viewManager.lua" />
+    <Compile Include="scripts\view\baseView.lua" />
+    <Compile Include="scripts\view\bottomComponent.lua" />
+    <Compile Include="scripts\view\currency\currency.lua" />
+    <Compile Include="scripts\view\evaluatePage.lua" />
+    <Compile Include="scripts\view\face\bottomPage.lua" />
+    <Compile Include="scripts\view\face\facePage.lua" />
+    <Compile Include="scripts\view\face\faceView.lua" />
+    <Compile Include="scripts\view\hackAppealView.lua" />
+    <Compile Include="scripts\view\leaveMessageView.lua" />
+    <Compile Include="scripts\view\normalChatView.lua" />
+    <Compile Include="scripts\view\pickerView.lua" />
+    <Compile Include="scripts\view\playerReport.lua" />
+    <Compile Include="scripts\view\selComponent.lua" />
+    <Compile Include="scripts\view\startView.lua" />
+    <Compile Include="scripts\view\vipChatView.lua" />
+    <Compile Include="scripts\view\voice\voiceCancelPage.lua" />
+    <Compile Include="scripts\view\voice\voiceLeavePage.lua" />
+    <Compile Include="scripts\view\voice\voiceUpPage.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="scripts\libs\XML_README.md" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
+</Project>
