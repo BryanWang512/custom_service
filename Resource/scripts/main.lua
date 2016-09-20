@@ -15,7 +15,7 @@ local function main()
     print("==========begin==============")
     ViewManager.showStartView();
 
-    local layoutScale = System.getLayoutScale()
+    local layoutScale = System.getOldLayoutScale()
     if layoutScale < 1 then
         Label.set_default_line_scale(1/layoutScale)
     end
@@ -25,7 +25,7 @@ function event_resize(width, height)
     System.updateLayout()
     SCREENWIDTH = System.getScreenScaleWidth()
     SCREENHEIGHT = System.getScreenScaleHeight()
-    local layoutScale = System.getLayoutScale()
+    local layoutScale = System.getOldLayoutScale()
     --保证下划线高度>=1
     if layoutScale < 1 then
         Label.set_default_line_scale(1/layoutScale)

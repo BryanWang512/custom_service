@@ -60,7 +60,7 @@ bottomControl = class('bottomControl', nil, {
 		self.keyboard_height = 0
 
 		self.m_realLineH = 1
-		local layoutScale = System.getLayoutScale()
+		local layoutScale = System.getOldLayoutScale()
     	if layoutScale < 1 then      
         	self.m_realLineH = 1/layoutScale
     	end

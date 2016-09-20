@@ -4941,7 +4941,11 @@ end
 --
 -- @return #number 适配缩放比例。
 System.getLayoutScale = function()
-    return s_layoutScale;
+    return 1;
+end
+
+System.getOldLayoutScale = function ()
+    return s_layoutScale
 end
 
 ---
