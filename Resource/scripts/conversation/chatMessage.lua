@@ -1,10 +1,10 @@
 local UI = require('byui/basic')
 local AL = require('byui/autolayout')
 local Layout = require('byui/layout')
-local Am = require('animation')
+local Am = require(string.format('%sanimation', KefuRootPath))
 local class, mixin, super = unpack(require('byui/class'))
-local kefuCommon = require("kefuCommon")
-local UserData = require("conversation/sessionData")
+local kefuCommon = require(string.format('%skefuCommon', KefuRootPath))
+local UserData = require(string.format('%sconversation/sessionData', KefuRootPath))
 
 local chatMessage
 chatMessage = class('chatMessage', nil, {
@@ -24,6 +24,11 @@ chatMessage = class('chatMessage', nil, {
 	end,
 
 	saveToDict = function (self, isSave)
+		if self.m_jsonStr then
+			UserData.insertHistoryMsg(self.m_jsonStr, isSave)
+			return
+		end
+		
 		--如果是机器人消息或者不是vip聊天，则不保存
 		local data = UserData.getStatusData() or {}
 		-- if not data.isVip then return end
@@ -36,9 +41,9 @@ chatMessage = class('chatMessage', nil, {
 		tb.types = self.types
 
 
-		local jsonStr = json.encode(tb)
+		self.m_jsonStr = json.encode(tb)
 
-		UserData.insertHistoryMsg(jsonStr, isSave)
+		UserData.insertHistoryMsg(self.m_jsonStr, isSave)
 
 	end,
 

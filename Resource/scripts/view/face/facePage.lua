@@ -1,9 +1,9 @@
-local baseView = require("view.baseView");
 local UI = require('byui.basic');
 local AutoLayout = require('byui/autolayout');
 local Layout = require('byui/layout');
-
 local class, mixin, super = unpack(require('byui/class'))
+
+
 local facePage = class('facePage', nil, {
 	__init__ = function (self,obj,callBack)
 		self.m_obj = obj;
@@ -112,7 +112,7 @@ local facePage = class('facePage', nil, {
 	           
 	            image =
 	            {
-	                normal = TextureUnit(TextureCache.instance():get("face/appkefu_del_btn_nor.png")),
+	                normal = TextureUnit(TextureCache.instance():get(KefuResMap.face_del_btn_nor)),
 	            },
 	            border = 0,
 	        }

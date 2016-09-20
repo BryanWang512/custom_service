@@ -1,12 +1,9 @@
-local baseView = require("view.baseView");
 local UI = require('byui/basic');
 local AutoLayout = require('byui/autolayout');
 local Layout = require('byui/layout');
-require("libs/json_wrap");
-require("util/jsonToTable");
-require("common/nativeEvent");
 local class, mixin, super = unpack(require('byui/class'))
-local UserData = require("conversation/sessionData")
+require(string.format('%scommon/nativeEvent', KefuRootPath))
+local UserData = require(string.format('%sconversation/sessionData', KefuRootPath))
 
 
 local currency
@@ -21,7 +18,6 @@ currency = class('currency', nil, {
 
 	createImg = function(self)
 		self.m_img = Widget();
-		self.m_str = "fdsafdsafd"
 		local wh = 105
 		self.m_img:add_rules({
 			AutoLayout.width:eq(wh),
@@ -36,8 +32,8 @@ currency = class('currency', nil, {
 			border = 0,
 			image = 
 			{
-				normal = TextureUnit(TextureCache.instance():get("currency/boyaa_kefu_pick_img_normal.png")),
-				down   = TextureUnit(TextureCache.instance():get("currency/boyaa_kefu_pick_img_down.png")),
+				normal = TextureUnit(TextureCache.instance():get(KefuResMap.currencyPickNormal)),
+				down   = TextureUnit(TextureCache.instance():get(KefuResMap.currencyPickDown)),
 			},
 		}
 		self.m_img_btn:add_rules({
@@ -57,7 +53,14 @@ currency = class('currency', nil, {
 		end
 
 		self.m_img_tx = Label();
+		self.m_img_tx.layout_size = Point(wh, 0)
 		self.m_img_tx.align_v = (ALIGN.CENTER - ALIGN.CENTER % 4)/4
+		self.m_img_tx.align_h = ALIGN.CENTER%4
+
+		-- self.m_img_tx:add_rules{
+		-- 	AutoLayout.top:eq(32+wh),
+		-- 	AutoLayout.left:eq(15),
+		-- }
 
 		local data = {}
 	    table.insert(data, {
@@ -70,9 +73,9 @@ currency = class('currency', nil, {
 	    })
 	    self.m_img_tx:set_data(data)
         
-    	self.m_img_tx.layout_size = Point(wh, 0)
+    	
 
-    	self.m_img_tx.x = 1
+    	self.m_img_tx.x = 0
     	self.m_img_tx.y = 150
 
 
@@ -114,8 +117,8 @@ currency = class('currency', nil, {
 			border = 0,
 			image = 
 			{
-				normal = TextureUnit(TextureCache.instance():get("currency/boyaa_kefu_panel_take_picture_normal.png")),
-				down   = TextureUnit(TextureCache.instance():get("currency/boyaa_kefu_panel_take_picture_down.png")),
+				normal = TextureUnit(TextureCache.instance():get(KefuResMap.currencyPictureNormal)),
+				down   = TextureUnit(TextureCache.instance():get(KefuResMap.currencyPictureDown)),
 			},
 		}
 

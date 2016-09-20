@@ -1,9 +1,9 @@
 local UI = require('byui/basic')
 local AL = require('byui/autolayout')
 local Layout = require('byui/layout')
-local Am = require('animation')
 local class, mixin, super = unpack(require('byui/class'))
-local UserData = require("conversation/sessionData")
+local Am = require(string.format('%sanimation', KefuRootPath))
+local UserData = require(string.format('%sconversation/sessionData', KefuRootPath))
 
 
 local MyCheckBox = class('MyCheckBox', UI.ToggleButton, {
@@ -276,7 +276,7 @@ evalutePage = class('evalutePage', nil, {
     		tb.experience_rating = self.m_experienceGrade
 
     		local str = json.encode(tb)
-    		netWorkControl.postString(HTTP_SUBMIT_RATING_URI, str, function (rsp)
+    		NetWorkControl.postString(HTTP_SUBMIT_RATING_URI, str, function (rsp)
     			local content = rsp.content
     			local contentTb = json.decode(content)
     			print_string("postString: "..content)

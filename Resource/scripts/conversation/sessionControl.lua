@@ -1,5 +1,6 @@
-local UserData = require("conversation/sessionData")
+local UserData = require(string.format('%sconversation/sessionData', KefuRootPath))
 local HTTP2 = require("network.http2")
+local kefuCommon = require(string.format('%skefuCommon', KefuRootPath))
 
 local timeOutTask = nil
 local endSessionTask = nil
@@ -314,11 +315,11 @@ sessionControl.logout = function ()
     Record.getInstance():stopTrack()
     Record.releaseInstance()
     UserData.resaveHistoryData()
-    local kefuCommon = require("kefuCommon")
+    
     kefuCommon.deleteSendingItems()
 
     ViewManager.showStartView(View_Anim_Type.LTOR)
-
+    --ViewManager.deleteAllView()
     NetWorkControl.cancelPollLoginTask()
     --只有已经登录才需要发logout消息
 

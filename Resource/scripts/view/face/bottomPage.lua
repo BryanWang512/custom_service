@@ -1,9 +1,8 @@
-local baseView = require("view.baseView");
 local UI = require('byui/basic');
 local AutoLayout = require('byui/autolayout');
 local Layout = require('byui/layout');
-
 local class, mixin, super = unpack(require('byui/class'))
+
 local bottomPage = class('bottomPage', nil, {
 	__init__ = function (self,root,callBack)
 		self.m_root = root;
@@ -18,7 +17,7 @@ local bottomPage = class('bottomPage', nil, {
 		self.m_ArrImage = {};
 		for i=1,5 do
 			local sprite = Sprite();
-			sprite.unit = TextureUnit(TextureCache.instance():get("face/appkefu_page_normal.png"));
+			sprite.unit = TextureUnit(TextureCache.instance():get(KefuResMap.face_page_normal));
 			
 	        sprite:add_rules({
 	        	AutoLayout.width:eq(wH),
@@ -29,14 +28,14 @@ local bottomPage = class('bottomPage', nil, {
 	        self.m_ArrImage[i] = sprite;
 	        self.m_root:add(sprite);
 		end
-		self.m_ArrImage[1].unit = TextureUnit(TextureCache.instance():get("face/appkefu_page_active.png"));
+		self.m_ArrImage[1].unit = TextureUnit(TextureCache.instance():get(KefuResMap.face_page_active));
 	end,
 
 	changeIcon = function(self,index,prevPage)
 		index = index or 1;
 		prevPage = prevPage or 1;
-		self.m_ArrImage[prevPage].unit  = TextureUnit(TextureCache.instance():get("face/appkefu_page_normal.png"));
-		self.m_ArrImage[index].unit  = TextureUnit(TextureCache.instance():get("face/appkefu_page_active.png"));
+		self.m_ArrImage[prevPage].unit  = TextureUnit(TextureCache.instance():get(KefuResMap.face_page_normal));
+		self.m_ArrImage[index].unit  = TextureUnit(TextureCache.instance():get(KefuResMap.face_page_active));
 	end,
 
 })

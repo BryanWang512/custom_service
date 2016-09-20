@@ -54,11 +54,10 @@ end
 dataInstance.resaveHistoryData = function ()
 	if historyDict and historyData and #historyData > 200 then
 		historyDict:delete()
-
+		historyNum = 0
 		local num = 100
 		for i=1, num do
-			local key = string.format("k_%d", i)
-			historyDict:setString(key, msg)
+			historyData[i]:saveToDict()
 		end
 		historyDict:setInt("msgNum", num)
 		historyDict:save()

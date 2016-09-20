@@ -1,4 +1,4 @@
-local Am = require('animation')
+local Am = require(string.format('%sanimation', KefuRootPath))
 local UI = require('byui/basic')
 local AL = require('byui/autolayout')
 local class, mixin, super = unpack(require('byui/class'))

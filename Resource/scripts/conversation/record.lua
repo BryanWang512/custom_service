@@ -24,14 +24,14 @@ Record.PLAYSTATE ={
 Record.getInstance = function ()
     if s_instance  == nil then
         s_instance = new(Record);
-        EventDispatcher.getInstance():register("audio_event_callback", s_instance, s_instance.callback)
+        EventDispatcher.getInstance():register(KefuEvent.voice, s_instance, s_instance.callback)
     end
     return s_instance;
 end
 
 Record.releaseInstance = function ()
     if s_instance then
-        EventDispatcher.getInstance():unregister("audio_event_callback", s_instance, s_instance.callback)
+        EventDispatcher.getInstance():unregister(KefuEvent.voice, s_instance, s_instance.callback)
         delete(s_instance);
         s_instance = nil
     end
@@ -107,7 +107,7 @@ end
 
 --插件事件回调,duration是时长
 function audio_event_callback(event, duration)
-    EventDispatcher.getInstance():dispatch("audio_event_callback", event, duration)
+    EventDispatcher.getInstance():dispatch(KefuEvent.voice, event, duration)
 end
 
 return Record

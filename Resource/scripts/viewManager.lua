@@ -1,14 +1,14 @@
 --------------------界面管理--------------------
 
-local startView = require("view.startView")
-local hackAppealView = require("view.hackAppealView")
-local vipChatView = require("view.vipChatView")
-local leaveMessageView = require("view.leaveMessageView")
-local playerReportView  = require("view.playerReport")
-local normalChatView = require("view.normalChatView")
+local startView = require(string.format('%sview/startView', KefuRootPath))
+local hackAppealView = require(string.format('%sview/hackAppealView', KefuRootPath))
+local vipChatView = require(string.format('%sview/vipChatView', KefuRootPath))
+local leaveMessageView = require(string.format('%sview/leaveMessageView', KefuRootPath))
+local playerReportView  = require(string.format('%sview/playerReportView', KefuRootPath))
+local normalChatView = require(string.format('%sview/normalChatView', KefuRootPath))
 
 
-local Am = require("animation")
+local Am = require(string.format('%sanimation', KefuRootPath))
 
 local currentView = nil
 local currentName = nil

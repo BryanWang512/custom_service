@@ -6,11 +6,11 @@
 
 --endregion
 
-local UI = require 'byui.basic'
-local AL = require 'byui.autolayout'
-local layout = require 'byui.layout' 
+local UI = require("byui/basic")
+local AL = require("byui/autolayout")
+local layout = require("byui/layout") 
 local class, mixin, super = unpack(require('byui/class'))
-local anim= require 'animation'
+local anim = require(string.format('%sanimation', KefuRootPath))
 
 local M = {}
 M.PickerView = class('PickerView',UI.ScrollView,{
@@ -56,16 +56,17 @@ M.PickerView = class('PickerView',UI.ScrollView,{
         end
     end,
     _init_view = function ( self )
-        if self.data then
+        if self.data and next(self.data) then
             for i=1,#self.data do
                 local cell = self:get_view(i)
                 assert(cell,'item of '..i.. 'does not exist')
                 self.container:add(cell)
             end
             Clock.instance():schedule_once(function ( ... )
-        	-- body
-	        		self:select_item(1,0)
-	        end,1)
+        		self:select_item(1,0)
+                self.m_initFinish = true
+                self.enabled = true
+	        end)
         end
         
     end,
@@ -105,7 +106,6 @@ M.PickerView = class('PickerView',UI.ScrollView,{
     data = {function (self)
         return self._data
     end,function(self,value)
-        assert(value ~= nil,'the data is nil.')
         assert(type(value) == 'table','the data type must be a table.')
         self._data = value
         self:_on_changed_data()
@@ -206,7 +206,7 @@ M.PickerView = class('PickerView',UI.ScrollView,{
         local target = (self.height  + self.row_height) / 2  - self.content.y
     	local index = math.floor(target / self.row_height + 0.5) 
         
-        if self.on_change_select then
+        if self.on_change_select and self.m_initFinish then
             self.on_change_select(index)
         end    
     end,

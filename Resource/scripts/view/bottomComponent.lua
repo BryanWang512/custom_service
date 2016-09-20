@@ -1,14 +1,14 @@
 local UI = require('byui/basic')
 local AL = require('byui/autolayout')
-local Am = require('animation')
 local class, mixin, super = unpack(require('byui/class'))
-local FaceView  = require("view/face/faceView")
-local AddView = require('view/currency/currency')
-local VoiceUpPage = require('view/voice/voiceUpPage')
-local VoiceCancelPage = require('view/voice/voiceCancelPage')
-local VoiceLeavePage = require('view/voice/voiceLeavePage')
-local kefuCommon = require('kefuCommon')
-local UserData = require("conversation/sessionData")
+local Am = require(string.format('%sanimation', KefuRootPath))
+local FaceView  = require(string.format('%sview/face/faceView', KefuRootPath))
+local AddView = require(string.format('%sview/currency/currency', KefuRootPath))
+local VoiceUpPage = require(string.format('%sview/voice/voiceUpPage', KefuRootPath))
+local VoiceCancelPage = require(string.format('%sview/voice/voiceCancelPage', KefuRootPath))
+local VoiceLeavePage = require(string.format('%sview/voice/voiceLeavePage', KefuRootPath))
+local kefuCommon = require(string.format('%skefuCommon', KefuRootPath))
+local UserData = require(string.format('%sconversation/sessionData', KefuRootPath))
 
 local LongButton
 LongButton = class('LongButton', UI.Button, {
@@ -59,6 +59,13 @@ bottomControl = class('bottomControl', nil, {
 		self.m_topHeight = delegate.m_topHeight
 		self.keyboard_height = 0
 
+		self.m_realLineH = 1
+		local layoutScale = System.getLayoutScale()
+    	if layoutScale < 1 then      
+        	self.m_realLineH = 1/layoutScale
+    	end
+
+
 		self:createSelectComponent()
 		self:createChatComponent()
 		--self.m_selectPage.visible = false
@@ -94,7 +101,7 @@ bottomControl = class('bottomControl', nil, {
 		local line = Widget()
 		line:add_rules{
 			AL.width:eq(AL.parent('width')),
-			AL.height:eq(1.5),
+			AL.height:eq(self.m_realLineH),
 		}
 		line.background_color = Colorf(224/255,224/255,224/255,1.0)		
 		self.m_faceWg:add(line)
@@ -131,7 +138,7 @@ bottomControl = class('bottomControl', nil, {
 		local line = Widget()
 		line:add_rules{
 			AL.width:eq(AL.parent('width')),
-			AL.height:eq(1.5),
+			AL.height:eq(self.m_realLineH),
 		}
 		line.background_color = Colorf(224/255,224/255,224/255,1.0)
 		self.m_photoWg:add(line)
@@ -161,8 +168,8 @@ bottomControl = class('bottomControl', nil, {
 		self.m_changeBg:add_rules{
 			AL.width:eq(44),
 			AL.height:eq(48),
-			AL.bottom:eq(AL.parent("height")-20),
-			-- AL.top:eq(32),
+			--AL.bottom:eq(AL.parent("height")-20),
+		    AL.top:eq(32),
 			AL.left:eq(28),
 		}
 
@@ -200,7 +207,8 @@ bottomControl = class('bottomControl', nil, {
 		self.m_yuyinBtn:add_rules{
 			AL.width:eq(56),
 			AL.height:eq(56),
-			AL.bottom:eq(AL.parent("height")-20),
+			AL.top:eq(24),
+			--AL.bottom:eq(AL.parent("height")-20),
 			AL.left:eq(120),
 		}
 
@@ -240,8 +248,8 @@ bottomControl = class('bottomControl', nil, {
 		self.m_keyBoardBtn:add_rules{
 			AL.width:eq(56),
 			AL.height:eq(56),
-			--AL.top:eq(24),
-			AL.bottom:eq(AL.parent("height")-20),
+			AL.top:eq(24),
+			--AL.bottom:eq(AL.parent("height")-20),
 			AL.left:eq(120),
 		}
 
@@ -277,8 +285,8 @@ bottomControl = class('bottomControl', nil, {
 		self.m_voiceBtn:add_rules{
 			AL.width:eq(AL.parent("width") - 100-20-56-20-40-56),
 			AL.height:eq(72),
-			--AL.top:eq(15),
-			AL.bottom:eq(AL.parent("height")-13),
+			AL.top:eq(15),
+			--AL.bottom:eq(AL.parent("height")-13),
 			AL.left:eq(120+56+20),
 		}
 
@@ -410,11 +418,23 @@ bottomControl = class('bottomControl', nil, {
           	margin = {10,15,10,5},
         }
 
-        self.m_editText:add_rules{
-            AL.width:eq(AL.parent("width") - 100-20-56-20-40-56-18-54),
-            AL.bottom:eq(AL.parent("height") - (self.m_pageSHeight-self.m_editSHeight)/2),
-			AL.left:eq(120+56+20),
-        }
+        local data = UserData.getStatusData()
+
+        if data.isVip then
+	        self.m_editText:add_rules{
+	            AL.width:eq(AL.parent("width") - 100-20-56-20-40-56-18-54),
+	        	AL.top:eq((self.m_pageSHeight-self.m_editSHeight)/2),
+				AL.left:eq(120+56+20),
+	        }
+	    else
+	    	self.m_editText:add_rules{
+            	AL.width:eq(AL.parent("width") - 100-20-40-56-18-54),
+            	AL.top:eq((self.m_pageSHeight-self.m_editSHeight)/2),
+				AL.left:eq(120),
+        	}
+        	self.m_yuyinBtn.visible = false
+	    end
+
         self.m_editText.height_hint = self.m_editSHeight
         self.m_editText.max_height = 170
         self.m_editText.hint_text = "<font size=30 color=#c3c3c3>请输入您的问题</font>"
@@ -438,8 +458,8 @@ bottomControl = class('bottomControl', nil, {
 		self.m_behavierBtn:add_rules{
 			AL.width:eq(54),
 			AL.height:eq(54),
-			--AL.top:eq(100-21-55),
-			AL.bottom:eq(AL.parent("height")-21),
+			AL.top:eq(24),
+			--AL.bottom:eq(AL.parent("height")-21),
 			AL.right:eq(AL.parent("width")-20-56-19),
 		}
 		self.m_chatPage:add(self.m_behavierBtn)
@@ -461,7 +481,8 @@ bottomControl = class('bottomControl', nil, {
 		self.m_addBtn:add_rules{
 			AL.width:eq(56),
 			AL.height:eq(56),
-			AL.bottom:eq(AL.parent('height') - 21),
+			AL.top:eq(23),
+			--AL.bottom:eq(AL.parent('height') - 21),
 			AL.right:eq(AL.parent("width")-20),
 		}
 
@@ -485,7 +506,8 @@ bottomControl = class('bottomControl', nil, {
         self.m_sendBtn:add_rules{
         	AL.width:eq(65),
 			AL.height:eq(60),
-			AL.bottom:eq(AL.parent('height') - 19),
+			AL.top:eq(21),
+			--AL.bottom:eq(AL.parent('height') - 19),
 			AL.right:eq(AL.parent("width")-17),
     	}
     	self.m_sendBtn.visible = false
@@ -515,7 +537,7 @@ bottomControl = class('bottomControl', nil, {
 		self.m_chatPage:add(self.m_topLine)
 		self.m_topLine:add_rules{
 			AL.width:eq(AL.parent('width')),
-			AL.height:eq(1.5),
+			AL.height:eq(self.m_realLineH),
 			AL.top:eq(0),
 			AL.left:eq(0),
 
@@ -524,13 +546,11 @@ bottomControl = class('bottomControl', nil, {
 		self.m_leftLine.background_color = Colorf(0.76, 0.76, 0.76, 1.0)
 		self.m_chatPage:add(self.m_leftLine)
 		self.m_leftLine:add_rules{
-			AL.width:eq(1.5),
+			AL.width:eq(self.m_realLineH),
 			AL.height:eq(AL.parent('height')),
 			AL.top:eq(0),
-			AL.left:eq(101),
+			AL.left:eq(100),
 		}
-
-		self.m_leftLine.zorder = 1
 
 		--动画效果
 		--需要考虑键盘打开的时候
@@ -586,10 +606,13 @@ bottomControl = class('bottomControl', nil, {
 				--m_scrollView变小
 				self.m_scrollView.height = self.m_root.height - self.m_topHeight - self.m_chatPage.height_hint - self.m_photoWg.height
 				
-			
+				local data = UserData.getStatusData()
 				--还需要改变其他ui状态
 				self.m_editText.visible = true
-				self.m_yuyinBtn.visible = true
+				if data.isVip then					
+					self.m_yuyinBtn.visible = true
+				end
+
 				self.m_behavierBtn.visible = true
 				self.m_keyBoardBtn.visible = false
 				self.m_voiceBtn.visible = false
@@ -623,11 +646,11 @@ bottomControl = class('bottomControl', nil, {
 				
 				--m_scrollView变小
 				self.m_scrollView.height = self.m_root.height - self.m_topHeight - self.m_faceWg.height - self.m_chatPage.height_hint
-				Clock.instance():schedule_once(function ()
-					Clock.instance():schedule_once(function ()	                
-	                	self.m_scrollView:scroll_to_bottom(0.25)
-	                end)
-	            end)
+
+				Clock.instance():schedule_once(function ()	                
+                	self.m_scrollView:scroll_to_bottom(0.25)
+                end)
+
 				
 			else
 				self.m_scrollView.height = self.m_root.height - self.m_topHeight - self.m_chatPage.height_hint
@@ -640,6 +663,7 @@ bottomControl = class('bottomControl', nil, {
 			self:updatePageStatus()
 			--关闭软键盘
 			self.m_editText:detach_ime()
+			self.m_editText:registered_keyboard()
 
 		end
 
@@ -649,22 +673,24 @@ bottomControl = class('bottomControl', nil, {
             self.m_chatPage:update_constraints()
 
             --m_scrollView高度计算方法
-            self.m_scrollView.height = self.m_root.height - self.keyboard_height- self.m_chatPage.height_hint - self.m_topHeight
+           
             if self.m_showAddPage then
-            	self.m_scrollView.height = self.m_scrollView.height - self.m_photoWg.height
-            end
-
-            if self.m_showBehavierPage then
-            	self.m_scrollView.height = self.m_scrollView.height - self.m_faceWg.height
+            	self.m_scrollView.height = self.m_root.height - self.m_photoWg.height - self.m_chatPage.height_hint - self.m_topHeight
+            elseif self.m_showBehavierPage then
+            	self.m_scrollView.height = self.m_root.height - self.m_faceWg.height - self.m_chatPage.height_hint - self.m_topHeight            	
+            else
+            	self.m_scrollView.height = self.m_root.height - self.keyboard_height- self.m_chatPage.height_hint - self.m_topHeight
             end
 
             --m_chatPage的y坐标计算方法
             self.m_chatPage.y = self.m_scrollView.height + self.m_topHeight
+
+
+
             Clock.instance():schedule_once(function ()
-                Clock.instance():schedule_once(function ()
-                    self.m_scrollView:scroll_to_bottom(0.25)
-                end)
+            	self.m_scrollView:scroll_to_bottom(0.0)            	
             end)
+
         end
 
 
@@ -804,10 +830,10 @@ bottomControl = class('bottomControl', nil, {
 			line.background_color = Colorf(0.76, 0.76, 0.76, 1.0)
 			self.m_selectPage:add(line)
 			line:add_rules{
-				AL.width:eq(1.5),
+				AL.width:eq(self.m_realLineH),
 				AL.height:eq(AL.parent('height')),
 				AL.top:eq(0),
-				AL.left:eq(101+space*(i-1)),
+				AL.left:eq(100+space*(i-1)),
 
 			}
 			
@@ -819,7 +845,7 @@ bottomControl = class('bottomControl', nil, {
 		self.m_selectPage:add(topLine)
 		topLine:add_rules{
 			AL.width:eq(AL.parent('width')),
-			AL.height:eq(1.5),
+			AL.height:eq(self.m_realLineH),
 			AL.top:eq(0),
 			AL.left:eq(0),
 
@@ -881,18 +907,6 @@ bottomControl = class('bottomControl', nil, {
         self:updatePageStatus()
 	end,
 
-	setVoiceUnvisible = function (self)
-		self.m_yuyinBtn.visible = false
-
-		self.m_editText:clear_rules()
-
-		self.m_editText:add_rules{
-            AL.width:eq(AL.parent("width") - 100-20-40-56-18-54),
-            AL.bottom:eq(AL.parent("height") - (self.m_pageSHeight-self.m_editSHeight)/2),
-			AL.left:eq(120),
-        }
-
-	end,
 })
 
 

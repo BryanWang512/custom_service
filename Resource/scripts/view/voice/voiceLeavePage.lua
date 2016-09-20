@@ -1,8 +1,8 @@
 local UI = require('byui/basic')
 local AL = require('byui/autolayout')
 local Layout = require('byui/layout')
-local Am = require('animation')
 local class, mixin, super = unpack(require('byui/class'))
+local Am = require(string.format('%sanimation', KefuRootPath))
 
 local voiceLeavePage
 voiceLeavePage = class('evalutePage', nil, {

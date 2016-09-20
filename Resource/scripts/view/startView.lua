@@ -1,9 +1,8 @@
-local baseView = require("view.baseView")
 local UI = require('byui/basic')
 local AL = require('byui/autolayout')
 local class, mixin, super = unpack(require('byui/class'))
-
-local UserData = require("conversation/sessionData")
+local baseView = require(string.format('%sview/baseView', KefuRootPath))
+local UserData = require(string.format('%sconversation/sessionData', KefuRootPath))
 local startView
 
 startView = class('startView', baseView, {
@@ -95,9 +94,11 @@ startView = class('startView', baseView, {
             NetWorkControl.init()
 
             local view = ViewManager.showNormalChatView()
-           -- view:showExceptionTips(DELAY_CONNECT_DEADLINE)
-            view:resetBottom()
-            view:contentPreUpdate()
+            if view then
+                view:showExceptionTips(DELAY_CONNECT_DEADLINE)
+                view:resetBottom()
+                view:contentPreUpdate()
+            end
         end
 
         self.m_root:add(self.m_customBtn)

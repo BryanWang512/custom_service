@@ -1,54 +1,17 @@
-local baseView = require("view.baseView")
 local UI = require('byui/basic')
 local AutoLayout = require('byui/autolayout')
-local Anim = require("animation")
 local Layout = require('byui/layout')
-require("byui/utils")
-require("libs/json_wrap");
 local class, mixin, super = unpack(require('byui/class'))
-local SelComponent = require("view/selComponent")
-local kefuCommon = require("kefuCommon")
-local UserData = require("conversation/sessionData")
+local Anim = require(string.format('%sanimation', KefuRootPath))
+local baseView = require(string.format('%sview/baseView', KefuRootPath))
+local SelComponent = require(string.format('%sview/selComponent', KefuRootPath))
+local kefuCommon = require(string.format('%skefuCommon', KefuRootPath))
+local UserData = require(string.format('%sconversation/sessionData', KefuRootPath))
 
 
 local page_view
 local sliderBlock
-local MyPageView
-MyPageView = class('MyPageView', UI.PageView, {
-    on_touch_up = function(self, p, t)
-        super(MyPageView, self).on_touch_up(self, p, t)
-        if page_view.page_num == 2 then
-            if sliderBlock.x == sliderBlock.width then return end 
 
-            local action = Anim.keyframes {
-                -- 关键帧位置, 属性, 时间函数，这里取得Anim.linear，你可以通过取不同的时间函数得到不同的动画效果。
-                { 0.0, { x = 0 }, Anim.accelerate_decelerate },
-                { 1.0, { x = sliderBlock.width }, nil },
-            }
-
-            local move = Anim.duration(0.3, action)
-
-            local anim = Anim.Animator()
-            anim:start(move, function(v)
-                sliderBlock.x = v.x
-            end , true)
-        else
-            if sliderBlock.x == 0 then return end
-            local action = Anim.keyframes {
-                -- 关键帧位置, 属性, 时间函数，这里取得Anim.linear，你可以通过取不同的时间函数得到不同的动画效果。
-                { 0.0, { x = sliderBlock.width }, Anim.accelerate_decelerate },
-                { 1.0, { x = 0 }, nil },
-            }
-
-            local move = Anim.duration(0.3, action)
-
-            local anim = Anim.Animator()
-            anim:start(move, function(v)
-                sliderBlock.x = v.x
-            end , true)
-        end
-    end,
-} )
 
 --通牌作弊 1；滥发广告2；刷分倒币3；捣乱游戏4；不雅用语5；其他6
 local txt2NumType = {
@@ -168,16 +131,16 @@ local createHistoryItem = function(data)
     btnItem:add(txtTime)
     txtTime:update()
 
-    txtTime:add_rules( {
+    txtTime:add_rules{
         AutoLayout.width:eq(150),
         AutoLayout.height:eq(20),
         AutoLayout.left:eq(AutoLayout.parent('width') - txtTime.width - 70),
         AutoLayout.centery:eq(AutoLayout.parent('height') * 0.44),
-    } )
+    }
 
 
     -- 创建箭头图标
-    local arrowIcon = Sprite(TextureUnit(TextureCache.instance():get("common/unfold.png")))
+    local arrowIcon = Sprite(TextureUnit(TextureCache.instance():get(KefuResMap.commonUnfold)))
     arrowIcon:add_rules( {
         AutoLayout.left:eq(AutoLayout.parent('width') * 0.94),
         AutoLayout.centery:eq(AutoLayout.parent('height') * 0.5),
@@ -185,7 +148,7 @@ local createHistoryItem = function(data)
     btnItem:add(arrowIcon)
 
     -- 创建箭头图标
-    local arrowIcon1 = Sprite(TextureUnit(TextureCache.instance():get("common/retract.png")))
+    local arrowIcon1 = Sprite(TextureUnit(TextureCache.instance():get(KefuResMap.commonRetract)))
     arrowIcon1:add_rules( {
         AutoLayout.left:eq(AutoLayout.parent('width') * 0.94),
         AutoLayout.centery:eq(AutoLayout.parent('height') * 0.5),
@@ -198,11 +161,11 @@ local createHistoryItem = function(data)
         AutoLayout.width:eq(AutoLayout.parent('width')),
         AutoLayout.top:eq(90),
     } )
-    contentCon.background_color = color_to_colorf(Color(230, 230, 230, 220))
+    contentCon.background_color = color_to_colorf(Color(224, 224, 224, 255))
     contentCon.visible = false
     container:add(contentCon)
 
-    local line = BorderSprite(TextureUnit(TextureCache.instance():get("line.png")))
+    local line = BorderSprite(TextureUnit(TextureCache.instance():get(KefuResMap.kefuLine)))
     line.v_border = {0,4,0,4}
     line.t_border = {0,4,0,4}
     line:add_rules( {
@@ -218,7 +181,7 @@ local createHistoryItem = function(data)
 
     local lines = {}
     for i = 1, 2 do
-        lines[i] = BorderSprite(TextureUnit(TextureCache.instance():get("line.png")))
+        lines[i] = BorderSprite(TextureUnit(TextureCache.instance():get(KefuResMap.kefuLine)))
         lines[i].v_border = {0,4,0,4}
         lines[i].t_border = {0,4,0,4}
 
@@ -371,7 +334,7 @@ local createHistoryItem = function(data)
 
     
 
-    local lineBottom = BorderSprite(TextureUnit(TextureCache.instance():get("line.png")))
+    local lineBottom = BorderSprite(TextureUnit(TextureCache.instance():get(KefuResMap.kefuLine)))
     lineBottom.v_border = {0,4,0,4}
     lineBottom.t_border = {0,4,0,4}
 
@@ -408,6 +371,8 @@ end
 hackAppealView = class('hackAppealView', baseView, {
     __init__ = function(self)
         super(hackAppealView, self).__init__(self)
+        self.m_status = {}
+
         local data = UserData.getStatusData()
         if data.isVip then
             self.m_txtColor = "#f4c493"
@@ -415,7 +380,7 @@ hackAppealView = class('hackAppealView', baseView, {
             self.m_txtColor = "#6fba2c"
         end
 
-        self.m_root.background_color = Colorf(242/255,240/255,235/255,1)
+        self.m_root.background_color = Colorf(235/255,235/255,235/255,1)
         -- ==============================================top=========================================================
         local topContainer = Widget()
         topContainer.background_color = Colorf(0.227, 0.188, 0.31, 1.0)
@@ -489,7 +454,7 @@ hackAppealView = class('hackAppealView', baseView, {
         
 
         local btnAppealAgainst = UI.Button {
-            text = string.format('<font color=#f4c493 size=%d>%s</font>',30,'我要举报'),
+            text = '<font color=#f4c493 size=30>我要举报</font>',
             margin = { 10, 10, 10, 10 },
             image =
             {
@@ -528,42 +493,14 @@ hackAppealView = class('hackAppealView', baseView, {
         buttomContainer:add(btnAppealHistory)
 
         btnAppealAgainst.on_click = function()
-            if page_view.page_num == 1 then return end 
-
-            local action = Anim.keyframes {
-                -- 关键帧位置, 属性, 时间函数，这里取得Anim.linear，你可以通过取不同的时间函数得到不同的动画效果。
-                { 0.0, { x = sliderBlock.width }, Anim.accelerate_decelerate },
-                { 1.0, { x = 0 }, nil },
-            }
-
-            local move = Anim.duration(0.3, action)
-
-            local anim = Anim.Animator()
-            anim:start(move, function(v)
-                sliderBlock.x = v.x
-            end , true)
+            if page_view.page_num == 1 then return end            
             page_view.page_num = 1
-            btnAppealAgainst.text = string.format('<font color=%s size=%d>%s</font>', self.m_txtColor, 30, '我要举报')
-            btnAppealHistory.text = string.format('<font color=#9b9b9b size=%d>%s</font>', 30, '举报历史')
+            
         end
 
         btnAppealHistory.on_click = function()
-            if page_view.page_num == 2 then return end
-            local action = Anim.keyframes {
-                -- 关键帧位置, 属性, 时间函数，这里取得Anim.linear，你可以通过取不同的时间函数得到不同的动画效果。
-                { 0.0, { x = 0 }, Anim.accelerate_decelerate },
-                { 1.0, { x = sliderBlock.width }, nil },
-            }
-
-            local move = Anim.duration(0.3, action)
-
-            local anim = Anim.Animator()
-            anim:start(move, function(v)
-                sliderBlock.x = v.x
-            end , true)
-            page_view.page_num = 2
-            btnAppealAgainst.text = string.format('<font color=#9b9b9b size=%d>%s</font>', 30, '我要举报')
-            btnAppealHistory.text = string.format('<font color=%s size=%d>%s</font>', self.m_txtColor, 30, '举报历史')
+            if page_view.page_num == 2 then return end            
+            page_view.page_num = 2           
         end
 
         -- tapTOp 分界线
@@ -577,7 +514,7 @@ hackAppealView = class('hackAppealView', baseView, {
         partLine.colorf = Colorf(0.7, 0.7, 0.7, 1)
         buttomContainer:add(partLine)
 
-        page_view = MyPageView {
+        page_view = UI.PageView {
             dimension = kHorizental,
             max_number = 2,
         }
@@ -610,17 +547,48 @@ hackAppealView = class('hackAppealView', baseView, {
             if self.m_pageView.page_num == 1 then
                 btnAppealAgainst.text = string.format('<font color=%s size=%d>%s</font>', self.m_txtColor, 30, '我要举报')
                 btnAppealHistory.text = string.format('<font color=#9b9b9b size=%d>%s</font>', 30, '举报历史')
+
+                if sliderBlock.x ~= 0 then
+                    local action = Anim.keyframes {
+                        -- 关键帧位置, 属性, 时间函数，这里取得Anim.linear，你可以通过取不同的时间函数得到不同的动画效果。
+                        { 0.0, { x = sliderBlock.width }, Anim.accelerate_decelerate },
+                        { 1.0, { x = 0 }, nil },
+                    }
+
+                    local move = Anim.duration(0.3, action)
+
+                    local anim = Anim.Animator()
+                    anim:start(move, function(v)
+                        sliderBlock.x = v.x
+                    end , true)
+                end
             else
                 btnAppealAgainst.text = string.format('<font color=#9b9b9b size=%d>%s</font>', 30, '我要举报')
                 btnAppealHistory.text = string.format('<font color=%s size=%d>%s</font>', self.m_txtColor, 30, '举报历史')
+            
+                if sliderBlock.x ~= sliderBlock.width then
+                    local action = Anim.keyframes {                    
+                        { 0.0, { x = 0 }, Anim.accelerate_decelerate },
+                        { 1.0, { x = sliderBlock.width }, nil },
+                    }
+
+                    local move = Anim.duration(0.3, action)
+
+                    local anim = Anim.Animator()
+                    anim:start(move, function(v)
+                        sliderBlock.x = v.x
+                    end , true)
+                end
             end
 
+
             if self.m_newCommit then
-                self:requireData()
+                self.m_newCommit = nil
+                self:requireData()                   
             end
 
         end
-        self.m_status = {}
+        
         self.m_root:add(topContainer)
 
         self:requireData()
@@ -668,6 +636,7 @@ hackAppealView = class('hackAppealView', baseView, {
         self.m_selectTxt = ""
         self.m_buttomContainer.y = self.m_buttomContainerY
         self.m_pageView.y = self.m_pageViewY
+        self.m_selComp:hide()
 
         sliderBlock.x = 0
 
@@ -680,13 +649,14 @@ hackAppealView = class('hackAppealView', baseView, {
         self.m_status = {}
         
         if self.m_newCommit then
+            self.m_newCommit = nil
             self:requireData()
         
         end
 
     end,
 
-    requireData = function (self, isNotify)
+    requireData = function (self, callback)
 
         NetWorkControl.obtainUserTabHistroy(0, 50, HTTP_SUBMIT_REPORT_HISTORY_URI, function (content)
             local tb = json.decode(content)
@@ -749,6 +719,12 @@ hackAppealView = class('hackAppealView', baseView, {
                     self.m_listViewReply.data = replyData
                 end
 
+                if callback then
+                    Clock.instance():schedule_once(function ()
+                        callback() 
+                    end, 1)
+                end
+
 
             else
                 Log.w("obtainUserTabHistroy", "举报内容获取失败")
@@ -763,7 +739,7 @@ hackAppealView = class('hackAppealView', baseView, {
         elseif i == 2 then
             local container = Widget()
             container:add_rules{
-                AutoLayout.width:eq(AutoLayout.parent('width')-1),
+                AutoLayout.width:eq(AutoLayout.parent('width')),
                 AutoLayout.height:eq(AutoLayout.parent('height')),
             }
 
@@ -779,6 +755,7 @@ hackAppealView = class('hackAppealView', baseView, {
                 AutoLayout.left:eq(1),
             }
             container:add(listviewHistory)
+            listviewHistory.velocity_factor = 3.1
 
             self.m_listViewReply = listviewHistory
             self.m_noRecordLabel = Label()
@@ -803,7 +780,7 @@ hackAppealView = class('hackAppealView', baseView, {
 
         local itemsData = {
             { title = "举报ID", hint_text = "请输入需要举报的ID", ui_type = "edit" },
-            { title = "举报类型", hint_text = "请输入举报类型", ui_type = "label", icon = "common/more.png" },
+            { title = "举报类型", hint_text = "请输入举报类型", ui_type = "label", icon = KefuResMap.commonMore },
         }
 
         local height = 100
@@ -876,13 +853,12 @@ hackAppealView = class('hackAppealView', baseView, {
                     end
 
                 end
-                edit:add_rules( {
+                edit:add_rules{
                     AutoLayout.width:eq(450),
                     AutoLayout.height:eq(80),
                     AutoLayout.left:eq(209),
                     AutoLayout.top:eq(34),
                 }
-                )
               
                 edit.keyboard_type = Application.KeyboardTypeNumberPad
                 item:add(edit)
@@ -914,7 +890,8 @@ hackAppealView = class('hackAppealView', baseView, {
 
                     local selcomp = SelComponent(self.m_root, {title = "举报类型", action = "完成", ui_type = 2 })
                     selcomp.btn_callback = function(str)
-                        label:set_rich_text(string.format('<font color=#000000 size=%d>%s</font>', 30, str))
+                        str = str or "通牌作弊"
+                        label:set_rich_text(string.format('<font color=#000000 size=30>%s</font>', str))
                         self.m_selectTxt = str
                         self.m_status[2] = true
 
@@ -1010,7 +987,7 @@ hackAppealView = class('hackAppealView', baseView, {
         }
 
         
-        itemWg:add(self.m_contentBtn)
+        container:add(self.m_contentBtn)
         self.m_contentBtn.visible = false
 
         self.m_eidtContent.on_text_changed = function ()
@@ -1068,8 +1045,8 @@ hackAppealView = class('hackAppealView', baseView, {
             margin = { 10, 10, 10, 10 },
             image =
             {
-                normal = TextureUnit(TextureCache.instance():get("common/upgrade_up.png")),
-                down = TextureUnit(TextureCache.instance():get("common/upgrade_down.png")),
+                normal = TextureUnit(TextureCache.instance():get(KefuResMap.commonUpgradeUp)),
+                down = TextureUnit(TextureCache.instance():get(KefuResMap.commonUpgradeDown)),
                 disabled = Colorf(0.2,0.2,0.2,1),
             },
         }
@@ -1160,10 +1137,13 @@ hackAppealView = class('hackAppealView', baseView, {
                     self.m_submitTips.hideTips("提交失败")
                 else
                     print("=============举报内容发送成功=============")
-                    self.m_newCommit = true
-                    self.m_submitTips.hideTips("提交成功!", 1)
-                    self:onUpdate()
-                    self.m_pageView.page_num = 2
+                    self.m_newCommit = nil
+                    self:requireData(function ()
+                        self.m_submitTips.hideTips("提交成功!", 1)
+                        self:onUpdate()
+                        self.m_pageView.page_num = 2
+                    end)
+
                 end
 
             end)

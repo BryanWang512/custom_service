@@ -680,6 +680,8 @@ local function compat_align_split(a)
     return unpack(t[a])
 end
 
+M.compat_align_split = compat_align_split
+
 local function compat_align_rules(align, alignX, alignY)
     local h, v = compat_align_split(align)
     local h_rule
@@ -705,6 +707,8 @@ local function compat_align_rules(align, alignX, alignY)
     return {h_rule, v_rule}
 
 end
+
+M.compat_align_rules = compat_align_rules
 
 M.LayoutItemMixin = {
     __init__ = function(self)
@@ -838,7 +842,7 @@ M.LayoutItemMixin = {
     end, function(self, v)
         if self._width_resist ~= v then
             self._width_resist = v
-            self.constrai                    = true
+            self.constraint_dirty = true
         end
     end},
     width_limit = {function(self)
@@ -1179,7 +1183,9 @@ if Widget.___class.___lua == nil then
             M.LayoutItemMixin.__init__(self)
             patch_on_enter_exit(self)
             super(Label, self).on_size_changed = function(_)
-                self.size_hint = self.size
+                if not self.layout_size:bool() then
+                    self.size_hint = self.size
+                end
                 --self:setSize(self.width, self.height)
                 self:update_constraints()
                 if self._on_size_changed then
@@ -1195,6 +1201,16 @@ if Widget.___class.___lua == nil then
                 end
             end
         end,
+        layout_size = {function(self)
+            return super(Label, self).layout_size
+        end, function(self, s)
+            super(Label, self).layout_size = s
+            if s:bool() then
+                self.size_hint = s
+            else
+                self.size_hint = self.size
+            end
+        end},
         on_size_changed = {function(self)
             return self._on_size_changed
         end, function(self, fn)
@@ -1280,12 +1296,8 @@ if Widget.___class.___lua == nil then
             local byui = require('byui/simple_ui')
             byui.init_label_link(self, onclick)
         end,
-        init_link = function(self, onclick)
-            local byui = require('byui/simple_ui')
-            byui.init_label_link(self, onclick)
-        end,
     }))
-    for _, name in ipairs{'LEFT', 'TOP', 'CENTER', 'MIDDLE', 'RIGHT', 'BOTTOM', 'config', 'get_default_line_height','add_emoji', 'set_emoji_baseline', 'set_emoji_scale'} do
+    for _, name in ipairs{'LEFT', 'TOP', 'CENTER', 'MIDDLE', 'RIGHT', 'BOTTOM', 'config', 'get_default_line_height','add_emoji', 'set_emoji_baseline', 'set_emoji_scale', 'set_default_line_scale'} do
         Label[name] = CLabel[name]
     end
 
@@ -2345,6 +2357,8 @@ return (function()
         local radiobutton_pos = Point(0,magnifier_size.y)
         local radiobutton_check_pos = Point(radiobutton_pos.x+radiobutton_r*2,magnifier_size.y)
 
+        local arrow_size = Point(20,30)
+        local arrow_pos = Point(radiobutton_check_pos.x + radiobutton_r*2,radiobutton_check_pos.y)
         local w = nvg_node(size, function(self, nvg)
             nvg:reset()
             nvg:translate(circle_pos)
@@ -2662,6 +2676,34 @@ return (function()
                 nvg:stroke_width(sw)
                 nvg:stroke()                
             end
+
+            do
+                local color = Colorf(0.0, 0.0, 0.0, 1.0)
+                local sw = 0.5
+
+                nvg:reset()
+                nvg:translate(arrow_pos)
+                nvg:begin_path()
+                nvg:move_to(Point(arrow_size.x/2,arrow_size.y))
+                nvg:line_to(Point(0,arrow_size.y - arrow_size.x/2))
+                nvg:stroke_color(color)
+                nvg:stroke_width(sw)
+                nvg:stroke()
+
+                nvg:begin_path()
+                nvg:move_to(Point(arrow_size.x/2,arrow_size.y))
+                nvg:line_to(Point(arrow_size.x,arrow_size.y -arrow_size.x/2))
+                nvg:stroke_color(color)
+                nvg:stroke_width(sw)
+                nvg:stroke()
+
+                nvg:begin_path()
+                nvg:move_to(Point(arrow_size.x/2,0))
+                nvg:line_to(Point(arrow_size.x/2,arrow_size.y))
+                nvg:stroke_color(color)
+                nvg:stroke_width(sw)
+                nvg:stroke()
+            end
         end)
         
         local fbo = FBO.create(size)
@@ -2714,6 +2756,9 @@ return (function()
 
         units.small_magnifier = TextureUnit(fbo.texture)
         units.small_magnifier.rect = Rect(small_magnifier_pos.x,small_magnifier_pos.y,small_magnifier_size.x,small_magnifier_size.y)
+
+        units.arrow = TextureUnit(fbo.texture)
+        units.arrow.rect = Rect(arrow_pos.x,arrow_pos.y,arrow_size.x,arrow_size.y)
     end
     return units
 end)()
@@ -3047,6 +3092,61 @@ M.SelectHandler = class('SelectHandler', RoundedView, mixin(M.EditEventHandler, 
 }))
 M.Pasteboard = ""
 
+
+local function insert_table( t,str,cursor,after ,max)
+    -- print("insert_table before",table.concat(t),cursor,after,max,#t)
+    local i = 1 
+    local j = 0 
+    if after then
+        i = cursor + 2
+        for uchar in string.gfind(str, "([%z\1-\127\194-\244][\128-\191]*)") do 
+            if max and #t >= max then
+                break
+            end
+            table.insert(t,cursor + 2,uchar)
+            j = cursor + 2
+            cursor = cursor + 1
+
+        end
+    else
+        i = cursor + 1
+        for uchar in string.gfind(str, "([%z\1-\127\194-\244][\128-\191]*)") do 
+            if max and #t >= max then
+                break
+            end
+            table.insert(t,cursor+1,uchar)
+            j = cursor + 1
+            cursor = cursor + 1
+        end
+    end
+    -- print(t)
+    -- print("insert_table after",table.concat(t),max,#t)
+    return i,j
+end
+
+local function delete_backward_table( t,count,cursor,after  )
+    -- print("delete_backward before",table.concat(t),after,cursor)
+    if not after then
+        local real_count = cursor - count + 1 >= 1 and cursor - count + 1 or 1
+        for i=cursor,real_count,-1 do
+            table.remove(t,i)
+        end
+    else
+        local real_count = cursor +1 - count + 1 >= 1 and cursor +1 - count + 1 or 1
+        for i=cursor+1,real_count,-1 do
+            table.remove(t,i)
+        end
+    end
+    -- print("delete_backward before",table.concat(t))
+end
+local function delete_selection_table( t,b,e )
+    -- print("delete_selection before",table.concat(t))
+    for i= e + 1,b+1,-1 do
+        table.remove(t,i)
+    end
+    -- print("delete_selection after",table.concat(t))
+end
+
 ---
 -- 可编辑文本基类.
 -- @type byui.TextBehaviour
@@ -3149,8 +3249,18 @@ M.TextBehaviour = {
                 end
             end,2.0)
         end
+
+        self.keyboard_secure = args.keyboard_secure 
+        self.max_length = args.max_length
+
+        self._truly_text = {}
+
         self.text = args.text or {{text  = "",color = Color(0.0,0.0,0.0)}}
         self.hint_text = args.hint_text or {{text  = "",color = Color(0.5,0.5,0.5)}}
+        
+
+
+        
     end,
     _update_selection_view = function(self)
         local select_begin_pos = self.select_begin.pos
@@ -3178,59 +3288,67 @@ M.TextBehaviour = {
             self.selection_left_view.pos = Point(0,select_begin_pos.y + select_height)
         end
     end,
+    registered_keyboard = function ( self )
+
+        Simple.share_keyboard_controller().on_keyboard = 
+            function( action, arg)
+                -- print_string(string.format("on_keyboard :%s,%s",action, arg))
+                self:_keyboard_event(action, arg)
+            end
+    end,
+    _keyboard_event = function ( self, action, arg)
+        if action == Application.KeyboardShow then
+            if not self._keyboard_show_rect or  self._keyboard_show_rect.y ~= arg.y then
+                self:_on_keyboard_show(arg)
+                self._keyboard_show_rect = arg
+            end
+        elseif action == Application.KeyboardHide then
+            self._is_mark = false
+            self._keyboard_enable = false
+            self.mode = "normal"
+            self:_on_keyboard_hide(arg)
+            self._keyboard_show_rect = nil
+        elseif action == Application.KeyboardInsert then
+            if self.mode == "select" then
+                self:delete_selection()
+                self.mode = "edit"
+            end
+            self._cursor_anim:stop()
+            Simple.share_menu_controller():set_menu_visible(false,false)
+
+            if string.find(arg, '\n') ~= nil then
+                -- self:reset_text()
+                self:_on_return_click()
+            else
+                self:insert(arg)
+            end
+        elseif action == Application.KeyboardDeleteBackward then
+            if self.mode == "select" then
+                self:delete_selection()
+            else
+                self:delete_backward(arg)
+            end
+        elseif action == Application.KeyboardSetMarkedText then
+            if self.mode == "select" then
+                self:delete_selection()
+            end
+            if self.mode ~= "edit" then
+                self.mode = "edit"
+            end
+            self._cursor_anim:stop()
+            Simple.share_menu_controller():set_menu_visible(false,false)
+            self:set_marked_text(arg)
+        end
+    end,
     attach_ime = function(self)
         Simple.share_keyboard_controller().keyboard_config = {
             type = self.keyboard_type,
             return_type = self.keyboard_return_type,
             appearance = self.keyboard_appearance,
-            secure = self.keyboard_secure,
+            secure = self.keyboard_secure and 1 or 0,
             auto_capitalization = self.keyboard_capitalization_type,
         }
-        Simple.share_keyboard_controller().on_keyboard = 
-            function( action, arg)
-                print("on_keyboard",action, arg)
-                if action == Application.KeyboardShow then
-                    if not self._keyboard_show_rect or  self._keyboard_show_rect.y ~= arg.y then
-                        self:_on_keyboard_show(arg)
-                        self._keyboard_show_rect = arg
-                    end
-                elseif action == Application.KeyboardHide then
-                    self._is_mark = false
-                    self._keyboard_enable = false
-                    self.mode = "normal"
-                    self:_on_keyboard_hide(arg)
-                    self._keyboard_show_rect = nil
-                elseif action == Application.KeyboardInsert then
-                    if self.mode == "select" then
-                        self:delete_selection()
-                        self.mode = "edit"
-                    end
-                    self._cursor_anim:stop()
-                    Simple.share_menu_controller():set_menu_visible(false,false)
-                    if string.find(arg, '\n') ~= nil then
-                        -- self:reset_text()
-                        self:_on_return_click()
-                    else
-                        self:insert(arg)
-                    end
-                elseif action == Application.KeyboardDeleteBackward then
-                    if self.mode == "select" then
-                        self:delete_selection()
-                    else
-                        self:delete_backward(arg)
-                    end
-                elseif action == Application.KeyboardSetMarkedText then
-                    if self.mode == "select" then
-                        self:delete_selection()
-                    end
-                    if self.mode ~= "edit" then
-                        self.mode = "edit"
-                    end
-                    self._cursor_anim:stop()
-                    Simple.share_menu_controller():set_menu_visible(false,false)
-                    self:set_marked_text(arg)
-                end
-            end
+        self:registered_keyboard()
         if not self._keyboard_enable then
             self._keyboard_enable = true
             Simple.share_keyboard_controller().keyboard_status = true
@@ -3280,6 +3398,19 @@ M.TextBehaviour = {
     -- @function [parent=#byui.TextBehaviour] insert
     -- @param #byui.TextBehaviour self 
     -- @param #string txt 
+        if self.inspection_insert then
+            local ret = self.inspection_insert(txt)
+            txt = ret and tostring(ret) or txt
+        end
+        local start = #self._truly_text
+        local i,j=insert_table(self._truly_text,txt,self.cursor,self._after,self.max_length)
+
+        if self.keyboard_secure then
+            txt = string.rep(self.password_character,#self._truly_text - start) 
+        else
+            txt = table.concat(self._truly_text,"",i,j)
+        end
+        
         self.cursor,self._after = self.label:insert(txt, self.cursor,self._after)
         Clock.instance():schedule_once(function()
             self.cursor_view.pos = self.label:to_parent(self.label:get_cursor_position(self.cursor,self._after))
@@ -3295,6 +3426,8 @@ M.TextBehaviour = {
     -- @param #byui.TextBehaviour self 
         self.cursor = self.select_begin.cursor
         self._after = self.select_begin._after
+
+        delete_selection_table(self._truly_text,self:_cursor_to_index(self.select_begin.cursor,self.select_begin._after),self:_cursor_to_index(self.select_end.cursor,self.select_end._after) -1)
         self.label:delete_selection( self:_cursor_to_index(self.select_begin.cursor,self.select_begin._after), self:_cursor_to_index(self.select_end.cursor,self.select_end._after) -1)
         Clock.instance():schedule_once(function()
             if not is_reset then
@@ -3313,6 +3446,8 @@ M.TextBehaviour = {
     -- @function [parent=#byui.TextBehaviour] delete_backward
     -- @param #byui.TextBehaviour self 
     -- @param #number count 需要删除的字符数。
+
+        delete_backward_table(self._truly_text,n,self.cursor,self._after)
         self.cursor,self._after = self.label:delete_backward( n, self.cursor,self._after)
         Clock.instance():schedule_once(function()
             self.cursor_view.pos = self.label:to_parent(self.label:get_cursor_position(self.cursor,self._after))
@@ -3442,7 +3577,11 @@ M.TextBehaviour = {
         return after and cursor+1 or cursor
     end ,
     text = {function ( self )
-        return self.label:get_selection(0,self.label.length-1)
+        if self.keyboard_secure then
+            return table.concat(self._truly_text)
+        else
+            return self.label:get_selection(0,self.label.length-1)
+        end
     end,function ( self,value )
         ---
         -- 当前输入的文本.
@@ -3464,6 +3603,15 @@ M.TextBehaviour = {
         self.cursor_view.size = Point(2,self.line_height)
         self.select_begin.line_height = self.line_height
         self.select_end.line_height = self.line_height
+
+        local i,j = insert_table(self._truly_text,temp_lbl:get_data()[1].text,0,false,self.max_length)
+        if self.keyboard_secure then
+            local str = string.rep(self.password_character,#self._truly_text)
+            self.label:set_text(str)
+        else
+            local str = table.concat(self._truly_text,"",i,j)
+            self.label:set_text(str)
+        end
         Clock.instance():schedule_once(function()
             self.cursor = self.label.length -1 < 0 and 0 or self.label.length -1
             
@@ -3532,7 +3680,7 @@ M.TextBehaviour = {
         self._keyboard_capitalization_type = v
     end},
     keyboard_secure = {function ( self )
-        return self._keyboard_secure or 0
+        return self._keyboard_secure or false
     end,function ( self,v )
         ---
         -- 是否为密码框.
@@ -3685,6 +3833,22 @@ M.TextBehaviour = {
         self.mag.attached = false
         self._handle:cancel()
     end,
+    password_character = {function ( self )
+        return self._password_character or "•"
+    end,function ( self,value )
+        if value and value ~= "" then
+            self._password_character = tostring(value)
+        end
+    end},
+    max_length = {function ( self )
+        return self._max_length
+    end,function ( self,value )
+        if tonumber(value) then
+            self._max_length = tonumber(value)
+        else
+            self._max_length = nil
+        end
+    end},
 }
 
 ---
@@ -5129,7 +5293,7 @@ M.GridLayout = class('GridLayout', Widget, {
 M.FloatLayout = class('FloatLayout', Widget, {
     __init__ = function(self, args)
         super(M.FloatLayout, self).__init__(self, args)
-        self.spacing = args.spacing
+        self.spacing = args.spacing or Point(0,0)
         self._pen = Point(0,0)
         self._line_height = 0
         self.dimension = args.dimension or kVertical
@@ -5442,29 +5606,30 @@ M.ScrollView = class('ScrollView', Widget, mixin(Simple.EventHandler, {
             end
         end
         self.on_value_changed = function(self, h,v )
-            local direction = Point(h.value,v.value) - self._content.pos
+            local value = Point(math.floor(h.value), math.floor(v.value))
+            local direction = value - self._content.pos
             if direction ~= Point(0,0) then
                 self._scrolling = true
-                self._content.pos = Point(h.value,v.value)
+                self._content.pos = value
                 if self._vertical_scroll_indicator and direction.y ~= 0 then
-                    self._vertical_scroll_indicator.content_offset = v.value
+                    self._vertical_scroll_indicator.content_offset = value.y
                 end
                 if self._horizental_scroll_indicator and direction.x ~= 0 then
-                    self._horizental_scroll_indicator.content_offset = h.value
+                    self._horizental_scroll_indicator.content_offset = value.x
                 end
-                if h.value > 0 or h.value < h.min  then
+                if value.x > 0 or value.x < h.min  then
                     if self.on_overscroll then
-                        self:on_overscroll(Point(h.value > 0 and h.value or h.value - h.min,0))
+                        self:on_overscroll(Point(value.x > 0 and value.x or value.x - h.min,0))
                     end
-                elseif v.value > 0 or v.value < v.min then
+                elseif value.y > 0 or value.y < v.min then
                     if self.on_overscroll then
-                        self:on_overscroll(Point(0,v.value > 0 and v.value or v.value - v.min))
+                        self:on_overscroll(Point(0,value.y > 0 and value.y or value.y - v.min))
                     end
                 else
                     if self.on_overscroll then
                         self:on_overscroll(Point(0,0))
                     end
-                    self:on_scroll(Point(h.value,v.value), direction, Point(h.decay.velocity,v.decay.velocity))
+                    self:on_scroll(value, direction, Point(h.decay.velocity,v.decay.velocity))
                 end
             end
         end
@@ -6093,7 +6258,7 @@ M.ListView = class('ListView', M.ScrollView, {
         args.dimension = args.dimension == kHorizental and kHorizental or kVertical 
         super(M.ListView, self).__init__(self, args)
         self.pos_dimension = args.dimension == kVertical and 'y' or 'x'
-        self.container = layout.FloatLayout{spacing = Point(0,0)}
+        self.container = layout.FloatLayout{spacing = Point(0,0),dimension = args.dimension}
         self.container.relative = true
         self.content = self.container
         self.content:add_rules{
@@ -6253,7 +6418,9 @@ M.ListView = class('ListView', M.ScrollView, {
     -- @usage local listview = byui.ListView{}
     --        listview:delete(1)
     insert = function ( self,item,index)
-        assert(index == nil or (index > 0 and index <= #self.data),"invalid index:" .. tostring(index))
+        if #self.data ~= 0 then
+            assert(index == nil or (index > 0 and index <= #self.data),"invalid index:" .. tostring(index))
+        end
         if index then
             table.insert(self.data,index,item)
         else
@@ -6264,7 +6431,7 @@ M.ListView = class('ListView', M.ScrollView, {
     end,
     get_view = function ( self,index )
         assert(self.data[index] ~= nil and type(self.data[index]) == 'table',"the data of ".. tostring(index) .." is invalid." )
-        local widget = self.create_cell(self.data[index])
+        local widget = self.create_cell(self.data[index],index)
         widget:initId()
         return widget
     end,
@@ -6289,7 +6456,13 @@ M.ListView = class('ListView', M.ScrollView, {
         elseif self._refresh_length < 0 then
             if math.abs(self._refresh_length) > self.distance_to_refresh then
                 self.bottom_view.visible = true
-                self.kinetic[self.pos_dimension].min = self.kinetic[self.pos_dimension].min - self.distance_to_refresh
+                local real_min = -(self._content.content_bbox.w - self.width)
+                if self.pos_dimension == 'x' then
+                    real_min = -(self._content.content_bbox.w - self.width)
+                else
+                    real_min = -(self._content.content_bbox.h - self.height)
+                end
+                self.kinetic[self.pos_dimension].min = real_min - self.distance_to_refresh
                 if self.on_refresh then
                     self.refresh_mode = false
                     self.on_refresh(self.refresh_mode)
@@ -6344,23 +6517,20 @@ M.ListView = class('ListView', M.ScrollView, {
         if self.refresh_mode then
             local index = #self.data - self.length + 1
             local item = self.container.children[index]
-            -- self.container:update(false)
-            Clock.instance():schedule_once(function ( ... )
-                local offset2 = item:to_parent(Point(0,0))
-                -- print("offset2",offset2,item.pos)
-                 Clock.instance():schedule_once(function ( ... )
-                    local offset = item:to_parent(Point(0,0))
-                    -- print("offset",offset,item.pos)
-                    offset = offset*(-1)
-                    offset[self.pos_dimension] = offset[self.pos_dimension] + self.distance_to_refresh
-                    self:scroll_to(offset,0.0)
-                end)
-            end)
-            
+            self.container:update()
+            local offset = item:to_parent(Point(0,0))
+             -- print("offset",offset,item.pos)
+            offset = offset*(-1)
+            offset[self.pos_dimension] = offset[self.pos_dimension] + self.distance_to_refresh
+                    -- self:scroll_to(offset,0.0)
+            self.content.y = offset.y
+                -- end)
+            -- end)
         end
     end
 })
 return M
+
 end
         
 
@@ -6648,6 +6818,7 @@ M.EventHandler = {
     --          enabled:boolean类型。是否启用触摸事件。
     --          need_capture:boolean类型。是否需要捕获事件。
     __init__ = function(self, args)
+        self:add_auto_cleanup('event_widget')
         self.event_widget = args.event_widget or self
         if self.event_widget:getId() < 0 then
             self.event_widget:initId()
@@ -7443,7 +7614,7 @@ M.Button = class('Button', BorderSprite, mixin(M.EventHandler, M.ButtonBehaviour
 
 ---
 -- 复选框控件.
--- 同时继承了@{#byui.EventHandler},@{#byui.ButtonBehaviour},@{#byui.ImageBehaviour}。
+-- 同时继承了@{#byui.EventHandler},@{#byui.CheckboxBehaviour},@{#byui.ImageBehaviour}。
 -- @type byui.Checkbox
 -- @extends engine#BorderSprite 
 
@@ -7451,7 +7622,7 @@ M.Button = class('Button', BorderSprite, mixin(M.EventHandler, M.ButtonBehaviour
 -- 创建一个复选框.
 -- @callof #byui.Checkbox
 -- @param #byui.Checkbox self 
--- @param #table args 构造参数.@{#byui.EventHandler.__init__},@{#byui.ButtonBehaviour.__init__},@{#byui.ImageBehaviour.__init__}所需要的构造参数。
+-- @param #table args 构造参数.@{#byui.EventHandler.__init__},@{#byui.CheckboxBehaviour.__init__},@{#byui.ImageBehaviour.__init__}所需要的构造参数。
 -- @return #byui.Checkbox 返回创建的复选框
 
 
@@ -8273,14 +8444,18 @@ M.Slider = class('Slider', Widget, mixin(M.EventHandler, {
         self.thumb.pos = Point(from + coefficient * (to - from) ,self.progress_bar.height/2-self.thumb.height/2)
     end},
     on_touch_down = function(self, p, t)
+        p = self:from_world(p)
         self._last = p.x
     end,
     on_touch_move = function(self, p, t)
+        p = self:from_world(p)
         local diff = ((p.x - self._last) / self.progress_bar.width)*(self.progress_bar.maxinum_value - self.progress_bar.mininum_value)
         self._last = p.x
         self.value = self.value + diff
+        self:_on_change(self.value)
     end,
     on_touch_up = function(self, p, t)
+        p = self:from_world(p)
         self._start = nil
         self:_on_change(self.value)
     end,
@@ -8448,16 +8623,18 @@ M.Layers = class('Layers', Widget, mixin(M.EventHandler, {
     end,
 
     _anim_move = function(self, status,duration,timing)
-        if not status then
-            ui_utils.play_attr_anim(self.anim, {
+        if self._foreground_control then
+            if not status then
+                ui_utils.play_attr_anim(self.anim, {
 
-                {self._foreground_control, self.pos_dimension, 0,timing},
-            }, duration or 0.15)
-        else
-            ui_utils.play_attr_anim(self.anim, {
+                    {self._foreground_control, self.pos_dimension, 0,timing},
+                }, duration or 0.15)
+            else
+                ui_utils.play_attr_anim(self.anim, {
 
-                {self._foreground_control, 'pos', Point(self._drag_length * self.drag_direction.x,self._drag_length * self.drag_direction.y),timing},
-            }, duration or 0.15)
+                    {self._foreground_control, 'pos', Point(self._drag_length * self.drag_direction.x,self._drag_length * self.drag_direction.y),timing},
+                }, duration or 0.15)
+            end
         end
         self._show_status = not status
         self._throw = true
@@ -10217,15 +10394,22 @@ local function editbox( root )
                             ,icon_style = KTextIconMagnifier,
                             text = "<font color=#000000>hello world</font>",
                             hint_text = "<font color=#777777>Text</font>",
-                            margin= {10,10,10,10}}
+                            margin= {10,10,10,10},keyboard_secure = false}
     edit.pos = Point(100,100)
-    
+    -- edit.max_length = 5
     edit.size = Point(200,55)
     edit.name = "edit"
-    edit.keyboard_type = Application.KeyboardTypeNumberPad
+    edit.inspection_insert = function ( str )
+        if not tonumber(str) or tonumber(str) > 7 then
+            return ""
+        end
+    end
+    -- edit.keyboard_type = Application.KeyboardTypeNumberPad
+    -- edit.keyboard_secure = true
     root:add(edit)
 
     local edit2 = M.EditBox{background_style = KTextBorderStyleBezel,icon_style = KTextIconMagnifier}
+    edit2.max_length = 5
     edit2.pos = Point(100,200)
     
     edit2.size = Point(200,50)
@@ -10234,6 +10418,7 @@ local function editbox( root )
     edit2.text = "<font color=#aaaaaa>hello world</font>"
     edit2.keyboard_type = Application.KeyboardTypeWebSearch
     root:add(edit2)
+
 
     local edit3 = M.EditBox{background_style = KTextBorderStyleLine,icon_style = KTextIconDelete
     ,text = {{
@@ -10302,6 +10487,7 @@ local function test_multiline_editbox( root )
 
     M.init_simple_event(lbl_insert,function ( ... )
         print("insert")
+        mul_editbox:registered_keyboard()
         M.share_keyboard_controller():insert('hello')
     end)
 
@@ -10530,7 +10716,9 @@ function border( root )
     root:add(v_top)
     root:add(v_right)
     root:add(v_bottom)
+
 end
+
 
 function simple_list_view( root )
     -- Clock.instance().maxfps =1 
@@ -10569,6 +10757,7 @@ function simple_list_view( root )
             print("下拉刷新")
             simple_list.top_view.background_color = Colorf(1.0,1.0,0.5)
             Clock.instance():schedule_once(function ( ... )
+                -- Clock.instance().maxfps = 1
                 simple_list:insert({height = 300,color = Colorf(math.random(),math.random(),math.random())},1)
                 simple_list:insert({height = 300,color = Colorf(math.random(),math.random(),math.random())},1)
                 simple_list:insert({height = 300,color = Colorf(math.random(),math.random(),math.random())},1)
@@ -10630,7 +10819,7 @@ function simple_list_view( root )
         --     end,10)
 
         -- end,5)
-    end,10)
+    end,2)
 
 end
 
@@ -10684,7 +10873,7 @@ function layout_demo( root )
     --     end,align.v*2)
     -- end
 end
-return test_pageview
+return test_multiline_editbox
 
 
 end

@@ -1,8 +1,9 @@
 local UI = require('byui/basic')
 local AutoLayout = require('byui/autolayout')
-local Anim = require("animation")
 local class, mixin, super = unpack(require('byui/class'))
-local PV = require('view/pickerView')
+local PV = require(string.format('%sview/pickerView', KefuRootPath))
+local Anim = require(string.format('%sanimation', KefuRootPath))
+local kefuCommon = require(string.format('%skefuCommon', KefuRootPath))
 
 local selComponent
 selComponent = class('selComponent', nil, {
@@ -50,6 +51,10 @@ selComponent = class('selComponent', nil, {
         } )
         topContainer.background_color = color_to_colorf(Color(230, 230, 230)),
         self.container:add(topContainer)
+
+        UI.init_simple_event(self.container, function ()
+            -- body
+        end)
 
         local labelTitle = Label()
         labelTitle:set_rich_text(string.format('<font color=#000000 size=%d>%s</font>', 34, data.title))
@@ -137,6 +142,11 @@ selComponent = class('selComponent', nil, {
         end
     end,
 
+    hide = function (self)
+        self.m_spaceBtn.visible = false
+        self.container.visible = false
+    end,
+
     createTypePacker = function(self, title)
         local data = {
             "通牌作弊",
@@ -202,6 +212,12 @@ selComponent = class('selComponent', nil, {
         local hour = os.date("%H", os.time())
         local min = os.date("%M", os.time())
 
+        self.year = tonumber(year)
+        self.m_numYear = self.year - 2003
+        self.m_numMonth = tonumber(month)
+        self.m_numDay = kefuCommon.getDayNum(tonumber(year), tonumber(month))
+
+
         self.result = year .. "-" .. month .. "-" .. day .. " " .. hour .. ":" .. min
 
         local listYearData = { }
@@ -216,7 +232,7 @@ selComponent = class('selComponent', nil, {
         end
 
         local listDayData = { }
-        for i = 1, 31 do
+        for i = 1, self.m_numDay do
             listDayData[i] = i < 10 and "0" .. tostring(i) .. "日" or "" .. tostring(i) .. "日"
         end
 
@@ -226,8 +242,8 @@ selComponent = class('selComponent', nil, {
         end
 
         local listMinData = { }
-        for i = 1, 59 do
-            listMinData[i] = i < 10 and "0" .. tostring(i) .. "分" or "" .. tostring(i) .. "分"
+        for i = 1, 60 do
+            listMinData[i] = i - 1 < 10 and "0" .. tostring(i-1) .. "分" or "" .. tostring(i-1) .. "分"
         end
 
         local pickerYear = PV.PickerView {
@@ -239,13 +255,14 @@ selComponent = class('selComponent', nil, {
         pickerYear:add_rules( {
             AutoLayout.width:eq(150),
             AutoLayout.height:eq(AutoLayout.parent('height') -90),
-
-            AutoLayout.left:eq(50),
+            AutoLayout.left:eq(40),
             AutoLayout.top:eq(90),
         } )
         self.container:add(pickerYear)
 
 
+        local startx = 40 + 135
+        local space = 110
         local pickerMonth = PV.PickerView {
             size = Point(150,600),
             row_height = 440 / 7
@@ -256,11 +273,14 @@ selComponent = class('selComponent', nil, {
             AutoLayout.width:eq(150),
             AutoLayout.height:eq(AutoLayout.parent('height') -90),
 
-            AutoLayout.centerx:eq(AutoLayout.parent('width') * 0.33),
+            AutoLayout.left:eq((AutoLayout.parent('width')-startx-40)*0.25-space+startx ),
             AutoLayout.top:eq(90),
         } )
         self.container:add(pickerMonth)
 
+
+
+        
 
         local pickerDay = PV.PickerView {
             size = Point(150,600),
@@ -271,12 +291,12 @@ selComponent = class('selComponent', nil, {
         pickerDay:add_rules( {
             AutoLayout.width:eq(150),
             AutoLayout.height:eq(AutoLayout.parent('height') -90),
-
-            AutoLayout.centerx:eq(AutoLayout.parent('width') * 0.5),
+            AutoLayout.left:eq((AutoLayout.parent('width')-startx-40)*0.5-space+startx ),
             AutoLayout.top:eq(90),
         } )
         self.container:add(pickerDay)
 
+      
         local pickerHour = PV.PickerView {
             size = Point(150,600),
             row_height = 440 / 7
@@ -286,8 +306,7 @@ selComponent = class('selComponent', nil, {
         pickerHour:add_rules( {
             AutoLayout.width:eq(150),
             AutoLayout.height:eq(AutoLayout.parent('height') -90),
-
-            AutoLayout.centerx:eq(AutoLayout.parent('width') * 0.68),
+            AutoLayout.left:eq((AutoLayout.parent('width')-startx-40)*0.75-space+startx ),
             AutoLayout.top:eq(90),
         } )
         self.container:add(pickerHour)
@@ -301,71 +320,73 @@ selComponent = class('selComponent', nil, {
         pickerMin:add_rules( {
             AutoLayout.width:eq(150),
             AutoLayout.height:eq(AutoLayout.parent('height') -90),
-
-            AutoLayout.left:eq(AutoLayout.parent('width') -50 - pickerMin.width),
+            AutoLayout.left:eq(AutoLayout.parent('width')-40-space),
             AutoLayout.top:eq(90),
         } )
         self.container:add(pickerMin)
 
 
         pickerYear.on_change_select = function(index)
+            if index < 1 or index > self.m_numYear then return end 
             self.year = tonumber(index + 2003)
-            --            if tonumber(self.month)== 1 or  tonumber(self.month)== 3 or tonumber(self.month)== 5 or tonumber(self.month)== 7 or tonumber(self.month)== 8 or tonumber(self.month)== 10 or tonumber(self.month)== 12  then
-            --                --pickerDay:insert("31",31)
-            --            elseif tonumber(self.month)== 4 or  tonumber(self.month)== 6 or tonumber(self.month)== 9 or tonumber(self.month)== 11 then
-            --                if pickerDay:get_view(31) then
-            --                     pickerDay:delete(31)
-            --                end
-            --            end
+            local dayNum = kefuCommon.getDayNum(self.year, self.m_numMonth)
+            if self.m_numDay == dayNum then return end
+            self.m_numDay = dayNum
 
-            --            if (math.fmod(self.year, 4) == 0 and math.fmod(self.year, 100) ~= 0) or math.fmod(self.year, 400) == 0 then
-            --                self.leap = true
-            --                if tonumber(self.month)== 2 then
-            --                end
-            --            else
-            --                 self.leap = false
+            listDayData = {}
+            for i = 1, self.m_numDay do
+                listDayData[i] = i < 10 and "0" .. tostring(i) .. "日" or "" .. tostring(i) .. "日"
+            end
+            pickerDay.enabled = false
+            pickerDay.data = listDayData
+        end           
+    
 
-            --                 if tonumber(self.month)== 2 then
-
-            --                end
-            --            end
-        end
+   
         pickerMonth.on_change_select = function(index)
+            if index < 1 or index > 12 then return end 
+
             self.month = index < 10 and "0" .. index or index
+            self.m_numMonth = index
+            local dayNum = kefuCommon.getDayNum(self.year, self.m_numMonth)
+            if self.m_numDay == dayNum then return end               
+            self.m_numDay = dayNum
 
-            --            if tonumber(self.month)== 1 or  tonumber(self.month)== 3 or tonumber(self.month)== 5 or tonumber(self.month)== 7 or tonumber(self.month)== 8 or tonumber(self.month)== 10 or tonumber(self.month)== 12  then
-            --                --pickerDay:insert("31",31)
-            --            elseif tonumber(self.month)== 4 or  tonumber(self.month)== 6 or tonumber(self.month)== 9 or tonumber(self.month)== 11 then
-            --                if pickerDay:get_view(31) then
-            --                     pickerDay:delete(31)
-            --                end
+            listDayData = {}
+            for i = 1, self.m_numDay do
+                listDayData[i] = i < 10 and "0" .. tostring(i) .. "日" or "" .. tostring(i) .. "日"
+            end
 
-            --            end
-
-            --            if index ==2 then
-            --                if self.leap then
-            --                else
-            --                end
-            --            end
+            pickerDay.enabled = false
+            pickerDay.data = listDayData
         end
+
+  
         pickerDay.on_change_select = function(index)
+            if index < 1 or index > self.m_numDay then return end
+
             self.day = index < 10 and "0" .. index or index
         end
+
         pickerHour.on_change_select = function(index)
-            self.hour = index < 10 and "0" .. index - 1 or index - 1
+            if index < 1 or index > 24 then return end
+
+            self.hour = index - 1 < 10 and "0" .. index - 1 or index - 1
         end
 
         pickerMin.on_change_select = function(index)
-            self.min = index < 10 and "0" .. index or index
+            if index < 1 or index > 60 then return end
+
+            self.min = index - 1 < 10 and "0" .. index - 1 or index - 1
         end
 
-        Clock.instance():schedule_once( function()
-            pickerYear:select_item(tonumber(year) -2003)
-            pickerMonth:select_item(tonumber(month))
-            pickerDay:select_item(tonumber(day))
-            pickerHour:select_item(tonumber(hour))
-            pickerMin:select_item(tonumber(min))
-        end , 1)
+        -- Clock.instance():schedule_once( function()
+        --     pickerYear:select_item(tonumber(year) -2003)
+        --     pickerMonth:select_item(tonumber(month))
+        --     pickerDay:select_item(tonumber(day))
+        --     pickerHour:select_item(tonumber(hour))
+        --     pickerMin:select_item(tonumber(min))
+        -- end , 1)
 
     end
 

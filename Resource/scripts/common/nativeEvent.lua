@@ -1,8 +1,6 @@
 -- NativeEvent.lua
 -- 本地事件方法
 
-require("libs/json_wrap");
-
 NativeEvent = class();
 NativeEvent.s_luaCallNavite = "OnLuaCall";
 NativeEvent.s_luaCallEvent = "LuaCallEvent";

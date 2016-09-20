@@ -1,53 +1,17 @@
-local baseView = require("view.baseView")
 local UI = require('byui/basic')
 local AutoLayout = require('byui/autolayout')
-local Anim = require("animation")
 local Layout = require('byui/layout')
-require("byui/utils")
-local leaveMessageView
 local class, mixin, super = unpack(require('byui/class'))
-local UserData = require("conversation/sessionData")
-local kefuCommon = require("kefuCommon")
-local SelComponent = require("view/selComponent")
+local Anim = require(string.format('%sanimation', KefuRootPath))
+local baseView = require(string.format('%sview/baseView', KefuRootPath))
+local UserData = require(string.format('%sconversation/sessionData', KefuRootPath))
+local kefuCommon = require(string.format('%skefuCommon', KefuRootPath))
+local SelComponent = require(string.format('%sview/selComponent', KefuRootPath))
 
+local leaveMessageView
 local page_view
 local sliderBlock
-local MyPageView
-MyPageView = class('MyPageView', UI.PageView, {
-    on_touch_up = function(self, p, t)
-        super(MyPageView, self).on_touch_up(self, p, t)
-        if page_view.page_num == 2 then
-            if sliderBlock.x == sliderBlock.width then return end
 
-            local action = Anim.keyframes {
-                -- 关键帧位置, 属性, 时间函数，这里取得Anim.linear，你可以通过取不同的时间函数得到不同的动画效果。
-                { 0.0, { x = 0 }, Anim.accelerate_decelerate },
-                { 1.0, { x = sliderBlock.width }, nil },
-            }
-
-            local move = Anim.duration(0.3, action)
-
-            local anim = Anim.Animator()
-            anim:start(move, function(v)
-                sliderBlock.x = v.x
-            end , true)
-        else
-            if sliderBlock.x == 0 then return end
-            local action = Anim.keyframes {
-                -- 关键帧位置, 属性, 时间函数，这里取得Anim.linear，你可以通过取不同的时间函数得到不同的动画效果。
-                { 0.0, { x = sliderBlock.width }, Anim.accelerate_decelerate },
-                { 1.0, { x = 0 }, nil },
-            }
-
-            local move = Anim.duration(0.3, action)
-
-            local anim = Anim.Animator()
-            anim:start(move, function(v)
-                sliderBlock.x = v.x
-            end , true)
-        end
-    end,
-} )
 
 local rules = {
     top_container =
@@ -142,7 +106,7 @@ local createReplyItem = function(data)
     } )
 
     -- 创建箭头图标
-    local arrowIcon = Sprite(TextureUnit(TextureCache.instance():get("common/unfold.png")))
+    local arrowIcon = Sprite(TextureUnit(TextureCache.instance():get(KefuResMap.commonUnfold)))
     arrowIcon:add_rules( {
         AutoLayout.left:eq(AutoLayout.parent('width') * 0.94),
         AutoLayout.centery:eq(AutoLayout.parent('height') * 0.5),
@@ -150,7 +114,7 @@ local createReplyItem = function(data)
     btnItem:add(arrowIcon)
 
     -- 创建箭头图标
-    local arrowIcon1 = Sprite(TextureUnit(TextureCache.instance():get("common/retract.png")))
+    local arrowIcon1 = Sprite(TextureUnit(TextureCache.instance():get(KefuResMap.commonRetract)))
     arrowIcon1:add_rules( {
         AutoLayout.left:eq(AutoLayout.parent('width') * 0.94),
         AutoLayout.centery:eq(AutoLayout.parent('height') * 0.5),
@@ -163,11 +127,11 @@ local createReplyItem = function(data)
         AutoLayout.width:eq(AutoLayout.parent('width')),
         AutoLayout.top:eq(90),
     } )
-    contentCon.background_color = color_to_colorf(Color(230, 230, 230, 220))
+    contentCon.background_color = color_to_colorf(Color(224, 224, 224, 255))
     contentCon.visible = false
     container:add(contentCon)
 
-    local line = BorderSprite(TextureUnit(TextureCache.instance():get("line.png")))
+    local line = BorderSprite(TextureUnit(TextureCache.instance():get(KefuResMap.kefuLine)))
     line.v_border = {0,4,0,4}
     line.t_border = {0,4,0,4}
     line.zorder = 1
@@ -181,7 +145,7 @@ local createReplyItem = function(data)
 
     local lines = {}
     for i = 1, 4 do
-        lines[i] = BorderSprite(TextureUnit(TextureCache.instance():get("line.png")))
+        lines[i] = BorderSprite(TextureUnit(TextureCache.instance():get(KefuResMap.kefuLine)))
         lines[i].v_border = {0,4,0,4}
         lines[i].t_border = {0,4,0,4}
         lines[i].zorder = 1
@@ -332,7 +296,7 @@ local createReplyItem = function(data)
     contentCon.height_hint = posY
 
     
-    local lineBottom = BorderSprite(TextureUnit(TextureCache.instance():get("line.png")))
+    local lineBottom = BorderSprite(TextureUnit(TextureCache.instance():get(KefuResMap.kefuLine)))
     lineBottom.v_border = {0,4,0,4}
     lineBottom.t_border = {0,4,0,4}
 
@@ -342,8 +306,6 @@ local createReplyItem = function(data)
         AutoLayout.centerx:eq(AutoLayout.parent('width') * 0.5),
         AutoLayout.top:eq(contentCon.height_hint-4),
     } )
- --   lineBottom.colorf = Colorf(0.0, 0.0, 0.0, 1)
- --   contentCon:add(lineBottom)
 
 
     btnItem.on_click = function()
@@ -367,6 +329,7 @@ end
 leaveMessageView = class('leaveMessageView', baseView, {
     __init__ = function(self)
         super(leaveMessageView, self).__init__(self)
+        self.m_status = {}
 
         local data = UserData.getStatusData()
         if data.isVip then
@@ -375,7 +338,7 @@ leaveMessageView = class('leaveMessageView', baseView, {
             self.m_txtColor = "#6fba2c"
         end
 
-        self.m_root.background_color = Colorf(242/255,240/255,235/255,1)
+        self.m_root.background_color = Colorf(235/255,235/255,235/255,1)
         -- ==============================================top=========================================================
         local topContainer = Widget()
         topContainer.background_color = Colorf(0.227, 0.188, 0.31, 1.0)
@@ -451,7 +414,7 @@ leaveMessageView = class('leaveMessageView', baseView, {
 
     
         local btnLeaveMessage = UI.Button {
-            text = string.format('<font color=#f4c493 size=%d>%s</font>',30,'我要留言'),
+            text = '<font color=#f4c493 size=30>我要留言</font>',
             margin = { 10, 10, 10, 10 },
             image =
             {
@@ -471,7 +434,7 @@ leaveMessageView = class('leaveMessageView', baseView, {
         buttomContainer:add(btnLeaveMessage)
 
         local btnReplyMessage = UI.Button {
-            text = string.format('<font color=#9b9b9b size=%d>%s</font>',30,'留言回复'),
+            text = '<font color=#9b9b9b size=30>留言回复</font>',
             margin = { 10, 10, 10, 10 },
             image =
             {
@@ -490,43 +453,15 @@ leaveMessageView = class('leaveMessageView', baseView, {
         buttomContainer:add(btnReplyMessage)
 
         btnLeaveMessage.on_click = function()
-            if page_view.page_num == 1 then return end
-
-            local action = Anim.keyframes {
-                -- 关键帧位置, 属性, 时间函数，这里取得Anim.linear，你可以通过取不同的时间函数得到不同的动画效果。
-                { 0.0, { x = sliderBlock.width }, Anim.accelerate_decelerate },
-                { 1.0, { x = 0 }, nil },
-            }
-
-            local move = Anim.duration(0.3, action)
-
-            local anim = Anim.Animator()
-            anim:start(move, function(v)
-                sliderBlock.x = v.x
-            end , true)
+            if page_view.page_num == 1 then return end           
             page_view.page_num = 1
-            btnLeaveMessage.text = string.format('<font color=%s size=%d>%s</font>', self.m_txtColor, 30, '我要留言')
-            btnReplyMessage.text = string.format('<font color=#9b9b9b size=%d>%s</font>', 30, '留言回复')
+
         end
 
         btnReplyMessage.on_click = function()
             if page_view.page_num == 2 then return end
-
-            local action = Anim.keyframes {
-                -- 关键帧位置, 属性, 时间函数，这里取得Anim.linear，你可以通过取不同的时间函数得到不同的动画效果。
-                { 0.0, { x = 0 }, Anim.accelerate_decelerate },
-                { 1.0, { x = sliderBlock.width }, nil },
-            }
-
-            local move = Anim.duration(0.3, action)
-
-            local anim = Anim.Animator()
-            anim:start(move, function(v)
-                sliderBlock.x = v.x
-            end , true)
             page_view.page_num = 2
-            btnLeaveMessage.text = string.format('<font color=#9b9b9b size=%d>%s</font>', 30, '我要留言')
-            btnReplyMessage.text = string.format('<font color=%s size=%d>%s</font>', self.m_txtColor, 30, '留言回复')
+           
         end
 
         
@@ -541,7 +476,7 @@ leaveMessageView = class('leaveMessageView', baseView, {
         partLine.colorf = Colorf(0.7, 0.7, 0.7, 1)
         buttomContainer:add(partLine)
 
-        page_view = MyPageView {
+        page_view = UI.PageView {
             dimension = kHorizental,
             max_number = 2,
         }
@@ -571,15 +506,45 @@ leaveMessageView = class('leaveMessageView', baseView, {
 
         self.m_pageView.on_page_change = function ()
             if self.m_pageView.page_num == 1 then
-                btnLeaveMessage.text = string.format('<font color=%s size=%d>%s</font>', self.m_txtColor, 30, '我要留言')
-                btnReplyMessage.text = string.format('<font color=#9b9b9b size=%d>%s</font>', 30, '留言回复')
+                btnLeaveMessage.text = string.format('<font color=%s size=30>%s</font>', self.m_txtColor, '我要留言')
+                btnReplyMessage.text = string.format('<font color=#9b9b9b size=30>%s</font>', '留言回复')
+            
+                if sliderBlock.x ~= 0 then
+                    local action = Anim.keyframes {
+                        -- 关键帧位置, 属性, 时间函数，这里取得Anim.linear，你可以通过取不同的时间函数得到不同的动画效果。
+                        { 0.0, { x = sliderBlock.width }, Anim.accelerate_decelerate },
+                        { 1.0, { x = 0 }, nil },
+                    }
+
+                    local move = Anim.duration(0.3, action)
+
+                    local anim = Anim.Animator()
+                    anim:start(move, function(v)
+                        sliderBlock.x = v.x
+                    end , true)
+                end
             else
-                btnLeaveMessage.text = string.format('<font color=#9b9b9b size=%d>%s</font>', 30, '我要留言')
-                btnReplyMessage.text = string.format('<font color=%s size=%d>%s</font>', self.m_txtColor, 30, '留言回复')
+                btnLeaveMessage.text = string.format('<font color=#9b9b9b size=30>%s</font>', '我要留言')
+                btnReplyMessage.text = string.format('<font color=%s size=30>%s</font>', self.m_txtColor, '留言回复')
+            
+                if sliderBlock.x ~= sliderBlock.width then
+                    local action = Anim.keyframes {                    
+                        { 0.0, { x = 0 }, Anim.accelerate_decelerate },
+                        { 1.0, { x = sliderBlock.width }, nil },
+                    }
+
+                    local move = Anim.duration(0.3, action)
+
+                    local anim = Anim.Animator()
+                    anim:start(move, function(v)
+                        sliderBlock.x = v.x
+                    end , true)
+                end
             end
 
             if self.m_newCommit then
-                self:requireData()
+                self.m_newCommit = nil
+                self:requireData()                  
             end
         end
 
@@ -628,6 +593,7 @@ leaveMessageView = class('leaveMessageView', baseView, {
         self.m_editPhone.text = string.format('<font color=#000000 size=%d>%s</font>', 30, "")
         self.m_editPhone.hint_text = string.format('<font color=#9b9b9b size=30>请输入手机号码</font>')
         self.m_typeLabel:set_rich_text("<font color=#9b9b9b size=30>请选择留言类型</font>")
+        self.m_selComp:hide()
 
         self.m_buttomContainer.y = self.m_buttomContainerY
         self.m_pageView.y = self.m_pageViewY
@@ -636,6 +602,7 @@ leaveMessageView = class('leaveMessageView', baseView, {
         self.m_status = {}
 
         if self.m_newCommit then
+            self.m_newCommit = nil
             self:requireData()
         end
 
@@ -643,7 +610,7 @@ leaveMessageView = class('leaveMessageView', baseView, {
         self:updateItemPos()
     end,
 
-    requireData = function (self)
+    requireData = function (self, callback)
         NetWorkControl.obtainUserTabHistroy(0, 50, HTTP_SUBMIT_ADVISE_HISTORY_URI, function (content)
 
             local tb = json.decode(content)
@@ -723,7 +690,11 @@ leaveMessageView = class('leaveMessageView', baseView, {
                 end
                 self.m_replyData = replyData
 
-                
+                if callback then
+                    Clock.instance():schedule_once(function ()
+                        callback() 
+                    end, 1)
+                end
                 
             else            --获取失败
                 Log.w("obtainUserTabHistroy", "留言内容获取失败")
@@ -740,8 +711,8 @@ leaveMessageView = class('leaveMessageView', baseView, {
 
             local container = Widget()
             container:add_rules{
-                AutoLayout.width:eq(AutoLayout.parent('width')-1),
-                AutoLayout.height:eq(AutoLayout.parent('height')),
+                AutoLayout.width:eq(AutoLayout.parent('width')),
+                AutoLayout.height:eq(AutoLayout.parent('height')),              
             }
 
             local listviewReply = UI.ListView {
@@ -758,6 +729,7 @@ leaveMessageView = class('leaveMessageView', baseView, {
                 AutoLayout.left:eq(1),
             }
             container:add(listviewReply)
+            listviewReply.velocity_factor = 3.1
 
 
             self.m_listViewReply = listviewReply
@@ -790,21 +762,21 @@ leaveMessageView = class('leaveMessageView', baseView, {
 
         for i=1, 3 do
             self.m_Items[i] = Widget()
-            self.m_Items[i]:add_rules( {
-                    AutoLayout.width:eq(AutoLayout.parent('width')),
-                    AutoLayout.height:eq(height),
-                    AutoLayout.centerx:eq(AutoLayout.parent('width') * 0.5),
-                } )
+            self.m_Items[i]:add_rules{
+                AutoLayout.width:eq(AutoLayout.parent('width')),
+                AutoLayout.height:eq(height),
+                AutoLayout.centerx:eq(AutoLayout.parent('width') * 0.5),
+            }
 
             self.m_Items[i].y = height*(i-1)
             container:add(self.m_Items[i])
 
             local line = Widget()
-            line:add_rules( {
+            line:add_rules{
                 AutoLayout.width:eq(AutoLayout.parent('width')),
                 AutoLayout.height:eq(2.5),
                 AutoLayout.bottom:eq(AutoLayout.parent('height')),
-            } )
+            }
 
             line.background_color = Colorf(0.77, 0.77, 0.77, 1)
             self.m_Items[i]:add(line)
@@ -812,11 +784,10 @@ leaveMessageView = class('leaveMessageView', baseView, {
             local title = Label()
             title.align = Label.CENTER
             title:set_rich_text(string.format('<font color=%s size=30>%s</font>', txtConfig[i].color, txtConfig[i].title))
-            title:add_rules( {
+            title:add_rules{
                 AutoLayout.left:eq(30),
                 AutoLayout.top:eq(40),
             }
-            )
             self.m_Items[i]:add(title)
 
 
@@ -831,17 +802,17 @@ leaveMessageView = class('leaveMessageView', baseView, {
             hint_text = '<font color=#9b9b9b size=30>请输入手机号码</font>',
         
         }
-        self.m_editPhone:add_rules( {
+        self.m_editPhone:add_rules{
             AutoLayout.width:eq(AutoLayout.parent('width')-220),
             AutoLayout.height:eq(80),
             AutoLayout.left:eq(220),
             AutoLayout.top:eq(40),
         }
-        )
+
         self.m_editPhone.keyboard_type = Application.KeyboardTypeNumberPad
         self.m_Items[1]:add(self.m_editPhone)
 
-        local icon = Sprite(TextureUnit(TextureCache.instance():get("common/necessary.png")))
+        local icon = Sprite(TextureUnit(TextureCache.instance():get(KefuResMap.commonNecessary)))
         icon:add_rules( {
             AutoLayout.left:eq(AutoLayout.parent('width') -30),
             AutoLayout.centery:eq(50),
@@ -864,7 +835,7 @@ leaveMessageView = class('leaveMessageView', baseView, {
         self.m_typeLabel.absolute_align = ALIGN.LEFT
         typeWg:add(self.m_typeLabel)
 
-        local moreIcon = Sprite(TextureUnit(TextureCache.instance():get("common/more.png")))
+        local moreIcon = Sprite(TextureUnit(TextureCache.instance():get(KefuResMap.commonMore)))
         moreIcon:add_rules{
             AutoLayout.right:eq(AutoLayout.parent('width') -15),
             AutoLayout.centery:eq(50),
@@ -879,6 +850,7 @@ leaveMessageView = class('leaveMessageView', baseView, {
         end)
 
         self.m_selComp.btn_callback = function(str)
+            str = str or "无法登陆"
             self.m_typeLabel:set_rich_text("<font color=#000000 size=30>"..str.."</font>")
             self.m_status[2] = true
             self.m_selectTxt = str
@@ -945,9 +917,7 @@ leaveMessageView = class('leaveMessageView', baseView, {
         self.m_contentBtn:add_rules{
             AutoLayout.width:eq(AutoLayout.parent('width')),
             AutoLayout.height:eq(AutoLayout.parent('height')),
-        }
-
-        
+        }        
         self.m_contentBtn.visible = false
 
 
@@ -965,7 +935,7 @@ leaveMessageView = class('leaveMessageView', baseView, {
         editContent.max_height = 180
         editContent.hint_text = string.format('<font color=#c3c3c3 size=%d>%s</font>', 30, "留言内容")
         self.m_Items[4]:add(editContent)
-        self.m_Items[4]:add(self.m_contentBtn)
+        container:add(self.m_contentBtn)
 
         local line1 = Widget()
 
@@ -1031,7 +1001,7 @@ leaveMessageView = class('leaveMessageView', baseView, {
             AutoLayout.width:eq(AutoLayout.parent('width') * 0.92),
             AutoLayout.height:eq(100),
             AutoLayout.centerx:eq(AutoLayout.parent('width') * 0.5),
-            AutoLayout.bottom:eq(AutoLayout.parent('height')-20),
+            AutoLayout.bottom:eq(AutoLayout.parent('height')-30),
         }
         )
         container:add(btnCommit)
@@ -1060,10 +1030,12 @@ leaveMessageView = class('leaveMessageView', baseView, {
                     print_string("=============留言内容发送结果:"..rsp.content)
                     local result = json.decode(rsp.content)
                     if result.code == 0 then                   
-                        self.m_newCommit = true
-                        self.m_submitTips.hideTips("提交成功!", 1)
-                        self:onUpdate()
-                        self.m_pageView.page_num = 2
+                        self.m_newCommit = nil
+                        self:requireData(function ()
+                            self.m_submitTips.hideTips("提交成功!", 1)
+                            self:onUpdate()
+                            self.m_pageView.page_num = 2
+                        end)
                     else
                         self.m_submitTips.hideTips("提交失败")
                     end

@@ -1,4 +1,3 @@
-require("core/system");
 
 Log = class();
 Log.s_tab = "";

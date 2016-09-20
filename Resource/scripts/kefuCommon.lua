@@ -1,6 +1,6 @@
-local AL = require('byui/autolayout')
-local Am = require('animation')
-local UI = require('byui/basic')
+local AL = require(string.format('%sbyui/autolayout', KefuRootPath))
+local Am = require(string.format('%sanimation', KefuRootPath))
+local UI = require(string.format('%sbyui/basic', KefuRootPath))
 
 --头像大小
 local headH = 80
@@ -57,16 +57,17 @@ KefuCommon.createUpdateIcon = function ()
     local wg = Widget()
     wg:add_rules{
         AL.width:eq(AL.parent("width")),
-        AL.height:eq(130),
     }
+    wg.height = 120
 
     local icon = Sprite(TextureUnit(TextureCache.instance():get(KefuResMap.chat_kefu_load_more)))
     wg:add(icon)
+    local wh = 70
     icon:add_rules{
-        AL.width:eq(80),
-        AL.height:eq(80),
+        AL.width:eq(wh),
+        AL.height:eq(wh),
         AL.top:eq(15),
-        AL.left:eq((AL.parent("width")-80)/2),
+        AL.left:eq((AL.parent("width")-wh)/2),
     }
 
     icon.anchor = Point(0.5,0.5)
@@ -75,6 +76,23 @@ KefuCommon.createUpdateIcon = function ()
     txt:set_rich_text("<font color=#C3C3C3 bg=#00000000 size=25>正在刷新...</font>")
     wg:add(txt)
     txt.absolute_align = ALIGN.BOTTOM
+
+
+    local ac = Am.value(0, 359)
+    wg.animTor = Am.Animator(Am.timing(Am.linear, Am.duration(1.5, ac)), function (v)
+        icon.rotation = v
+    end, kAnimRepeat)
+
+    wg.show = function ()
+        wg.visible = true
+    --    wg.animTor:start()
+    end
+
+    wg.hide = function ()
+        wg.visible = false
+    --    wg.animTor:stop()
+    end
+
 
     return wg
 end
@@ -99,8 +117,8 @@ KefuCommon.createSendingItem = function ()
     local icons = {}
     local num = 8
     for i=1, num do
-        local path = string.format("common/appkefu_loading_%d.png", i-1)
-        icons[i] = Sprite(TextureUnit(TextureCache.instance():get(path)))
+        local path = string.format("commonLoading%d", i-1)
+        icons[i] = Sprite(TextureUnit(TextureCache.instance():get(KefuResMap[path])))
         icons[i]:add_rules{
             AL.width:eq(AL.parent('width')),
             AL.height:eq(AL.parent('height')),
@@ -159,7 +177,7 @@ end
 
 --创建头像
 KefuCommon.createHeadIcon = function (parent, path, isLeft)
-    local UserData = require("conversation/sessionData")
+    local UserData = require(string.format('%sconversation/sessionData', KefuRootPath))
     local data = UserData.getStatusData() or {}
 
     local headIcon = nil
@@ -443,10 +461,10 @@ end
 --创建右边对话
 KefuCommon.createRightChatMsg = function (str, isVip, headPath)
     local wg = Widget()
-    local path = "chat/chatto_bg_normal9.png"
+    local path = KefuResMap.chatto_bg_normal9
 
     if isVip then
-        path = "chat/chatto_vip_bg_normal9.png"
+        path = KefuResMap.chatto_vip_bg_normal9
     end
 
     local chatBg = BorderSprite(TextureUnit(TextureCache.instance():get(path)))
@@ -566,10 +584,10 @@ end
 KefuCommon.createRightImageItem = function (path, isVip)
     local maxImgW = System.getScreenScaleWidth() * 0.4
 
-    local bgPath = "chat/chatto_bg_normal9.png"
+    local bgPath = KefuResMap.chatto_bg_normal9
 
     if isVip then
-        bgPath = "chat/chatto_vip_bg_normal9.png"
+        bgPath = KefuResMap.chatto_vip_bg_normal9
     end
     
     local wg = Widget()
@@ -792,10 +810,10 @@ end
 --创建聊天语音项
 KefuCommon.createRightVoiceItem = function (time, voicePath, isVip)
     local wg = Widget()
-    local path = "chat/chatto_bg_normal9.png"
+    local path = KefuResMap.chatto_bg_normal9
 
     if isVip then
-        path = "chat/chatto_vip_bg_normal9.png"
+        path = KefuResMap.chatto_vip_bg_normal9
     end
 
     local chatBg = BorderSprite(TextureUnit(TextureCache.instance():get(path)))
@@ -1022,8 +1040,8 @@ KefuCommon.initFaceEmoji = function ()
         end
 
         local key = tostring(start)
-        local path = string.format("face/appkefu_f%s.png", strIdx)
-        tb[key] = {file = path}
+        local path = string.format("face_f%s", strIdx)
+        tb[key] = {file = KefuResMap[path]}
         start = start + 1
     end
     Label.add_emoji(tb)
@@ -1245,6 +1263,26 @@ KefuCommon.isTelPhoneNumber = function (text)
     if two == "3" or two == "5" or two == "8" then return true end
 
     return false
+end
+
+--根据年月算天数
+KefuCommon.getDayNum = function (year, month)
+    if month == 1 or month == 3 or month == 5 or month == 7 or month == 8 or month == 10 or month == 12 then
+        return 31
+    elseif month == 4 or month == 6 or month == 9 or month == 11 then
+        return 30
+    else
+        --闰年
+        if year % 400 == 0 then
+            return 29
+        else
+            if year % 4 == 0 and year % 100 ~= 0 then
+                return 29
+            else
+                return 28
+            end
+        end
+    end
 end
 
 

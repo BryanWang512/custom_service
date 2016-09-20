@@ -6,12 +6,6 @@ System.updateLayout()
 SCREENWIDTH = System.getScreenScaleWidth()
 SCREENHEIGHT = System.getScreenScaleHeight()
 
-KefuResMap = require('qn_res_alias_map')
-NetWorkControl = require('network/netWorkControl')
-SessionControl = require('conversation/sessionControl')
-ViewManager = require 'viewManager'
-Record = require("conversation/record");
-ChatMessage = require('conversation/chatMessage')
 
 
 ConstString = {
@@ -59,6 +53,12 @@ HISTORY_MSG_PATH = "kefu_historymsg"
 
 --语音采样值
 SAMPLE_RATE_IN_HZ = 8000
+
+KefuEvent = {
+	voice = "kefu_audio_event",
+	mqttReceive = "kefu_mqtt_receive",
+	connectLost = "kefu_connect_lost",
+}
 
 --------------------client 配置信息--------------------------- 
 mqtt_client_info = {
@@ -210,7 +210,14 @@ end
 
 
 
---------------------- http url --------------------
-
+--------------------- require --------------------
+require(string.format('%slibs/json_wrap', KefuRootPath))
+require(string.format('%scommon/log', KefuRootPath))
+KefuResMap = require(string.format('%sqn_res_alias_map', KefuRootPath))
+NetWorkControl = require(string.format('%sconversation/netWorkControl', KefuRootPath))
+SessionControl = require(string.format('%sconversation/sessionControl', KefuRootPath))
+ViewManager = require(string.format('%sviewManager', KefuRootPath))
+Record = require(string.format('%sconversation/record', KefuRootPath))
+ChatMessage = require(string.format('%sconversation/chatMessage', KefuRootPath))
 
 

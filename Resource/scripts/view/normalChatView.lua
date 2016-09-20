@@ -1,14 +1,12 @@
-local baseView = require('view/baseView')
 local UI = require('byui/basic')
 local AL = require('byui/autolayout')
 local Layout = require('byui/layout')
-local Am = require('animation')
-local BottomCp = require('view/bottomComponent')
 local class, mixin, super = unpack(require('byui/class'))
-local kefuCommon = require("kefuCommon")
-local vipChatView = require('view/vipChatView')
-
-local UserData = require("conversation/sessionData")
+local Am = require(string.format('%sanimation', KefuRootPath))
+local baseView = require(string.format('%sview/baseView', KefuRootPath))
+local kefuCommon = require(string.format('%skefuCommon', KefuRootPath))
+local vipChatView = require(string.format('%sview/vipChatView', KefuRootPath))
+local UserData = require(string.format('%sconversation/sessionData', KefuRootPath))
 
 local normalChatView
 normalChatView = class('normalChatView', vipChatView, {
@@ -23,8 +21,6 @@ normalChatView = class('normalChatView', vipChatView, {
 
             SessionControl.logout()			
 		end
-
-		self.m_bottomCp:setVoiceUnvisible()
 
 	end,
 
