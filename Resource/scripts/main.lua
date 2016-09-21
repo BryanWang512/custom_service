@@ -4,9 +4,9 @@ require(string.format('%scommon/kefuConstant', KefuRootPath))
 
 
 local function main()
-    
-    Label.set_emoji_baseline(0.8)
-    Label.set_emoji_scale(1)
+    Label.config(1, 48, false)
+    Label.set_emoji_baseline(0.9)
+    Label.set_emoji_scale(1.5)
 
     local kefuCommon = require(string.format('%skefuCommon', KefuRootPath))
     kefuCommon.initFaceEmoji()

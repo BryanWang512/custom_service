@@ -1,8 +1,52 @@
-DESIGNWIDTH = 720 * 0.95
-DESIGNHEIGHT = 1280 * 0.95
-System.setLayoutWidth(DESIGNWIDTH)
-System.setLayoutHeight(DESIGNHEIGHT)
-System.updateLayout()
+--设计分辨率
+DESIGNWIDTH = 720 
+DESIGNHEIGHT = 1280
+DESIGNSCALE = 1.0
+
+local function setDesign()
+	local sW = System.getScreenWidth()
+	local sH = System.getScreenHeight()
+
+	local xScale = sW / DESIGNWIDTH
+	local yScale = sH / DESIGNHEIGHT
+
+	--按height计算
+	if xScale > yScale then
+		if sH - DESIGNHEIGHT > 1000 then
+			DESIGNSCALE = 1.25
+		elseif sH - DESIGNHEIGHT > 800 then
+			DESIGNSCALE = 1.2
+		elseif sH - DESIGNHEIGHT > 600 then
+			DESIGNSCALE = 1.15
+		elseif sH - DESIGNHEIGHT > 400 then
+			DESIGNSCALE = 1.1
+		elseif sH - DESIGNHEIGHT > 200 then
+			DESIGNSCALE = 1.05
+		end 
+	else  
+	--按width计算
+		if sW - DESIGNWIDTH > 1000 then
+			DESIGNSCALE = 1.25
+		elseif sW - DESIGNWIDTH > 800 then
+			DESIGNSCALE = 1.2
+		elseif sH - DESIGNWIDTH > 600 then
+			DESIGNSCALE = 1.15
+		elseif sH - DESIGNWIDTH > 400 then
+			DESIGNSCALE = 1.1
+		elseif sH - DESIGNWIDTH > 200 then
+			DESIGNSCALE = 1.05
+		end
+
+	end
+
+	System.setLayoutWidth(DESIGNWIDTH * DESIGNSCALE)
+	System.setLayoutHeight(DESIGNHEIGHT * DESIGNSCALE)
+	System.updateLayout()
+	
+end
+
+setDesign()
+
 SCREENWIDTH = System.getScreenScaleWidth()
 SCREENHEIGHT = System.getScreenScaleHeight()
 
