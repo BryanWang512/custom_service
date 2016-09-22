@@ -47,7 +47,7 @@ WinAudioRecord::WinAudioRecord()
 WinAudioRecord::~WinAudioRecord()
 {
 	lock_guard<mutex> locker(m_wait_mutex);
-	print_log_debug("recorder", "~WinAudioRecord");
+	kefu_print_log_debug("recorder", "~WinAudioRecord");
 }
 
 int WinAudioRecord::getState()
@@ -64,21 +64,21 @@ int WinAudioRecord::getBufferSize()
 void WinAudioRecord::start()
 {
 	lock_guard<mutex> locker(m_state_mutex);
-	print_log_debug("kefu_yuyin", "WinAudioRecord::startRecording");
+	kefu_print_log_debug("kefu_yuyin", "WinAudioRecord::startRecording");
 	state = RECORDSTATE_RECORDING;
-	print_log_debug("kefu_yuyin", "WinAudioRecord::startRecording return");
+	kefu_print_log_debug("kefu_yuyin", "WinAudioRecord::startRecording return");
 }
 
 void WinAudioRecord::release()
 {
-	print_log_debug("kefu_yuyin", "WinAudioRecord::release");
+	kefu_print_log_debug("kefu_yuyin", "WinAudioRecord::release");
 }
 
 void WinAudioRecord::stop()
 {
 	lock_guard<mutex> locker(m_state_mutex);
 	state = RECORDSTATE_STOPPED;
-	print_log_debug("kefu_yuyin", "WinAudioRecord::stop>>>>>>>>>>>>>>>>>>>>>");
+	kefu_print_log_debug("kefu_yuyin", "WinAudioRecord::stop>>>>>>>>>>>>>>>>>>>>>");
 }
 
 int WinAudioRecord::readHandle(char** audioData)
@@ -93,7 +93,7 @@ int WinAudioRecord::readHandle(char** audioData)
 
 	BoyaaTimer timer;
 	timer.reset();
-	print_log_debug("kefu_yuyin", "win32 readHandle begin");
+	kefu_print_log_debug("kefu_yuyin", "win32 readHandle begin");
 	if (getState() == RECORDSTATE_RECORDING)
 	{
 		//使用waveInOpen函数开启音频采集
@@ -136,7 +136,7 @@ int WinAudioRecord::readHandle(char** audioData)
 		}
 		waveInClose(hWaveIn);
 	}
-	print_log_debug("kefu_yuyin", "win32 readHandle end speed:%dms", timer.elapsed());
+	kefu_print_log_debug("kefu_yuyin", "win32 readHandle end speed:%dms", timer.elapsed());
 	return buffSize;
 }
 #endif

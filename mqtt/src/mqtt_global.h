@@ -43,7 +43,7 @@ static EngineInterface* g_EngineInterface = 0;
 
 static const bool __DEBUG = true;
 static const char* TAG = "mqtt";
-void print_log_debug(const char* tag, const char *fmt, ...);
+void mqtt_print_log_debug(const char* tag, const char *fmt, ...);
 
 const int K_FAILED = 0;
 const int K_SUCCESS = 1;
@@ -67,7 +67,7 @@ bool str_ends_with(string src, string suffix)
 }
 
 static mutex m_print_mutex;
-void print_log_debug(const char* tag, const char *fmt, ...)
+void mqtt_print_log_debug(const char* tag, const char *fmt, ...)
 {
 	if (!__DEBUG)
 	{
@@ -115,14 +115,14 @@ _long currentTimeMillis()
 	chrono::time_point<chrono::system_clock, chrono::milliseconds> tp = chrono::time_point_cast<chrono::milliseconds>(chrono::system_clock::now());
 	auto tmp = chrono::duration_cast<chrono::milliseconds>(tp.time_since_epoch());
 	_long timestamp = tmp.count();
-	print_log_debug(TAG, "currentTimeMillis : %I64d", timestamp);
+	mqtt_print_log_debug(TAG, "currentTimeMillis : %I64d", timestamp);
 	return timestamp;
 }
 
 void printBuffer(const char* buffer, int size)
 {
 	for (int i = 0; i < size; i++){
-		print_log_debug(TAG, "buffer[%d] = %d", i, buffer[i]);
+		mqtt_print_log_debug(TAG, "buffer[%d] = %d", i, buffer[i]);
 	}
 }
 

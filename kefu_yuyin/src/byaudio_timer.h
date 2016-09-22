@@ -8,7 +8,7 @@ using namespace std::chrono;
 class BoyaaTimer
 {
 public:
-	BoyaaTimer() : m_begin(high_resolution_clock::now()) { print_log_debug("audio_kefu", "BoyaaTimer, begin:%d", m_begin); }
+	BoyaaTimer() : m_begin(high_resolution_clock::now()) { kefu_print_log_debug("audio_kefu", "BoyaaTimer, begin:%d", m_begin); }
 	void reset() { m_begin = high_resolution_clock::now(); }
 	
 	// ‰≥ˆ∫¡√Î

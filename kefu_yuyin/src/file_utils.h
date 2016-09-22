@@ -111,7 +111,7 @@ void byaudio_delete_all_file(const char *dir, int depth)
 	//opendir()：打开一个目录并建立一个目录流，
 	//成功则返回一个指向DIR结构的指针
 	if ((dp = opendir(dir)) == NULL){
-		print_log_debug("audio_kefu","cannot open directory:%s\n", dir);
+		kefu_print_log_debug("audio_kefu","cannot open directory:%s\n", dir);
 		return;
 	}
 	chdir(dir); //将工作目录更改到dir
@@ -126,11 +126,11 @@ void byaudio_delete_all_file(const char *dir, int depth)
 			if (strcmp(".", entry->d_name) == 0 || strcmp("..", entry->d_name) == 0){
 				continue;
 			}
-			print_log_debug("audio_kefu","delete %*s%s/\n", depth, "", entry->d_name);
+			kefu_print_log_debug("audio_kefu","delete %*s%s/\n", depth, "", entry->d_name);
 			byaudio_delete_all_file(entry->d_name, depth + 4);
 		}
 		else{
-			print_log_debug("audio_kefu","%*s%s\n", depth, "", entry->d_name);
+			kefu_print_log_debug("audio_kefu","%*s%s\n", depth, "", entry->d_name);
 			int flag = remove(entry->d_name);
 		}
 	}
@@ -143,38 +143,38 @@ void byaudio_delete_all_file(const char *dir, int depth)
 
 int byaudio_read_file(string dir, string name, char** output)
 {
-	print_log_debug("audio_kefu", "byaudio_read_file");
+	kefu_print_log_debug("audio_kefu", "byaudio_read_file");
 	int flag = 0;
 	if (!dir.empty() && !name.empty())
 	{
-		print_log_debug("audio_kefu", "byaudio_read_file -> dir = %s, name = %s", dir.c_str(), name.c_str());
+		kefu_print_log_debug("audio_kefu", "byaudio_read_file -> dir = %s, name = %s", dir.c_str(), name.c_str());
 		string fileName = dir + "/" + name;
 		FILE* fp = fopen(fileName.c_str(), "r");
 		if (fp != NULL){
-			print_log_debug("audio_kefu", "byaudio_read_file -> fp != NULL");
+			kefu_print_log_debug("audio_kefu", "byaudio_read_file -> fp != NULL");
 			fseek(fp, 0, SEEK_END); //定位到文件末 
-			print_log_debug("audio_kefu", "byaudio_read_file -> SEEK_END");
+			kefu_print_log_debug("audio_kefu", "byaudio_read_file -> SEEK_END");
 			int len = (int)ftell(fp); //文件长度
 			if (*output != NULL){
-				print_log_debug("audio_kefu", "byaudio_read_file -> delete *output");
+				kefu_print_log_debug("audio_kefu", "byaudio_read_file -> delete *output");
 				delete[] *output;
 				*output = NULL;
 			}
-			print_log_debug("audio_kefu", "byaudio_read_file -> SEEK_SET");
+			kefu_print_log_debug("audio_kefu", "byaudio_read_file -> SEEK_SET");
 			fseek(fp, 0, SEEK_SET); //定位到文件开头 
-			print_log_debug("audio_kefu", "byaudio_read_file -> new char");
+			kefu_print_log_debug("audio_kefu", "byaudio_read_file -> new char");
 			char* temp = new char[len + 1];
 			int readSize = (int)fread(temp, sizeof(char), len, fp);
-			print_log_debug("audio_kefu", "byaudio_read_file -> fread, len =%d", readSize);
+			kefu_print_log_debug("audio_kefu", "byaudio_read_file -> fread, len =%d", readSize);
 			temp[len] = '\0';
 			*output = temp;
-			print_log_debug("audio_kefu", "byaudio_read_file -> fclose");
+			kefu_print_log_debug("audio_kefu", "byaudio_read_file -> fclose");
 			fclose(fp);
 			fp = NULL;
 			flag = 1;
 		}
 	}
-	print_log_debug("audio_kefu", "byaudio_read_file flag = %d", flag);
+	kefu_print_log_debug("audio_kefu", "byaudio_read_file flag = %d", flag);
 	return flag;
 }
 #endif

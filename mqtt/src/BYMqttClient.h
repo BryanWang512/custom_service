@@ -137,7 +137,7 @@ int BYMqttClient::disconnect()
 	int result = MQTTAsync_disconnect(client, &opts);
 	if (result != MQTTASYNC_SUCCESS)
 	{
-		print_log_debug(TAG, "disconnect error~~~~~~~~~~");
+		mqtt_print_log_debug(TAG, "disconnect error~~~~~~~~~~");
 	}
 	return result;
 }
@@ -180,10 +180,10 @@ int BYMqttClient::connect(string topicName)
 		opts.ssl = &ssl_opts;
 	}
 	int result = MQTTAsync_connect(client, &opts);
-	print_log_debug(TAG, "mqtt_connect result:%d", result);
+	mqtt_print_log_debug(TAG, "mqtt_connect result:%d", result);
 	if (result != MQTTASYNC_SUCCESS)
 	{
-		print_log_debug(TAG, "connect error!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		mqtt_print_log_debug(TAG, "connect error!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	}
 	return result;
 }
@@ -213,7 +213,7 @@ int BYMqttClient::subscribe(string topicName)
 	int result = MQTTAsync_subscribe(client, topicName.c_str(), config->get_qos(), &opts);
 	if (result != MQTTASYNC_SUCCESS)
 	{
-		print_log_debug(TAG, "subscribe error!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		mqtt_print_log_debug(TAG, "subscribe error!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	}
 	return result;
 }
@@ -240,9 +240,9 @@ int BYMqttClient::publish(string topicName, const char* payload, size_t size)
 	int result = MQTTAsync_sendMessage(client, topicName.c_str(), &pubmsg, &opts);
 	if (result != MQTTASYNC_SUCCESS)
 	{
-		print_log_debug(TAG, "publish error!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		mqtt_print_log_debug(TAG, "publish error!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	}
-	print_log_debug(TAG, "MQTTAsync_publishMessage code:%d", result);
+	mqtt_print_log_debug(TAG, "MQTTAsync_publishMessage code:%d", result);
 	return result;
 }
 
@@ -344,7 +344,7 @@ int BYMqttClient::sendOffMessageAck(vector<_long> offsMsg, string sessionId, str
 	//Òì²½
 	if (offsMsg.size() > 0)
 	{
-		print_log_debug(TAG, "doSendOffMessageAck, size:%d", offsMsg.size());
+		mqtt_print_log_debug(TAG, "doSendOffMessageAck, size:%d", offsMsg.size());
 		ChatMessageAck ack;
 		char buffer[BUFFER_SIZE];
 		size_t size = 0;

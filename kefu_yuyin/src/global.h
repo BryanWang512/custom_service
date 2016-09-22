@@ -21,7 +21,7 @@ static EngineInterface* g_EngineInterface = 0;
 static const bool __DEBUG = true;
 static void volume_callback(double);
 
-void print_log_debug(const char* tag, const char *fmt, ...);
+void kefu_print_log_debug(const char* tag, const char *fmt, ...);
 
 #define AUDIO_SOURCE_VOICE_COMMUNICATION (7)
 #define AUDIO_SOURCE_MIC (1)
@@ -70,7 +70,7 @@ extern "C"
 	bool checkJniException(JNIEnv *env, const char* str){
 		if (env->ExceptionCheck()){
 			env->ExceptionDescribe();
-			print_log_debug("ERROR", "jni error from %s", 0 == str ? "" : str);
+			kefu_print_log_debug("ERROR", "jni error from %s", 0 == str ? "" : str);
 			env->ExceptionClear();
 			return true;
 		}
@@ -82,14 +82,13 @@ extern "C"
 
 #endif
 
-static mutex m_print_mutex;
-void print_log_debug(const char* tag, const char *fmt, ...)
+
+void kefu_print_log_debug(const char* tag, const char *fmt, ...)
 {
 	if (!__DEBUG)
 	{
 		return;
 	}
-	lock_guard<mutex>locker(m_print_mutex);
 	if ((0 == tag || '\0' == tag[0]) || (0 == fmt || '\0' == fmt[0])){
 		return;
 	}

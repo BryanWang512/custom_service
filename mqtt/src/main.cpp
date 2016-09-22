@@ -49,7 +49,7 @@ static int traceback(lua_State *L) {
     lua_pushvalue(L, 1);
     lua_pushinteger(L, 2);
     lua_call(L, 2, 1);
-	print_log_debug(TAG, lua_tostring(L, -1));
+	mqtt_print_log_debug(TAG, lua_tostring(L, -1));
     return 1;
 }
 
@@ -187,12 +187,12 @@ extern "C"
 int mqtt_create(lua_State* L)
 {
 	string params = luaL_checkstring(L, 1);
-	print_log_debug(TAG, "params : %s", params.c_str());
+	mqtt_print_log_debug(TAG, "params : %s", params.c_str());
 	long id = luaL_checklong(L, 2);
-	print_log_debug(TAG, "id : %d", id);
+	mqtt_print_log_debug(TAG, "id : %d", id);
 	Json::Value json;
 	if (!string_to_json(params, json)){
-		print_log_debug(TAG, "parse json error!!!!!!!!!!!!");
+		mqtt_print_log_debug(TAG, "parse json error!!!!!!!!!!!!");
 		return 0;
 	}
 	string host = json[COLUMN_HOST_CONFIG].asString();
@@ -226,7 +226,7 @@ int mqtt_create(lua_State* L)
 
 int mqtt_destroy(lua_State* L)
 {
-	print_log_debug(TAG, "mqtt_destroy!!!!!!!!!!");
+	mqtt_print_log_debug(TAG, "mqtt_destroy!!!!!!!!!!");
 	delete mqtt_client;
 	mqtt_client = NULL;
 	return 1;
@@ -253,7 +253,7 @@ int mqtt_disconnect(lua_State* L)
 {
 	if (should_return())
 		return 0;
-	print_log_debug(TAG, "mqtt_disconnect!!!!!!!!!!");
+	mqtt_print_log_debug(TAG, "mqtt_disconnect!!!!!!!!!!");
 	lua_pushinteger(L, mqtt_client->disconnect());
 	return 1;
 }
@@ -331,7 +331,7 @@ int mqtt_send_offmsg_ack(lua_State* L)
 	//第一个参数是table
 	luaL_checktype(L, 1, LUA_TTABLE);
 	int len = lua_objlen(L, 1);
-	print_log_debug(TAG, "mqtt_send_offmsg_ack table len: %d", len);
+	mqtt_print_log_debug(TAG, "mqtt_send_offmsg_ack table len: %d", len);
 	vector<_long> msgs;
 	for (int i = 1; i <= len; ++i)
 	{
@@ -356,7 +356,7 @@ int mqtt_clock(lua_State* L)
 /*-----------------------------------下面是mqtt回调函数-----------------------------------------*/
 static void delivery_completed(void *context, MQTTAsync_token dt)
 {
-	print_log_debug(TAG, "Message with token value %d delivery confirmed\n", dt);
+	mqtt_print_log_debug(TAG, "Message with token value %d delivery confirmed\n", dt);
 	//do nothing
 	if (should_return()) return;
 	mqtt_client->token = dt;
@@ -372,8 +372,8 @@ static void delivery_completed(void *context, MQTTAsync_token dt)
 static int message_arrived(void *context, char *topicName, int topicLen, MQTTAsync_message *message)
 {
 	if (should_return()) return 0;
-	print_log_debug(TAG, "message_arrived\n");
-	print_log_debug(TAG, "topic: %s\n", topicName);
+	mqtt_print_log_debug(TAG, "message_arrived\n");
+	mqtt_print_log_debug(TAG, "topic: %s\n", topicName);
 	if (str_ends_with(topicName, "loginresp"))
 	{
 		LoginResponse response;
@@ -467,7 +467,7 @@ static int message_arrived(void *context, char *topicName, int topicLen, MQTTAsy
 static void conn_lost(void *context, char *cause)
 {
 	if (should_return()) return;
-	print_log_debug(TAG, "Connection lost, cause: %s\n", cause);
+	mqtt_print_log_debug(TAG, "Connection lost, cause: %s\n", cause);
 	MqttEvent event;
 	event.id = mqtt_client->getId();
 	event.cmd = MQTT_CONNECT_LOST;
@@ -478,7 +478,7 @@ static void conn_lost(void *context, char *cause)
 static void onConnectFailure(void* context, MQTTAsync_failureData* response)
 {
 	if (should_return()) return;
-	print_log_debug(TAG, "Connect failed, rc %d\n", response ? response->code : 0);
+	mqtt_print_log_debug(TAG, "Connect failed, rc %d\n", response ? response->code : 0);
 	MqttEvent event;
 	event.id = mqtt_client->getId();
 	event.cmd = MQTT_CONNECT_FAILURE;
@@ -489,7 +489,7 @@ static void onConnectFailure(void* context, MQTTAsync_failureData* response)
 static void onConnect(void* context, MQTTAsync_successData* response)
 {
 	if (should_return()) return;
-	print_log_debug(TAG, "Connect succeed !!!");
+	mqtt_print_log_debug(TAG, "Connect succeed !!!");
 	MqttEvent event;
 	event.id = mqtt_client->getId();
 	event.cmd = MQTT_CONNECT_SUCCESS;
@@ -500,7 +500,7 @@ static void onConnect(void* context, MQTTAsync_successData* response)
 static void onSubscribe(void* context, MQTTAsync_successData* response)
 {
 	if (should_return()) return;
-	print_log_debug(TAG, "Subscribe succeed !!!");
+	mqtt_print_log_debug(TAG, "Subscribe succeed !!!");
 	MqttEvent event;
 	event.id = mqtt_client->getId();
 	event.cmd = MQTT_SUBSCRIBE_SUCCESS;
@@ -511,7 +511,7 @@ static void onSubscribe(void* context, MQTTAsync_successData* response)
 static void onSubscribeFailure(void* context, MQTTAsync_failureData* response)
 {
 	if (should_return()) return;
-	print_log_debug(TAG, "Subscribe failed, rc %d\n", response ? response->code : 0);
+	mqtt_print_log_debug(TAG, "Subscribe failed, rc %d\n", response ? response->code : 0);
 	MqttEvent event;
 	event.id = mqtt_client->getId();
 	event.cmd = MQTT_SUBSCRIBE_FAILURE;
@@ -522,7 +522,7 @@ static void onSubscribeFailure(void* context, MQTTAsync_failureData* response)
 static void onPublish(void* context, MQTTAsync_successData* response)
 {
 	if (should_return()) return;
-	print_log_debug(TAG, "Publish succeed !!!");
+	mqtt_print_log_debug(TAG, "Publish succeed !!!");
 	MqttEvent event;
 	event.id = mqtt_client->getId();
 	event.cmd = MQTT_SEND_MSG_SUCCESS;
@@ -532,7 +532,7 @@ static void onPublish(void* context, MQTTAsync_successData* response)
 
 static void onPublishFailure(void* context, MQTTAsync_failureData* response)
 {
-	print_log_debug(TAG, "Publish failed, rc %d\n", response ? response->code : 0);
+	mqtt_print_log_debug(TAG, "Publish failed, rc %d\n", response ? response->code : 0);
 	if (should_return()) return;
 	MqttEvent event;
 	event.id = mqtt_client->getId();
@@ -544,7 +544,7 @@ static void onPublishFailure(void* context, MQTTAsync_failureData* response)
 static void onDisconnect(void* context, MQTTAsync_successData* response)
 {
 	if (should_return()) return;
-	print_log_debug(TAG, "Disconnect succeed !!!");
+	mqtt_print_log_debug(TAG, "Disconnect succeed !!!");
 	MqttEvent event;
 	event.id = mqtt_client->getId();
 	event.cmd = MQTT_DISCONNECT_SUCCESS;
@@ -555,7 +555,7 @@ static void onDisconnect(void* context, MQTTAsync_successData* response)
 static void onDisconnectFailure(void* context, MQTTAsync_failureData* response)
 {
 	if (should_return()) return;
-	print_log_debug(TAG, "Disconnect failed, rc %d\n", response ? response->code : 0);
+	mqtt_print_log_debug(TAG, "Disconnect failed, rc %d\n", response ? response->code : 0);
 	MqttEvent event;
 	event.id = mqtt_client->getId();
 	event.cmd = MQTT_DISCONNECT_FAILURE;
@@ -567,7 +567,7 @@ static void handleLoginResponse()
 {
 	if (mqtt_client->getContainer()->is_login_response_queue_empty()) return;
 	LUA_LoginResponse item = mqtt_client->getContainer()->popLoginResponse();
-	print_log_debug(TAG, "handleLoginResponse");
+	mqtt_print_log_debug(TAG, "handleLoginResponse");
 	lua_State* L = GetLuaState();
 	TRACE_BACK
 	lua_getglobal(L, MQTT_MESSAGE_ARRIVED);
@@ -587,7 +587,7 @@ static void handleShiftSession()
 {
 	if (mqtt_client->getContainer()->is_shift_session_queue_empty()) return;
 	LUA_ShiftSession item = mqtt_client->getContainer()->popShiftSession();
-	print_log_debug(TAG, "handleShiftSession");
+	mqtt_print_log_debug(TAG, "handleShiftSession");
 	lua_State* L = GetLuaState();
 	TRACE_BACK
 	lua_getglobal(L, MQTT_MESSAGE_ARRIVED);
@@ -602,7 +602,7 @@ static void handleEndSession()
 {
 	if (mqtt_client->getContainer()->is_end_session_queue_empty()) return;
 	LUA_EndSession item = mqtt_client->getContainer()->popEndSession();
-	print_log_debug(TAG, "handleEndSession");
+	mqtt_print_log_debug(TAG, "handleEndSession");
 	lua_State* L = GetLuaState();
 	TRACE_BACK
 	lua_getglobal(L, MQTT_MESSAGE_ARRIVED);
@@ -623,7 +623,7 @@ static void handleChatReadyResponse()
 {
 	if (mqtt_client->getContainer()->is_chatready_response_queue_empty()) return;
 	LUA_ChatReadyResponse item = mqtt_client->getContainer()->popChatReadyResponse();
-	print_log_debug(TAG, "handleChatReadyResponse");
+	mqtt_print_log_debug(TAG, "handleChatReadyResponse");
 	lua_State* L = GetLuaState();
 	TRACE_BACK
 	lua_getglobal(L, MQTT_MESSAGE_ARRIVED);
@@ -638,7 +638,7 @@ static void handleChatMessage()
 {
 	if (mqtt_client->getContainer()->is_chat_message_queue_empty()) return;
 	LUA_ChatMessage item = mqtt_client->getContainer()->popChatMessage();
-	print_log_debug(TAG, "handleChatMessage");
+	mqtt_print_log_debug(TAG, "handleChatMessage");
 	lua_State* L = GetLuaState();
 	TRACE_BACK
 	lua_getglobal(L, MQTT_MESSAGE_ARRIVED);
@@ -655,7 +655,7 @@ static void handleChatOffMessage()
 {
 	if (mqtt_client->getContainer()->is_chatoff_message_queue_empty()) return;
 	LUA_ChatMessage item = mqtt_client->getContainer()->popChatOffMessage();
-	print_log_debug(TAG, "handleChatOffMessage");
+	mqtt_print_log_debug(TAG, "handleChatOffMessage");
 	lua_State* L = GetLuaState();
 	TRACE_BACK
 	lua_getglobal(L, MQTT_MESSAGE_ARRIVED);
@@ -671,7 +671,7 @@ static void handleLogoutMessage()
 {
 	if (mqtt_client->getContainer()->is_logout_message_queue_empty()) return;
 	LUA_LogoutMessage item = mqtt_client->getContainer()->popLogoutMessage();
-	print_log_debug(TAG, "handleLogoutMessage");
+	mqtt_print_log_debug(TAG, "handleLogoutMessage");
 	lua_State* L = GetLuaState();
 	TRACE_BACK
 	lua_getglobal(L, MQTT_MESSAGE_ARRIVED);
@@ -692,7 +692,7 @@ static void handleMqttEvent()
 {
 	if (mqtt_client->getContainer()->is_mqtt_event_queue_empty()) return;
 	MqttEvent item = mqtt_client->getContainer()->popMqttEvent();
-	print_log_debug(TAG, "handleMqttEvent");
+	mqtt_print_log_debug(TAG, "handleMqttEvent");
 	lua_State* L = GetLuaState();
 	TRACE_BACK
 	lua_getglobal(L, MQTT_EVENT_CALLBACK);

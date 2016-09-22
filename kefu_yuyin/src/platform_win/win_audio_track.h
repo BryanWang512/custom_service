@@ -120,7 +120,7 @@ void WinAudioTrack::writeHandle(const char* audioData, int sizeInBytes)
 	lock_guard<mutex> locker(m_wait_mutex);
 	BoyaaTimer timer;
 	timer.reset();
-	print_log_debug("recorder", "win32 writeHandle begin");
+	kefu_print_log_debug("recorder", "win32 writeHandle begin");
 	if (getState() == PLAYSTATE_PLAYING){
 		waveOutOpen(&hwo, WAVE_MAPPER, &wfx, 0L, 0L, CALLBACK_NULL);//打开一个给定的波形音频输出装置来进行声音播放，方式为回调函数方式。如果是对话框程序，可以将第五个参数改为(DWORD)this，操作跟本Demo程序相似
 		wh1.dwLoops = 0L;//播放区一
@@ -152,7 +152,7 @@ void WinAudioTrack::writeHandle(const char* audioData, int sizeInBytes)
 		setDone(true);
 		waveOutClose(hwo);
 	}
-	print_log_debug("recorder", "win32 writeHandle end speed:%dms", timer.elapsed());
+	kefu_print_log_debug("recorder", "win32 writeHandle end speed:%dms", timer.elapsed());
 	return;
 }
 #endif

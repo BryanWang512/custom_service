@@ -62,26 +62,26 @@ int AudioRecord::save(_callback callback)
 	//录音
 	int len = 0;
 	int datasize = 0;
-	print_log_debug("audio_kefu", "AudioRecord->path:%s", path.c_str());
+	kefu_print_log_debug("audio_kefu", "AudioRecord->path:%s", path.c_str());
 	FILE* fp = fopen(path.c_str(), "a+");
 	if (fp == NULL){
-		print_log_debug("audio_kefu", "AudioRecord::save failed causeby:fp == NULL ");
+		kefu_print_log_debug("audio_kefu", "AudioRecord::save failed causeby:fp == NULL ");
 	}
 	else{
-		print_log_debug("audio_kefu", "AudioRecord::save file create succeed");
+		kefu_print_log_debug("audio_kefu", "AudioRecord::save file create succeed");
 		while (((len = readHandle(&temp)) > 0) && !isCancel)
 		{
 			double volume = calculateVolume(temp, len);
 			callback(volume);
-			print_log_debug("audio_kefu", "AudioRecord::volume:%lf", volume);
+			kefu_print_log_debug("audio_kefu", "AudioRecord::volume:%lf", volume);
 			datasize += len;
 			//speex编码 
 			long dataSize = byaudio_speex_encode(temp, &speexBuff, len);
-			print_log_debug("audio_kefu", "AudioRecord::save write size:%d", dataSize);
+			kefu_print_log_debug("audio_kefu", "AudioRecord::save write size:%d", dataSize);
 			//写文件
 			fwrite(speexBuff, sizeof(char), dataSize, fp);
 
-			//print_log_debug("audio_kefu", "AudioRecord::save write size:%d", len);//pcm原数据
+			//kefu_print_log_debug("audio_kefu", "AudioRecord::save write size:%d", len);//pcm原数据
 			//fwrite(temp, sizeof(char), len, fp); 
 			
 		}

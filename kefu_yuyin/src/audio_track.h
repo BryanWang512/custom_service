@@ -32,27 +32,27 @@ void AudioTrack::setPath(string path)
 //先读取数据，在播放
 int AudioTrack::read()
 {
-	print_log_debug("audio_kefu", "AudioRecord::play->path:%s", path.c_str());
+	kefu_print_log_debug("audio_kefu", "AudioRecord::play->path:%s", path.c_str());
 	FILE* fp = fopen(path.c_str(), "r");
 	if (fp == NULL){
-		print_log_debug("audio_kefu", "AudioRecord::play failed causeby:fp == NULL ");
+		kefu_print_log_debug("audio_kefu", "AudioRecord::play failed causeby:fp == NULL ");
 		return 0;
 	}
 	else{
 		char* audioData = NULL;
-		print_log_debug("audio_kefu", "AudioRecord::play file open succeed");
+		kefu_print_log_debug("audio_kefu", "AudioRecord::play file open succeed");
 		fseek(fp, 0, SEEK_END); //定位到文件末 
 		int len = (int)ftell(fp); //文件长度
 		char* buffer = new char[len];
 		fseek(fp, 0, SEEK_SET); //定位到文件开头 
 		int readSize = (int)fread(buffer, sizeof(char), len, fp);
-		print_log_debug("audio_kefu", "AudioRecord::play -> fread, len =%d", readSize);
+		kefu_print_log_debug("audio_kefu", "AudioRecord::play -> fread, len =%d", readSize);
 		fclose(fp);
 		fp = NULL;
 		
 		//speex解码
 		int dataSize = (int)byaudio_speex_decode(buffer, &audioData, len);
-		print_log_debug("audio_kefu", "AudioRecord::play -> speex_decode, len =%d", dataSize);
+		kefu_print_log_debug("audio_kefu", "AudioRecord::play -> speex_decode, len =%d", dataSize);
 		writeHandle(audioData, dataSize);
 		delete[] buffer;
 		buffer = NULL;

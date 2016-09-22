@@ -14,7 +14,7 @@ void fill_logout_message(Header* header, LogoutMessage* message, char* buffer,in
 	message->set_end_type(end_type);
 	*size = message->ByteSize();
 	bool ret = message->SerializeToArray(buffer, *size);
-	print_log_debug(TAG, "SerializeToArray result: %d.", ret);
+	mqtt_print_log_debug(TAG, "SerializeToArray result: %d.", ret);
 }
 
 //loginRequest
@@ -35,7 +35,7 @@ void fill_login_request(Header* header, LoginRequest* message, const string& fro
 	}
 	*size = message->ByteSize();
 	bool ret = message->SerializeToArray(buffer, *size);
-	print_log_debug(TAG, "SerializeToArray result: %d.", ret);
+	mqtt_print_log_debug(TAG, "SerializeToArray result: %d.", ret);
 }
 
 //chatReady
@@ -46,7 +46,7 @@ void fill_chat_ready_request(Header* header, ChatReadyRequest* message, const st
 	message->set_session_id(sessionId);
 	*size = message->ByteSize();
 	int ret = message->SerializeToArray(buffer, *size);
-	print_log_debug(TAG, "SerializeToArray result: %d.", ret);
+	mqtt_print_log_debug(TAG, "SerializeToArray result: %d.", ret);
 }
 
 //chatMessage
@@ -59,7 +59,7 @@ void fill_chat_message(Header* header, ChatMessage* message, const string& msg, 
 	message->set_msg(msg);
 	*size = message->ByteSize();
 	int ret = message->SerializeToArray(buffer, *size);
-	print_log_debug(TAG, "SerializeToArray result: %d.", ret);
+	mqtt_print_log_debug(TAG, "SerializeToArray result: %d.", ret);
 }
 
 //ChatMessageAck
@@ -70,7 +70,7 @@ void fill_chat_message_ack(Header* header, ChatMessageAck* message, _long seq_id
 	message->add_seq_ids(seq_id);
 	*size = message->ByteSize();
 	int ret = message->SerializeToArray(buffer, *size);
-	print_log_debug(TAG, "SerializeToArray result: %d.", ret);
+	mqtt_print_log_debug(TAG, "SerializeToArray result: %d.", ret);
 
 }
 
@@ -85,7 +85,7 @@ void fill_chat_messages_ack(Header* header, ChatMessageAck* message, vector<_lon
 	}
 	*size = message->ByteSize();
 	int ret = message->SerializeToArray(buffer, *size);
-	print_log_debug(TAG, "SerializeToArray result: %d.", ret);
+	mqtt_print_log_debug(TAG, "SerializeToArray result: %d.", ret);
 
 }
 

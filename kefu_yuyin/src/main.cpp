@@ -35,13 +35,13 @@ static luaL_Reg lualibs[] =
 static void audioDestory()
 {
 	if (recordThread != NULL){
-		print_log_debug("audio_kefu", "destory recordThread");
+		kefu_print_log_debug("audio_kefu", "destory recordThread");
 		recordThread->stop();
 		delete recordThread;
 		recordThread = NULL;
 	}
 	if (trackThread != NULL){
-		print_log_debug("audio_kefu", "destory trackThread");
+		kefu_print_log_debug("audio_kefu", "destory trackThread");
 		trackThread->stop();
 		delete trackThread;
 		trackThread = NULL;
@@ -51,7 +51,7 @@ static void audioDestory()
 
 static void audioCreate(lua_State* L)
 {
-	print_log_debug("audio_kefu", "start create audio");
+	kefu_print_log_debug("audio_kefu", "start create audio");
 	audioDestory();
 	//create track thread
 	trackThread = new TrackThread();
@@ -179,11 +179,11 @@ int audio_destroy(lua_State* L)
 int audio_record_start(lua_State* L)
 {
 	if (recordThread == NULL){
-		print_log_debug("audio_kefu", "call audio_record_start failed causeby:recordThread == NULL ");
+		kefu_print_log_debug("audio_kefu", "call audio_record_start failed causeby:recordThread == NULL ");
 	}
 	else{
 		string path = luaL_checkstring(L, 1);
-		print_log_debug("audio_kefu", "audio_record_start path:%s", path.c_str());
+		kefu_print_log_debug("audio_kefu", "audio_record_start path:%s", path.c_str());
 		recordThread->start(path);
 	}
 	return 0;
@@ -194,7 +194,7 @@ int audio_record_start(lua_State* L)
 int audio_record_stop(lua_State* L)
 {
 	if (recordThread == NULL){
-		print_log_debug("audio_kefu", "call audio_record_stop failed causeby:recordThread == NULL ");
+		kefu_print_log_debug("audio_kefu", "call audio_record_stop failed causeby:recordThread == NULL ");
 	}
 	else{
 		recordThread->stop();
@@ -206,7 +206,7 @@ int audio_record_stop(lua_State* L)
 int audio_record_cancel(lua_State* L)
 {
 	if (recordThread == NULL){
-		print_log_debug("audio_kefu", "call audio_record_stop failed causeby:recordThread == NULL ");
+		kefu_print_log_debug("audio_kefu", "call audio_record_stop failed causeby:recordThread == NULL ");
 	}
 	else{
 		recordThread->cancel();
@@ -217,11 +217,11 @@ int audio_record_cancel(lua_State* L)
 int audio_track_start(lua_State* L)
 {
 	if (trackThread == NULL){
-		print_log_debug("audio_kefu", "call audio_track_start failed causeby:trackThread == NULL ");
+		kefu_print_log_debug("audio_kefu", "call audio_track_start failed causeby:trackThread == NULL ");
 	}
 	else{
 		string path = luaL_checkstring(L, 1);
-		print_log_debug("audio_kefu", "audio_track_start,path:%s", path.c_str());
+		kefu_print_log_debug("audio_kefu", "audio_track_start,path:%s", path.c_str());
 		trackThread->start(path);
 	}
 	return 0;
@@ -230,7 +230,7 @@ int audio_track_start(lua_State* L)
 int audio_track_stop(lua_State*L)
 {
 	if (trackThread == NULL){
-		print_log_debug("audio_kefu", "call audio_track_stop failed causeby:trackThread == NULL ");
+		kefu_print_log_debug("audio_kefu", "call audio_track_stop failed causeby:trackThread == NULL ");
 	}
 	else{
 		trackThread->stop();
@@ -242,7 +242,7 @@ int audio_track_stop(lua_State*L)
 int audio_track_state(lua_State*L)
 {
 	if (trackThread == NULL){
-		print_log_debug("audio_kefu", "call audio_track_state failed causeby:trackThread == NULL ");
+		kefu_print_log_debug("audio_kefu", "call audio_track_state failed causeby:trackThread == NULL ");
 		lua_pushnumber(L, -1);
 	}
 	else{
@@ -267,7 +267,7 @@ static void audio_event_callback(int cmd, int duration)
 {
 	lua_State* L = __GetLuaState();
 	if (L == NULL){
-		print_log_debug("recorder", "call recorder_event_callback failed causeby:lua_State* == NULL");
+		kefu_print_log_debug("recorder", "call recorder_event_callback failed causeby:lua_State* == NULL");
 		return;
 	}
 	lua_getglobal(L, "audio_event_callback");

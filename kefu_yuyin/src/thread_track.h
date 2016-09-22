@@ -103,10 +103,10 @@ void TrackThread::start(string path)
 {
 	if (audioTrack == NULL)
 		return;
-	print_log_debug("audio_kefu", "start");
+	kefu_print_log_debug("audio_kefu", "start");
 	stop();
 	audioTrack->setPath(path);
-	print_log_debug("audio_kefu", "audioTrack->play");
+	kefu_print_log_debug("audio_kefu", "audioTrack->play");
 	_t = new thread(&TrackThread::run, this);
 }
 
@@ -131,21 +131,21 @@ void TrackThread::run()
 	if (TARGET_PLATFORM == PLATFORM_IOS || TARGET_PLATFORM == PLATFORM_WIN32){
         audioTrack->play();
         dataSize = audioTrack->read();
-        print_log_debug("audio_kefu", "TrackThread::run read dataSize: %d", dataSize);
+        kefu_print_log_debug("audio_kefu", "TrackThread::run read dataSize: %d", dataSize);
     }else if (TARGET_PLATFORM == PLATFORM_ANDROID){
         dataSize = audioTrack->read();
-        print_log_debug("audio_kefu", "TrackThread::run read dataSize: %d", dataSize);
+        kefu_print_log_debug("audio_kefu", "TrackThread::run read dataSize: %d", dataSize);
         audioTrack->play();
     }
     int duration = (dataSize * 8 * 1000) / (SAMPLE_RATE_IN_HZ * 16 * 1); //ms
     //数据量 = （采样频率×采样位数×声道数×时间） / 8
-    print_log_debug("audio_kefu", "TrackThread::run duration: %d", duration);
+    kefu_print_log_debug("audio_kefu", "TrackThread::run duration: %d", duration);
 	_long playTimeCount = 0;
 	playTimer.reset();
 	while (playTimeCount < duration){
 		this_thread::sleep_for(chrono::milliseconds(500));
 		playTimeCount = playTimer.elapsed();
-		print_log_debug("audio_kefu", "TrackThread::run playTimeCount: %d", playTimeCount);
+		kefu_print_log_debug("audio_kefu", "TrackThread::run playTimeCount: %d", playTimeCount);
 	}
 	//播放完成
 	LuaMessage message;

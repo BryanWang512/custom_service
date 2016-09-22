@@ -81,7 +81,7 @@ void RecordThread::start(string path)
 		return;
 	}
 	audioRecord->setPath(path);
-	print_log_debug("audio_kefu", "audioRecord->startRecording");
+	kefu_print_log_debug("audio_kefu", "audioRecord->startRecording");
 	_t = new thread(&RecordThread::run, this);
 }
 
@@ -92,7 +92,7 @@ void RecordThread::run()
 		return;
 	audioRecord->start();
 	int dataSize = audioRecord->save(volume_callback);
-	print_log_debug("audio_kefu", "audioRecord->save() dataSize: %d", dataSize);
+	kefu_print_log_debug("audio_kefu", "audioRecord->save() dataSize: %d", dataSize);
     //Â¼ÖÆÍê³É
     LuaMessage message;
     if (audioRecord->isCancel) {
