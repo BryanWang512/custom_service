@@ -541,18 +541,9 @@ leaveMessageView = class('leaveMessageView', baseView, {
                     end , true)
                 end
             end
-
-            if self.m_newCommit then
-                self.m_newCommit = nil
-                self:requireData()                  
-            end
         end
 
         self.m_root:add(topContainer)
-
-        --请求留言记录
-        self:requireData()
-
     end,
 
     setNormalItem = function (self)
@@ -574,7 +565,7 @@ leaveMessageView = class('leaveMessageView', baseView, {
     end,
 
     -- 需要重载该函数
-    onUpdate = function(self, ...)
+    onUpdate = function(self, arg1, arg2)
         local data = UserData.getStatusData()
         if data.isVip then
             self.m_txtColor = "#f4c493"
@@ -600,9 +591,8 @@ leaveMessageView = class('leaveMessageView', baseView, {
 
         --标记是否可以提交
         self.m_status = {}
-
-        if self.m_newCommit then
-            self.m_newCommit = nil
+        
+        if not arg2 then
             self:requireData()
         end
 
@@ -610,36 +600,48 @@ leaveMessageView = class('leaveMessageView', baseView, {
         self:updateItemPos()
     end,
 
-    requireData = function (self, callback)
+    requireData = function (self, isRequire, callback)
+        --不需要向服务器拉数据
+        if not isRequire then
+            local leaveData = UserData.getLeaveMessageViewData() or {}
+            if leaveData.historyData then
+                self.m_noRecordLabel.visible = false
+                if self.m_replyData then
+                    --说明有数据更新
+                    if leaveData.hasNewReport then
+                        self.m_listViewReply.data = leaveData.historyData
+                    end
+                else
+                    --第一次数据更新
+                    self.m_listViewReply.data = leaveData.historyData
+                end
+
+                self.m_replyData = leaveData.historyData
+            else
+                --没有留言
+                self.m_noRecordLabel.visible = true
+                self.m_replyData = nil
+            end
+
+            return 
+        end
+
         NetWorkControl.obtainUserTabHistroy(0, 50, HTTP_SUBMIT_ADVISE_HISTORY_URI, function (content)
 
             local tb = json.decode(content)
 
             --0表示成功
             if tb.code == 0 then
-                self.m_newCommit = nil
-                if self.m_commitClock then
-                    self.m_commitClock:cancel()
-                    self.m_commitClock = nil
-                end
-                --30秒可以更新一次
-                self.m_commitClock = Clock.instance():schedule_once(function()
-                    self.m_newCommit = true
-                    
-                end, 30)
-
                 --没有留言历史记录
                 if not tb.data then return end
 
-                local viewData = UserData.getLeaveMessageViewData() or {}
+
                 table.sort(tb.data, function (v1,v2)
                     if v1.id > v2.id then
                         return true
                     end
                     return false
                 end)
-                viewData.historyData = tb.data
-                UserData.setLeaveMessageViewData(viewData)
 
                 local replyData = {}
                 for i, v in ipairs(tb.data) do
@@ -657,43 +659,11 @@ leaveMessageView = class('leaveMessageView', baseView, {
                     table.insert(replyData, data)
 
                 end
-                self.m_noRecordLabel.visible = false
-
-                if self.m_replyData then
-                    --说明有数据更新，需要改动界面
-                    if #self.m_replyData ~= #replyData then
-                        if #replyData < #self.m_replyData then return end 
-                        local addNum = #replyData - #self.m_replyData
-
-                        for i, v in ipairs(replyData) do
-                            if i - addNum > 0 then
-                                if v.reply ~= self.m_replyData[i-addNum].reply then
-                                    self.m_listViewReply.data = replyData
-                                    break
-                                end
-                            else
-                                self.m_listViewReply:insert(v, i)
-                            end
-                        end
-                        self.m_listViewReply.data = replyData
-                        self.m_replyData = replyData
-                    else
-                        for i, v in ipairs(self.m_replyData) do
-                            if v.reply ~= replyData[i].reply then
-                                self.m_listViewReply.data = replyData
-                                break
-                            end
-                        end
-                    end
-                else                  
-                    self.m_listViewReply.data = replyData
-                end
-                self.m_replyData = replyData
+                self.m_noRecordLabel.visible = false               
+                self.m_listViewReply.data = replyData
 
                 if callback then
-                    Clock.instance():schedule_once(function ()
-                        callback() 
-                    end, 1)
+                    callback()                   
                 end
                 
             else            --获取失败
@@ -1030,11 +1000,12 @@ leaveMessageView = class('leaveMessageView', baseView, {
                     print_string("=============留言内容发送结果:"..rsp.content)
                     local result = json.decode(rsp.content)
                     if result.code == 0 then                   
-                        self.m_newCommit = nil
-                        self:requireData(function ()
-                            self.m_submitTips.hideTips("提交成功!", 1)
-                            self:onUpdate()
-                            self.m_pageView.page_num = 2
+                        self:requireData(true, function ()
+                            Clock.instance():schedule_once(function ()                       
+                                self.m_submitTips.hideTips("提交成功!", 1)
+                                self:onUpdate(nil, true)
+                                self.m_pageView.page_num = 2
+                            end, 1)
                         end)
                     else
                         self.m_submitTips.hideTips("提交失败")
@@ -1067,11 +1038,7 @@ leaveMessageView = class('leaveMessageView', baseView, {
     end,
 
     onDelete = function (self)
-        self.m_newCommit = nil
-        if self.m_commitClock then
-            self.m_commitClock:cancel()
-            self.m_commitClock = nil
-        end
+        
     end,
 
 } )

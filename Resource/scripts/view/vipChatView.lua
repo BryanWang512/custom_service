@@ -39,7 +39,7 @@ vipChatView = class('vipChatView', baseView, {
 	__init__ = function (self)
 		super(vipChatView,self).__init__(self)
         EventDispatcher.getInstance():register(Event.Resume, self, self.onResume)
-        EventDispatcher.getInstance():register(KefuEvent.connectLost, self, self.showExceptionTips)
+        EventDispatcher.getInstance():register(KefuEvent.connectLost, self, self.connectLost)
         self.m_root.background_color = Colorf(242/255, 240/255, 235/255,1.0)
 		self.m_topBg = Widget()
 		self.m_topBg.background_color = Colorf(58/255, 48/255, 78/255,1.0)
@@ -120,7 +120,6 @@ vipChatView = class('vipChatView', baseView, {
         }
 
         self.m_content:add_rules(AL.rules.fill_parent)
-        self.m_realHeight = 0
 
         self.m_content.background_color = Colorf(242/255, 240/255, 235/255,1.0)
         self.m_content.relative = true
@@ -131,7 +130,7 @@ vipChatView = class('vipChatView', baseView, {
 
         self:createUpdateIcon()
         self:createScrollViewBtn()
-		self.m_bottomCp = BottomCp(self.m_root, {"玩家举报","留言回复"}, self)
+		self.m_bottomCp = BottomCp(self.m_root, {"玩家举报","留言回复"}, self)  --"盗号申请",
         
 
 	end,
@@ -143,20 +142,38 @@ vipChatView = class('vipChatView', baseView, {
 
     showEvalutePage = function (self, callbcak)
         if not self.m_evalutePage then
+            self.m_evPageBackground = Widget()
+            self.m_evPageBackground:add_rules{
+                AL.width:eq(AL.parent('width')),
+                AL.height:eq(AL.parent('height') - self.m_topHeight),
+                AL.top:eq(self.m_topHeight),
+            }
+            self.m_evPageBackground.background_color = Colorf(50/255, 50/255, 50/255, 0.6)
+            self.m_root:add(self.m_evPageBackground)
             self.m_evalutePage = EPage(self.m_root)
         end
 
         self.m_scrollView.enabled = false
         self.m_evalutePage:update(callbcak)
+        self.m_evPageBackground.visible = true
         self.m_evalutePage:show()
     end,
 
     hideEvalutePage = function (self)
         if not self.m_evalutePage then
+            self.m_evPageBackground = Widget()
+            self.m_evPageBackground:add_rules{
+                AL.width:eq(AL.parent('width')),
+                AL.height:eq(AL.parent('height') - self.m_topHeight),
+                AL.top:eq(self.m_topHeight),
+            }
+            self.m_root:add(self.m_evPageBackground)
+            self.m_evPageBackground.background_color = Colorf(50/255, 50/255, 50/255, 0.6)
             self.m_evalutePage = EPage(self.m_root)
         end
 
         self.m_scrollView.enabled = true
+        self.m_evPageBackground.visible = false
         self.m_evalutePage:hide()
     end,
 
@@ -351,6 +368,9 @@ vipChatView = class('vipChatView', baseView, {
         self.m_scrollView.enabled = true
         self.m_hasNoMessage = nil
 
+        SessionControl.hasNewLeaveReport(function (hasNewReport)
+            self.m_bottomCp:updateLeaveItem(hasNewReport)
+        end)
     end,
 
     --显示发送文本
@@ -407,8 +427,6 @@ vipChatView = class('vipChatView', baseView, {
         UserData.resetHistoryIndex()
         self.m_content:remove_all()
         self.m_hasNoMessage = nil
-        --content实际高度
-        self.m_realHeight = 30
 
         --添加头部的空格
         self.m_topSpaceWg = Widget()
@@ -588,24 +606,7 @@ vipChatView = class('vipChatView', baseView, {
     end,
 
     contentAddChild = function (self, child, lastWg)
-        -- if self.m_bottomSpaceWg then
-        --     self.m_content:remove(self.m_bottomSpaceWg)
-        --     self.m_bottomSpaceWg = nil
-        -- end
-
-        -- self.m_realHeight = self.m_realHeight or 0
-        -- self.m_realHeight = self.m_realHeight + child.height
         self.m_content:add(child, lastWg)
-
-        --为了填满content加入了一个widget
-        -- if self.m_realHeight < self.m_content.height then
-        --     self.m_bottomSpaceWg = Widget()
-        --     self.m_bottomSpaceWg:add_rules{
-        --         AL.width:eq(AL.parent('width')),
-        --         AL.height:eq(self.m_content.height - self.m_realHeight),
-        --     }
-        --     self.m_content:add(self.m_bottomSpaceWg)
-        -- end
     end,
 
     removeBottomSpaceWg = function (self)
@@ -618,6 +619,30 @@ vipChatView = class('vipChatView', baseView, {
     addTips = function (self, str)
         local tips = kefuCommon.showTips(str)
         self:contentAddChild(tips)
+    end,
+
+    connectLost = function (self)
+        self:showExceptionTips(0)
+
+        if self.m_reconnectCk then
+            self.m_reconnectCk:cancel()
+            self.m_reconnectCk = nil
+        end
+
+        --重连操作，先判断网络是否好了，之后断掉与服务器的连接，再进行connect
+        self.m_reconnectCk = Clock.instance():schedule(function()            
+            if NetWorkControl.MQTT and NetWorkControl.MQTT:isConnected() then
+                self:hideExceptionTips()
+                self.m_reconnectCk:cancel()
+                self.m_reconnectCk = nil
+                NetWorkControl.sendProtocol("disconnect")
+
+                Clock.instance():schedule_once(function()  
+                    NetWorkControl.sendProtocol("connect")
+                end, 0.25)
+            end
+        end, 1)
+
     end,
 
     showExceptionTips = function (self, time)
@@ -690,9 +715,14 @@ vipChatView = class('vipChatView', baseView, {
 
     
     --销毁方法
-    on_destroy = function (self)
-       EventDispatcher.getInstance():unregister(Event.Resume, self, self.onResume)
-       EventDispatcher.getInstance():unregister(KefuEvent.connectLost, self, self.showExceptionTips)
+    onDelete = function (self)
+        if self.m_reconnectCk then
+            self.m_reconnectCk:cancel()
+            self.m_reconnectCk = nil
+        end
+
+        EventDispatcher.getInstance():unregister(Event.Resume, self, self.onResume)
+        EventDispatcher.getInstance():unregister(KefuEvent.connectLost, self, self.connectLost)
     end,
 })
 

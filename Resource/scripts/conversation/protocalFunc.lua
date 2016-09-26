@@ -37,8 +37,6 @@ protocalFunc.loginresp = function (loginCode, loginMsg, sessionId, serviceGid, s
 		UserData.setStatusData(data)
 
 		NetWorkControl.cancelPollLoginTask()
-		view:contentPreUpdate()
-
 
     elseif loginCode == 2 then      --登录失败
     	view:showExceptionTips(0)
@@ -117,7 +115,7 @@ protocalFunc.chatreadyresp = function (code, sessionId, serviceInfo)
 
 	print_string("tb.avatarUri:"..tb.avatarUri)
 	--下载客服头像
-	if tb.avatarUri and tb.avatarUri ~= "" then
+	if tb.avatarUri and tb.avatarUri ~= "" and string.find(tb.avatarUri, "http") then
 		data.needUpdateIcons = {}
 		local index = 1
 		local urlLen = string.len(tb.avatarUri)

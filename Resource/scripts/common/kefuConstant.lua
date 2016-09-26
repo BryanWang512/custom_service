@@ -25,15 +25,15 @@ local function setDesign()
 		end 
 	else  
 	--按width计算
-		if sW - DESIGNWIDTH > 1000 then
+		if sW - DESIGNWIDTH > 1000 * 0.9 then
 			DESIGNSCALE = 1.25
-		elseif sW - DESIGNWIDTH > 800 then
+		elseif sW - DESIGNWIDTH > 800 * 0.9 then
 			DESIGNSCALE = 1.2
-		elseif sH - DESIGNWIDTH > 600 then
+		elseif sW - DESIGNWIDTH > 600 * 0.9 then
 			DESIGNSCALE = 1.15
-		elseif sH - DESIGNWIDTH > 400 then
+		elseif sW - DESIGNWIDTH > 400 * 0.9 then
 			DESIGNSCALE = 1.1
-		elseif sH - DESIGNWIDTH > 200 then
+		elseif sW - DESIGNWIDTH > 200 * 0.9 then
 			DESIGNSCALE = 1.05
 		end
 
@@ -91,9 +91,17 @@ ISTEST = true
 --每次显示的历史消息条数
 PAGE_SIZE = 18
 
+--是否有新回复
+HasNewReport = {
+	yes = 1,
+	no = 0,
+}
+
 
 ---历史消息文件名
 HISTORY_MSG_PATH = "kefu_historymsg"
+LEAVE_MSG_PATH = "kefu_leavemsg"
+HACK_MSG_PATH = "kefu_hackmsg"
 
 --语音采样值
 SAMPLE_RATE_IN_HZ = 8000

@@ -10,7 +10,7 @@ logoutTipsPage = class("logoutTipsPage", nil, {
 		self.m_root = root
 
 		self.m_container = Widget()
-		self.m_container.background_color = Colorf(0.3,0.3,0.3,0.6)
+		self.m_container.background_color = Colorf(50/255, 50/255, 50/255, 0.6)
 		self.m_root:add(self.m_container)
 		
 		self.m_container:add_rules{

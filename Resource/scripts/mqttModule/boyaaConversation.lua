@@ -299,6 +299,11 @@ BoyaaConversation.connect = function (self)
     return ret;
 end
 
+-- 只有执行过createMqtt 和 connect 之后才能调用该接口
+BoyaaConversation.reConnect = function (self)
+	self.mqtt.reconnect();
+end
+
 --step3:订阅主题
 BoyaaConversation.subscribe = function (self)
     local ret = self.mqtt.subscribe(self:getSubscribeTopic());
@@ -605,7 +610,8 @@ function mqtt_event_callback(handlerId, event, code)
         print_string("MQTT_SEND_MSG_FAILURE code: " .. code);
     elseif event == MqttEvent_Map.MQTT_CONNECT_LOST then
         print_string("Connection lost, cause: " .. code);
-        EventDispatcher.getInstance():dispatch(KefuEvent.connectLost, 0)
+        EventDispatcher.getInstance():dispatch(KefuEvent.connectLost)
+        
     elseif event == MqttEvent_Map.MQTT_DELIVERY_COMPLETED then
         print_string("Message with token value : " .. code);
     elseif event == MqttEvent_Map.MQTT_DISCONNECT_SUCCESS or event == MqttEvent_Map.MQTT_DISCONNECT_FAILURE then

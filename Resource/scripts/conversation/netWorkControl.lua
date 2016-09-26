@@ -9,22 +9,18 @@ local loginTaskClock = nil
 netWorkControl = {}
 
 netWorkControl.init = function ()
-	if netWorkControl.destroyClock then
-		netWorkControl.destroyClock:cancel()
-		netWorkControl.destroyClock = nil
+
+	if netWorkControl.MQTT then
+		delete(netWorkControl.MQTT)
+		netWorkControl.MQTT = nil
 	end
 
-
 	netWorkControl.initClock = Clock.instance():schedule_once(function()
-		if netWorkControl.MQTT then
-			delete(netWorkControl.MQTT)
-			netWorkControl.MQTT = nil
-		end
 		netWorkControl.MQTT = new(BoyaaConversation, mqtt_client_config, mqtt_client_info);
 		EventDispatcher.getInstance():register(KefuEvent.mqttReceive, netWorkControl, netWorkControl.receiveProtocal)
 		netWorkControl.sendProtocol("connect") 
 			          
-	end, 1)
+	end, 0.4)
 
 
 end
@@ -245,29 +241,19 @@ end
 
 netWorkControl.destroy = function (time)
 	EventDispatcher.getInstance():unregister(KefuEvent.mqttReceive, netWorkControl, netWorkControl.receiveProtocal)
-	if netWorkControl.destroyClock then
-		netWorkControl.destroyClock:cancel()
-		netWorkControl.destroyClock = nil
-	end
 
 	if netWorkControl.initClock then
 		netWorkControl.initClock:cancel()
 		netWorkControl.initClock = nil
 	end
 
-	if time and time <= 0 then
-		if netWorkControl.MQTT then
-			delete(netWorkControl.MQTT)
-			netWorkControl.MQTT = nil
-		end
-	else
-		netWorkControl.destroyClock = Clock.instance():schedule_once(function()
-			if netWorkControl.MQTT then
-				delete(netWorkControl.MQTT)
-				netWorkControl.MQTT = nil
-			end	            
-	    end, time or 10)
-	end
+
+
+	if netWorkControl.MQTT then
+		delete(netWorkControl.MQTT)
+		netWorkControl.MQTT = nil
+	end	            
+
 end
 
 return netWorkControl

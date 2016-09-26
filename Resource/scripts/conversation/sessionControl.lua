@@ -5,6 +5,7 @@ local kefuCommon = require(string.format('%skefuCommon', KefuRootPath))
 local timeOutTask = nil
 local endSessionTask = nil
 
+
 sessionControl = {}
 
 --设置会话超时Task
@@ -304,6 +305,89 @@ sessionControl.showTimeTips = function (view)
 	end
 
 end
+
+--是否有新的留言回复
+sessionControl.hasNewLeaveReport = function (callback)
+	local leaveData = UserData.getLeaveMessageViewData() or {}
+	local dictData = leaveData.dictData or {}
+	leaveData.hasNewReport = nil
+
+	NetWorkControl.obtainUserTabHistroy(0, 50, HTTP_SUBMIT_ADVISE_HISTORY_URI, function (content)
+		local tb = json.decode(content)
+		
+
+		if tb.code == 0 and tb.data then
+			table.sort(tb.data, function (v1,v2)
+                if v1.id > v2.id then
+                    return true
+                end
+                return false
+            end)
+
+            
+            local replyData = {}
+            local newLeaveMsg = nil
+			for i, v in ipairs(tb.data) do
+
+				--说明是新提交的消息
+				if not dictData[v.id] then
+					dictData[v.id] = {}
+					dictData[v.id].reportContent = ConstString.replay_default					
+					dictData[v.id].hasNewReport = HasNewReport.no
+					dictData[v.id].id = v.id
+					UserData.insertLeaveMsg(dictData[v.id])
+					newLeaveMsg = true
+				end
+
+
+				if v.replies then
+					local replyNum = #v.replies
+         			if dictData[v.id].reportContent ~= v.replies[replyNum].reply then
+         				dictData[v.id].hasNewReport = HasNewReport.yes
+         				dictData[v.id].reportContent = v.replies[replyNum].reply
+						leaveData.hasNewReport = true
+						UserData.updateLeaveMsg(dictData[v.id])
+         			end
+            	end
+
+            	local data = {}
+                data.title = v.content
+                data.time = v.clock
+                data.id = v.id
+                data.mail = v.mail
+                data.phone = v.phone
+                data.hasNewReport = dictData[v.id].hasNewReport
+                if v.replies then
+                	local replyNum = #v.replies
+                    data.reply = v.replies[replyNum].reply
+                else
+                    data.reply = ConstString.replay_default
+                end
+
+                table.insert(replyData, data)
+            end
+
+            UserData.saveLeaveMsg()
+            leaveData.historyData = replyData
+		else          
+            Log.w("hasNewLeaveReport", "留言内容获取失败")
+		end
+
+		UserData.setLeaveMessageViewData(leaveData)
+		if callback then
+			callback(leaveData.hasNewReport)
+		end
+
+	end)
+
+end
+
+--是否有新的举报回复
+sessionControl.hasNewHackReport = function ()
+	
+end
+
+
 
 --登出后的数据状态重置
 sessionControl.logout = function ()

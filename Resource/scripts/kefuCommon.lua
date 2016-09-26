@@ -292,7 +292,7 @@ KefuCommon.createRobotChatMsg = function (str, links, headPath)
 
     -----留言
     if links and #links == 1 and links[1].type == 21 then
-        txt:set_rich_text(string.format("<font color=#000000 bg=#00000000 size=30>%s</font><font color=#0000ff bg=#00000000 size=30><a tag=link>  %s</a></font>", str, links[1].text))
+        txt:set_rich_text(string.format("<font color=#000000 bg=#00000000 size=30>%s</font><font color=#329bdd bg=#00000000 size=30><a tag=link>  %s</a></font>", str, links[1].text))
         txt:init_link(function (self, tag)
             ViewManager.showLeaveMessageView()
         end)
@@ -329,8 +329,8 @@ KefuCommon.createRobotChatMsg = function (str, links, headPath)
         for i, v in ipairs(links) do
             linkTxts[i] = Label()
             linkTxts[i].absolute_align = ALIGN.CENTER
-            linkTxts[i]:set_rich_text(string.format("<font color=#0000ff bg=#00000000 size=28>%s</font>", v.text))
-            linkTxts[i]:set_underline(Color(0,0,255))
+            linkTxts[i]:set_rich_text(string.format("<font color=#329bdd bg=#00000000 size=28>%s</font>", v.text))
+            linkTxts[i]:set_underline(Color(50,155,221))
             linkTxts[i]:update()
 
             linkBtns[i] = UI.Button{
@@ -374,8 +374,8 @@ KefuCommon.createRobotChatMsg = function (str, links, headPath)
         for i, v in ipairs(links) do
             linkBtns[i].on_click = function ()
                 local str = json.encode(v) 
-                linkTxts[i]:set_rich_text(string.format("<font color=#ff5555 bg=#00000000 size=28>%s</font>",v.text))
-                linkTxts[i]:set_underline(Color(255,85,85))
+                linkTxts[i]:set_rich_text(string.format("<font color=#ef7a17 bg=#00000000 size=28>%s</font>",v.text))
+                linkTxts[i]:set_underline(Color(239,122,23))
                 NetWorkControl.sendProtocol("sendChatMsg", str, MessageType_Map.ROBOT)
                 linkBtns[1].enabled = false
                 linkBtns[2].enabled = false
@@ -391,12 +391,12 @@ KefuCommon.createRobotChatMsg = function (str, links, headPath)
             linkTxts[i].absolute_align = ALIGN.CENTER
             --留言回复
             -- if v.type == 21 and #links == 1 then
-            --     linkTxts[i]:set_rich_text(string.format("<font color=#0000ff bg=#00000000 size=28>%s</font>", v.text))
+            --     linkTxts[i]:set_rich_text(string.format("<font color=#329bdd bg=#00000000 size=28>%s</font>", v.text))
             -- else
-                linkTxts[i]:set_rich_text(string.format("<font color=#0000ff bg=#00000000 size=28>%d.%s</font>", i, v.text))
+                linkTxts[i]:set_rich_text(string.format("<font color=#329bdd bg=#00000000 size=28>%d.%s</font>", i, v.text))
             --end
 
-            linkTxts[i]:set_underline(Color(0,0,255))
+            linkTxts[i]:set_underline(Color(50,155,221))
             linkTxts[i].layout_size = Point(SCREENWIDTH*0.6, 0)
             linkTxts[i]:update()
 
@@ -415,8 +415,8 @@ KefuCommon.createRobotChatMsg = function (str, links, headPath)
                 on_click = function ()
                     if v.type ~= 21 then
                         local str = json.encode(v) 
-                        linkTxts[i]:set_rich_text(string.format("<font color=#ff5555 bg=#00000000 size=28>%d.%s</font>",i, v.text))
-                        linkTxts[i]:set_underline(Color(255,85,85))
+                        linkTxts[i]:set_rich_text(string.format("<font color=#ef7a17 bg=#00000000 size=28>%d.%s</font>",i, v.text))
+                        linkTxts[i]:set_underline(Color(239,122,23))
                         NetWorkControl.sendProtocol("sendChatMsg", str, MessageType_Map.ROBOT)
                     
                     else        --type == 21需要跳转到留言界面  

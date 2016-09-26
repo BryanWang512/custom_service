@@ -304,7 +304,7 @@ bottomControl = class('bottomControl', nil, {
 			if self.m_voiceLeavePage then
 				self.m_voiceLeavePage:hide()
 			end
-			local fileName = "audio_"..tostring(Clock.now())..".mp3"; --录制语音文件
+			local fileName = "audio_"..tostring(os.time())..".amr"; --录制语音文件
 			self.m_fullPath = System.getStorageUserPath()..fileName; --录制语音文件全路径
 			Record.getInstance():startRecord(self.m_fullPath); --开始录制
 
@@ -492,23 +492,25 @@ bottomControl = class('bottomControl', nil, {
 		self.m_sendBtn = UI.Button{
             image ={
 
-                normal = TextureUnit(TextureCache.instance():get(KefuResMap.chatSendBtnUp)),
-                down = TextureUnit(TextureCache.instance():get(KefuResMap.chatSendBtnDw)),
-            },
-                          
-            border = false,
+                --normal = TextureUnit(TextureCache.instance():get(KefuResMap.chatSendBtnUp)),
+                --down = TextureUnit(TextureCache.instance():get(KefuResMap.chatSendBtnDw)),
+
+                normal= Colorf(111/255, 186/255, 44/255,1.0),
+                down= Colorf(100/255, 167/255, 40/255,1.0),
+            },                          
+            --border = false,
+            margin = { 5, 5, 5, 5 },
             text = "<font color=#ffffff size=26 weight=2>发送</font>",
-            radius = 0,
+            radius = 5,
         }
 
         self.m_sendBtn.focus = false
 
         self.m_sendBtn:add_rules{
-        	AL.width:eq(65),
-			AL.height:eq(60),
-			AL.top:eq(21),
-			--AL.bottom:eq(AL.parent('height') - 19),
-			AL.right:eq(AL.parent("width")-17),
+        	AL.width:eq(71),
+			AL.height:eq(66),
+			AL.top:eq(17),
+			AL.right:eq(AL.parent("width")-13),
     	}
     	self.m_sendBtn.visible = false
     	self.m_chatPage:add(self.m_sendBtn)
@@ -787,6 +789,7 @@ bottomControl = class('bottomControl', nil, {
 		self.m_selectItem = {}
 		local space = (SCREENWIDTH-100)/num
 
+		self.m_selectTag = {}
 		for i=1, num do
 			self.m_selectItem[i] = UI.Button{
 				image =
@@ -807,6 +810,16 @@ bottomControl = class('bottomControl', nil, {
 				AL.left:eq(100+space*(i-1)+1),
 			}
 			self.m_selectPage:add(self.m_selectItem[i])
+
+			self.m_selectTag[i] = Sprite(TextureUnit(TextureCache.instance():get("circle.png")))
+			self.m_selectTag[i]:add_rules{
+				AL.width:eq(18),
+				AL.height:eq(18),
+				AL.top:eq(17),
+				AL.right:eq( space - (space-150)/2 ),
+			}
+			self.m_selectItem[i]:add(self.m_selectTag[i])
+			self.m_selectTag[i].visible = false
 
 			self.m_selectItem[i].on_click = function()
 				if self.m_data[i] == "盗号申请" then
@@ -906,6 +919,17 @@ bottomControl = class('bottomControl', nil, {
         self.m_showBehavierPage = false
         self:updatePageStatus()
 	end,
+
+	updateLeaveItem = function (self, hasNewReport)
+		if hasNewReport then
+			--显示小红点
+			self.m_selectTag[#self.m_selectTag].visible = true
+			
+		else
+			--隐藏小红点
+			self.m_selectTag[#self.m_selectTag].visible = false
+		end
+	end
 
 })
 

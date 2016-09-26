@@ -61,8 +61,6 @@ startView = class('startView', baseView, {
             UserData.setStatusData(data)
             mqtt_client_config.role = "3"
             mqtt_client_config.stationId = self.m_edit.text~="" and self.m_edit.text or mqtt_client_config.stationId
-            NetWorkControl.init()
-            --显示界面后再connect
             local view = ViewManager.showVipChatView()
             if view then          
                 view:showExceptionTips(DELAY_CONNECT_DEADLINE)
@@ -70,6 +68,8 @@ startView = class('startView', baseView, {
                 view:contentPreUpdate()
             end
             
+            --显示界面后再connect
+            NetWorkControl.init()
         end
 
         str = string.format("<font color=#000000 size=%d>普通用户聊天</font>", 36)
@@ -91,7 +91,6 @@ startView = class('startView', baseView, {
             UserData.setStatusData(data)
             mqtt_client_config.role = "2"
             mqtt_client_config.stationId = self.m_edit.text~="" and self.m_edit.text or mqtt_client_config.stationId
-            NetWorkControl.init()
 
             local view = ViewManager.showNormalChatView()
             if view then
@@ -99,6 +98,8 @@ startView = class('startView', baseView, {
                 view:resetBottom()
                 view:contentPreUpdate()
             end
+            
+            NetWorkControl.init()
         end
 
         self.m_root:add(self.m_customBtn)

@@ -2,9 +2,13 @@ local dataInstance = {}
 local historyDict = nil
 local historyData = nil
 local historyNum = 0
+local leaveNum = 0
 local data = {}
 --标记显示过的历史消息索引
 local showId = 0
+
+local leaveMsgDict = nil
+
 
 local viewInfo = {
 	"Status",				--状态数据
@@ -46,6 +50,12 @@ dataInstance.clearAllData = function ()
 	if historyDict then
 		delete(historyDict)
 		historyDict = nil
+	end
+
+	leaveNum = 0
+	if leaveMsgDict then
+		delete(leaveMsgDict)
+		leaveMsgDict = nil
 	end
 
 end
@@ -199,6 +209,59 @@ dataInstance.getNewMsgTimeTips = function ()
 	end
 
 	return nil
+end
+
+--初始化留言记录，用于记录是否被浏览了
+dataInstance.initLeaveDict = function ()
+	if not leaveMsgDict then
+		
+		local path = LEAVE_MSG_PATH..mqtt_client_config.stationId
+		leaveMsgDict = new(Dict, path)
+		leaveMsgDict:load()
+	end
+
+	leaveNum = leaveMsgDict:getInt("msgNum", 0)
+	local info = {}
+	if leaveNum > 0 then
+		for i=1, leaveNum do
+			--id 的key
+			local idx = string.format("k_%d", i)
+			--内容的id
+			local key = leaveMsgDict:getInt(idx)
+			--内容
+			local v = leaveMsgDict:getString(tostring(key))
+			if v ~= "" then
+				local tb = json.decode(v)
+				info[tb.id] = tb
+			end
+		end
+	end
+
+	data["LeaveMessageView"] = data["LeaveMessageView"] or {}
+	data["LeaveMessageView"].dictData = info
+
+end
+
+dataInstance.insertLeaveMsg = function (msg)
+	leaveNum = leaveNum + 1
+	leaveMsgDict:setInt("msgNum", leaveNum)
+	local key = string.format("k_%d", leaveNum)
+	leaveMsgDict:setInt(key, msg.id)
+
+	local content = json.encode(msg)
+	leaveMsgDict:setString(tostring(msg.id), content)
+
+end
+
+dataInstance.updateLeaveMsg = function (msg)
+	local content = json.encode(msg)
+	leaveMsgDict:setString(tostring(msg.id), content)
+end
+
+dataInstance.saveLeaveMsg = function ()
+	if leaveMsgDict then
+		leaveMsgDict:save()
+	end
 end
 
 initData()

@@ -7,6 +7,7 @@ local baseView = require(string.format('%sview/baseView', KefuRootPath))
 local kefuCommon = require(string.format('%skefuCommon', KefuRootPath))
 local vipChatView = require(string.format('%sview/vipChatView', KefuRootPath))
 local UserData = require(string.format('%sconversation/sessionData', KefuRootPath))
+local LogOutPage = require(string.format('%sview/logoutTipsPage', KefuRootPath))
 
 local normalChatView
 normalChatView = class('normalChatView', vipChatView, {
@@ -18,14 +19,37 @@ normalChatView = class('normalChatView', vipChatView, {
 		self.m_backImg.unit = TextureUnit(TextureCache.instance():get(KefuResMap.chatBack))
 
 		self.m_backBtn.on_click = function ()
-
-            SessionControl.logout()			
+			self:onBackEvent()		
 		end
 
 	end,
 
 	onBackEvent = function (self)
-		SessionControl.logout()
+		--人工服务需要评分
+		if SessionControl.isHumanService() then
+			if self.m_evalutePage and self.m_evalutePage:isVisible() then           
+	            --表示已经处在评论界面，这时再点击按钮就直接退出了
+	            self:hideEvalutePage()
+	            SessionControl.logout()
+	        else
+	            if not self.m_logOutTips then
+	                self.m_logOutTips = LogOutPage(self.m_root)
+	            end
+	            self.m_logOutTips:show(function ()
+	                if SessionControl.isShouldGrade() then
+	                    self:showEvalutePage(function ()
+	                        self:hideEvalutePage()
+	                        SessionControl.logout()
+	                    end)
+	                else
+	                    SessionControl.logout()
+	                end
+	                
+	            end)
+	        end
+		else
+			SessionControl.logout()
+		end
 	end,
 })
 
